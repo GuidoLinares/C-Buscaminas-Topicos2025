@@ -1,5 +1,17 @@
-#include <SDL2/SDL.h>
-#include <stdio.h>
+
+/*
+Apellido(s), nombre(s): Linares, Guido Hernan
+DNI: 43170056
+Entrega: Sí
+
+Apellido(s), nombre(s): Goldring, Facundo
+DNI:   (pongan su DNI)
+Entrega: Sí
+
+Apellido(s), nombre(s): Calvet, Lucas
+DNI:  (pongan su DNI)
+Entrega: Sí
+*/
 
 int main(int argc, char *argv[]) {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -8,5 +20,7 @@ int main(int argc, char *argv[]) {
     }
     printf("SDL se inicializó correctamente.\n");
     SDL_Quit();
+
+    printf("LISTO EL REPOSITORIO");
     return 0;
 }
