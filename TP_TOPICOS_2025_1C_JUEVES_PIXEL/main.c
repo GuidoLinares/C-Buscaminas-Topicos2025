@@ -21,6 +21,6 @@ int main(int argc, char *argv[]) {
     printf("SDL se inicializó correctamente.\n");
     SDL_Quit();
 
-    printf("LISTO EL REPOSITORIO");
+    printf("LISTO EL REPOSITORIO E INSTALACION DE SDL");
     return 0;
 }
