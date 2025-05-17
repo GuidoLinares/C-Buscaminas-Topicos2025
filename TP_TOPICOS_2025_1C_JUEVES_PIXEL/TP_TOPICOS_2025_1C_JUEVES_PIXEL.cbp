@@ -13,13 +13,13 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
-					<Add directory="SDL2-devel-2.0.22-mingw/SDL2-2.0.22/x86_64-w64-mingw32/include" />
+					<Add directory="SDL2-2.0.22/x86_64-w64-mingw32/include" />
 				</Compiler>
 				<Linker>
-					<Add option="-lmingw32 -mconsole" />
+					<Add option="-lmingw32 -lSDL2main -lSDL2" />
 					<Add library="SDL2" />
 					<Add library="SDL2main" />
-					<Add directory="SDL2-devel-2.0.22-mingw/SDL2-2.0.22/x86_64-w64-mingw32/lib" />
+					<Add directory="SDL2-2.0.22/x86_64-w64-mingw32/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -29,26 +29,26 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
-					<Add directory="SDL2-devel-2.0.22-mingw/SDL2-2.0.22/x86_64-w64-mingw32/include" />
+					<Add directory="SDL2-2.0.22/x86_64-w64-mingw32/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add option="-lmingw32 -mconsole" />
+					<Add option="-lmingw32 -lSDL2main -lSDL2" />
 					<Add library="SDL2" />
 					<Add library="SDL2main" />
-					<Add directory="SDL2-devel-2.0.22-mingw/SDL2-2.0.22/x86_64-w64-mingw32/lib" />
+					<Add directory="SDL2-2.0.22/x86_64-w64-mingw32/lib" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add directory="SDL2-devel-2.0.22-mingw/SDL2-2.0.22/x86_64-w64-mingw32/include" />
+			<Add directory="SDL2-2.0.22/x86_64-w64-mingw32/include" />
 		</Compiler>
 		<Linker>
-			<Add option="-lmingw32 -mconsole" />
+			<Add option="-lmingw32 -lSDL2main -lSDL2" />
 			<Add library="SDL2" />
 			<Add library="SDL2main" />
-			<Add directory="SDL2-devel-2.0.22-mingw/SDL2-2.0.22/x86_64-w64-mingw32/lib" />
+			<Add directory="SDL2-2.0.22/x86_64-w64-mingw32/lib" />
 		</Linker>
 		<Unit filename="funciones.c">
 			<Option compilerVar="CC" />
