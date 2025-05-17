@@ -6,7 +6,7 @@ DNI: 43170056
 Entrega: Sí
 
 Apellido(s), nombre(s): Goldring, Facundo
-DNI:   (pongan su DNI)
+DNI: 44595085
 Entrega: Sí
 
 Apellido(s), nombre(s): Calvet, Lucas
@@ -16,25 +16,19 @@ Entrega: Sí
 
 int main(int argc, char* argv[])
 {
-    int op,porcentaje;
     int** matriz;
+    Archivo_conf configuracion;
+    configuracion = leerArchivo();
 
-    matriz  = crearMatriz();
+    matriz = crearMatriz(configuracion.dimensiones);
     if(!matriz)
        printf("%s",SIN_MEM);
     else
     {
-        inicializarMatriz(matriz);
+        inicializarMatriz(matriz, configuracion.dimensiones);
         puts("ARRANCA SETEO DEL JUEGO");
-        puts("Opcion 1- generar 10 bombas aleatorias en el tablero. \nOpcion 2- Generar bombas equivalentes al 10% del tablero");
-        op = validar2(1,2);
-        if(op == 1)
-            llenarMatriz(matriz, 10);
-        else
-        {
-            porcentaje = (TAM_GRILLA*TAM_GRILLA)/10;
-            llenarMatriz(matriz,porcentaje);
-        }
+        llenarMatriz(matriz, configuracion);
+
     }
 
 
@@ -55,7 +49,7 @@ int main(int argc, char* argv[])
     srand(time(0));
     */
 
-    mostrarMatriz(matriz);
+    mostrarMatriz(matriz,configuracion.dimensiones);
     free(matriz);
     return 0;
 

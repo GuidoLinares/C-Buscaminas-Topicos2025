@@ -7,18 +7,27 @@
 #include <ctype.h>
 #include <time.h>
 
-#define TAM_GRILLA 32
-#define CANT_MINAS 10
+#define FORMATO "CANTIDAD DE MINAS = %d| DIMENSION DEL TABLERO = %d"
 #define SIN_MEM "NO SE PUDO ASIGNAR MEMORIA"
+#define ARCH_CONFIG "buscaminas.conf"
+
+typedef struct
+{
+    int minas ;
+    int dimensiones;
+}Archivo_conf;
+
 
 //FUNCIONES DE CONSOLA
-int** crearMatriz ();
+int** crearMatriz (int);
 void destruirMatriz(int**, size_t);
-void llenarMatriz(int**, size_t);
-void mostrarMatriz(int**);
+void llenarMatriz(int**, Archivo_conf);
+void mostrarMatriz(int**, int);
 int generarAleatorio(int ,int );
 int validar2 (int , int );
-void inicializarMatriz(int**);
+void inicializarMatriz(int**, int);
+Archivo_conf leerArchivo();
+
 
 //FUNCIONES SDL
 

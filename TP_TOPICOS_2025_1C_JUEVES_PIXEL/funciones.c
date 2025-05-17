@@ -35,15 +35,16 @@ void destruirMatriz(int** m, size_t tam)
     free(m);
 }
 
-int** crearMatriz ()
+int** crearMatriz (int dimension)
 {
-    int** matriz = malloc(sizeof(void*)*TAM_GRILLA);
 
-    int**ult = matriz + TAM_GRILLA - 1;
+    int** matriz = malloc(sizeof(void*)*dimension);
+
+    int**ult = matriz + dimension - 1;
 
     for(int**i = matriz ; i<= ult ; i++)
     {
-        *i = (int*)malloc(sizeof(int)*TAM_GRILLA); // reservo memoria para cada elemento
+        *i = (int*)malloc(sizeof(int)*dimension); // reservo memoria para cada elemento
         if(!*i)
         {
             destruirMatriz(matriz, i - matriz);
@@ -66,11 +67,11 @@ int validar2 (int li, int ls)
     return num;
 }
 
-void inicializarMatriz(int** m)
+void inicializarMatriz(int** m, int dimension)
 {
     // Inicializar con ceros
-    for (int i = 0; i < TAM_GRILLA; i++) {
-        for (int j = 0; j < TAM_GRILLA; j++) {
+    for (int i = 0; i < dimension; i++) {
+        for (int j = 0; j < dimension; j++) {
             *(*(m + i) + j) = 0;
         }
     }
@@ -81,7 +82,7 @@ int generarAleatorio(int minimo, int maximo)
     return rand() % (maximo - minimo + 1) + minimo;
 }
 
-void llenarMatriz(int** m, size_t cant_minas)
+void llenarMatriz(int** m, Archivo_conf config)
 {
 
     // Semilla aleatoria
@@ -89,9 +90,9 @@ void llenarMatriz(int** m, size_t cant_minas)
 
     // Colocar minas (unos) en posiciones aleatorias no repetidas
     size_t minas_colocadas = 0;
-    while (minas_colocadas < cant_minas) {
-        int fila = generarAleatorio(0, TAM_GRILLA-1);
-        int col = generarAleatorio(0, TAM_GRILLA-1);
+    while (minas_colocadas < config.minas) {
+        int fila = generarAleatorio(0, config.dimensiones-1);
+        int col = generarAleatorio(0, config.dimensiones-1);
 
         if (*(*(m + fila) + col) == 0)
         {
@@ -101,12 +102,12 @@ void llenarMatriz(int** m, size_t cant_minas)
     }
 }
 
-void mostrarMatriz(int**m)
+void mostrarMatriz(int**m, int dimension)
 {
     int i=0,j;
-    for(i=0; i<TAM_GRILLA ; i++)
+    for(i=0; i<dimension ; i++)
     {
-        for(j=0; j<TAM_GRILLA ; j++ )
+        for(j=0; j<dimension ; j++ )
         {
             printf("[%d]",m[i][j]);
         }
@@ -114,6 +115,37 @@ void mostrarMatriz(int**m)
     }
 
 }
+
+Archivo_conf leerArchivo()
+{
+
+    Archivo_conf config;
+    FILE*arch;
+    arch = fopen(ARCH_CONFIG, "a+");
+    if(!arch)
+    {
+        fclose(arch);
+        printf("NO SE PUDO ABRIR EL ARCHIVO %s",ARCH_CONFIG);
+        exit(-1);
+    }
+
+    rewind(arch);
+
+    if(fscanf(arch,FORMATO,&config.minas, &config.dimensiones) != 2)
+    {
+        fprintf(stderr, "Error al leer el formato del archivo de configuración.\n"); // Mensaje de error más específico
+        fclose(arch);
+        exit(-2);
+    }
+    fclose(arch);
+    return config;
+}
+
+
+
+
+
+
 /////////////////// FUNCIONES SDL ///////////////////////////////
 void borrarPantalla(SDL_Window *ventana, SDL_Renderer *renderer)
 {
