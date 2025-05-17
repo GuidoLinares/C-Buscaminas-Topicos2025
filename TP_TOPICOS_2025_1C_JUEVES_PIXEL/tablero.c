@@ -11,12 +11,12 @@ void borrarPantalla(SDL_Window *ventana, SDL_Renderer *renderer)
 }
 
 int verificarSDL() {
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+    if (SDL_Init(SDL_INIT_VIDEO) < 0)
+    {
         fprintf(stderr, "SDL no se pudo inicializar: %s\n", SDL_GetError());
         return 0; // Indica que SDL no está bien instalado o no se pudo inicializar
-    } else {
+    } else
         printf("SDL se inicializó correctamente.\n");
-    }
 
     SDL_Quit(); // Limpia los recursos de SDL
     return 1; // Indica que SDL parece estar bien instalado

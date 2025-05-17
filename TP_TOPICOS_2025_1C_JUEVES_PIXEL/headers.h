@@ -26,7 +26,6 @@ void destruirMatriz(int**, size_t);
 void llenarMatriz(int**, Archivo_conf);
 void mostrarMatriz(int**, int);
 int generarAleatorio(int ,int );
-int validar2 (int , int );
 void inicializarMatriz(int**, int);
 Archivo_conf leerArchivo();
 

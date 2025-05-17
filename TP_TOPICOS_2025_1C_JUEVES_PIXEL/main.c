@@ -29,30 +29,25 @@ int main(int argc, char *argv[])
         llenarMatriz(matriz, configuracion);
     }
 
-    if (verificarSDL())
-        printf("SDL2 esta instalado y funcionando correctamente (inicializacion basica exitosa).\n");
-    else
-        printf("Se encontraron problemas con la instalacion de SDL2.\n");
-
     mostrarMatriz(matriz,configuracion.dimensiones);
 
     SDL_Window *ventana;
     SDL_Renderer *renderer;
 
     if (inicializarSDL("BUSCAMINAS_PIXEL", 640, 640, &ventana, &renderer) != 0)
-    return -1;
+        return -1;
 
     dibujarTablero(renderer, configuracion.dimensiones);
 
-    SDL_Event e;
-    int corriendo = 1;
+    SDL_Event evento;
+    int ejecutando = 1;
 
-    while (corriendo)
+    while (ejecutando)
     {
-        while (SDL_PollEvent(&e))
+        while (SDL_PollEvent(&evento))
         {
-            if (e.type == SDL_QUIT)
-                corriendo = 0;  // Cierra la ventana cuando el usuario la cierre
+            if (evento.type == SDL_QUIT)
+                ejecutando = 0;  // Cierra la ventana cuando el usuario la cierre
         }
 
         SDL_RenderClear(renderer);
