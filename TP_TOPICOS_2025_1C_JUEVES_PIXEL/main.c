@@ -16,7 +16,7 @@ Entrega: Sí
 
 int main(int argc, char* argv[])
 {
-    int op;
+    int op,porcentaje;
     int** matriz;
 
     matriz  = crearMatriz();
@@ -24,14 +24,15 @@ int main(int argc, char* argv[])
        printf("%s",SIN_MEM);
     else
     {
+        inicializarMatriz(matriz);
         puts("ARRANCA SETEO DEL JUEGO");
-        puts("Opcion 1- generar 10 bombas aleatorias en el tablero. Opcion 2- Generar bombas equivalentes al 10% del tablero");
+        puts("Opcion 1- generar 10 bombas aleatorias en el tablero. \nOpcion 2- Generar bombas equivalentes al 10% del tablero");
         op = validar2(1,2);
         if(op == 1)
             llenarMatriz(matriz, 10);
         else
         {
-            porcentaje =
+            porcentaje = (TAM_GRILLA*TAM_GRILLA)/10;
             llenarMatriz(matriz,porcentaje);
         }
     }
@@ -55,6 +56,7 @@ int main(int argc, char* argv[])
     */
 
     mostrarMatriz(matriz);
+    free(matriz);
     return 0;
 
 }
