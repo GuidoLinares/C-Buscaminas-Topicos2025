@@ -11,6 +11,7 @@
 #define SIN_MEM "NO SE PUDO ASIGNAR MEMORIA"
 #define ARCH_CONFIG "buscaminas.conf"
 #define TAM_PIXEL 8
+#define PIXEL_CELDA 1
 
 typedef struct
 {
@@ -28,6 +29,7 @@ int generarAleatorio(int ,int );
 int validar2 (int , int );
 void inicializarMatriz(int**, int);
 Archivo_conf leerArchivo();
+void dibujarTablero(SDL_Renderer *, int);
 
 
 //FUNCIONES SDL

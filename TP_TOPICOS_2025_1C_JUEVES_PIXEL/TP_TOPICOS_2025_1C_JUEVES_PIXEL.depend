@@ -1,6 +1,5 @@
 # depslib dependency file v1.0
-1747515175 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\main.c
-	"headers.h"
+1747518469 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\main.c
 	"headers.h"
 
 1747004678 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\sdl2-devel-2.0.22-mingw\sdl2-2.0.22\x86_64-w64-mingw32\include\sdl2\sdl.h
@@ -381,10 +380,10 @@
 	"begin_code.h"
 	"close_code.h"
 
-1747514536 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\funciones.c
+1747518280 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\funciones.c
 	"headers.h"
 
-1747515229 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\headers.h
+1747518328 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\headers.h
 	<SDL2/SDL.h>
 	<stdio.h>
 	<stdlib.h>
@@ -768,4 +767,7 @@
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
+
+1747518280 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\interfaz.c
+	"headers.h"
 
