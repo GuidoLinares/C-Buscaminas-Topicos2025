@@ -3,6 +3,7 @@
 	<FileVersion major="1" minor="6" />
 	<Project>
 		<Option title="TP_TOPICOS_2025_1C_JUEVES_PIXEL" />
+		<Option execution_dir="C:/Users/facua/OneDrive/Documents/GitHub/C-Buscaminas-Topicos2025/TP_TOPICOS_2025_1C_JUEVES_PIXEL/" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
@@ -49,17 +50,17 @@
 			<Add library="SDL2" />
 			<Add directory="SDL2-2.0.22/x86_64-w64-mingw32/lib" />
 		</Linker>
-		<Unit filename="funciones.c">
+		<Unit filename="../../../../../GitHub/C-Buscaminas-Topicos2025/TP_TOPICOS_2025_1C_JUEVES_PIXEL/funciones.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="headers.h" />
-		<Unit filename="interfaz.c">
+		<Unit filename="../../../../../GitHub/C-Buscaminas-Topicos2025/TP_TOPICOS_2025_1C_JUEVES_PIXEL/headers.h" />
+		<Unit filename="../../../../../GitHub/C-Buscaminas-Topicos2025/TP_TOPICOS_2025_1C_JUEVES_PIXEL/interfaz.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="main.c">
+		<Unit filename="../../../../../GitHub/C-Buscaminas-Topicos2025/TP_TOPICOS_2025_1C_JUEVES_PIXEL/main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="tablero.c">
+		<Unit filename="../../../../../GitHub/C-Buscaminas-Topicos2025/TP_TOPICOS_2025_1C_JUEVES_PIXEL/tablero.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>
