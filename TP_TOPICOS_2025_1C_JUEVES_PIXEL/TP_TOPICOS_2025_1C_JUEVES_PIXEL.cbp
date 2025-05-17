@@ -3,68 +3,61 @@
 	<FileVersion major="1" minor="6" />
 	<Project>
 		<Option title="TP_TOPICOS_2025_1C_JUEVES_PIXEL" />
-		<Option execution_dir="C:/Users/facua/OneDrive/Documents/GitHub/C-Buscaminas-Topicos2025/TP_TOPICOS_2025_1C_JUEVES_PIXEL/" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/TP_TOPICOS_2025_1C_JUEVES_PIXEL" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Debug/" />
-				<Option type="1" />
+				<Option output="TP_TOPICOS_2025_1C_JUEVES_PIXEL" prefix_auto="1" extension_auto="1" />
+				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
 					<Add directory="SDL2-2.0.22/x86_64-w64-mingw32/include" />
 				</Compiler>
 				<Linker>
-					<Add option="-lmingw32 -lSDL2main -lSDL2" />
+					<Add option="-Imingw32 -ISDL2main -ISDL2" />
 					<Add library="SDL2" />
-					<Add library="SDL2main" />
 					<Add directory="SDL2-2.0.22/x86_64-w64-mingw32/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/TP_TOPICOS_2025_1C_JUEVES_PIXEL" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Release/" />
-				<Option type="1" />
+				<Option output="TP_TOPICOS_2025_1C_JUEVES_PIXEL" prefix_auto="1" extension_auto="1" />
+				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
 					<Add directory="SDL2-2.0.22/x86_64-w64-mingw32/include" />
 				</Compiler>
 				<Linker>
-					<Add option="-s" />
-					<Add option="-lmingw32 -lSDL2main -lSDL2" />
+					<Add option="-Imingw32 -ISDL2main -ISDL2" />
 					<Add library="SDL2" />
-					<Add library="SDL2main" />
 					<Add directory="SDL2-2.0.22/x86_64-w64-mingw32/lib" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="-fexceptions" />
 			<Add directory="SDL2-2.0.22/x86_64-w64-mingw32/include" />
 		</Compiler>
 		<Linker>
-			<Add option="-lmingw32 -lSDL2main -lSDL2" />
+			<Add option="-Imingw32 -ISDL2main -ISDL2" />
 			<Add library="SDL2" />
 			<Add directory="SDL2-2.0.22/x86_64-w64-mingw32/lib" />
 		</Linker>
-		<Unit filename="../../../../../GitHub/C-Buscaminas-Topicos2025/TP_TOPICOS_2025_1C_JUEVES_PIXEL/funciones.c">
+		<Unit filename="funciones.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../../../../GitHub/C-Buscaminas-Topicos2025/TP_TOPICOS_2025_1C_JUEVES_PIXEL/headers.h" />
-		<Unit filename="../../../../../GitHub/C-Buscaminas-Topicos2025/TP_TOPICOS_2025_1C_JUEVES_PIXEL/interfaz.c">
+		<Unit filename="headers.h" />
+		<Unit filename="interfaz.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../../../../GitHub/C-Buscaminas-Topicos2025/TP_TOPICOS_2025_1C_JUEVES_PIXEL/main.c">
+		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../../../../GitHub/C-Buscaminas-Topicos2025/TP_TOPICOS_2025_1C_JUEVES_PIXEL/tablero.c">
+		<Unit filename="tablero.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Extensions>
-			<lib_finder disable_auto="1" />
-		</Extensions>
+		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
