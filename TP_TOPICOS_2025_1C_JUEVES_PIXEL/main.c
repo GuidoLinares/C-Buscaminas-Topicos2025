@@ -77,5 +77,7 @@ int main(int argc, char *argv[])
 
     free(matriz);
 
+    printf("facu gay");
+
     return 0;
 }
