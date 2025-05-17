@@ -36,22 +36,11 @@ int main(int argc, char *argv[])
 
     mostrarMatriz(matriz,configuracion.dimensiones);
 
-    SDL_Init(SDL_INIT_VIDEO);
-    SDL_Window *ventana = SDL_CreateWindow("BUSCAMINAS_PIXEL",SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,640, 640, SDL_WINDOW_SHOWN);
+    SDL_Window *ventana;
+    SDL_Renderer *renderer;
 
-    if (!ventana)
-    {
-        printf("Error al crear la ventana: %s\n", SDL_GetError());
-        return -1;
-    }
-    SDL_Renderer *renderer = SDL_CreateRenderer(ventana, -1, SDL_RENDERER_ACCELERATED);
-
-    if (!renderer)
-    {
-        printf("Error al crear el renderizador: %s\n", SDL_GetError());
-        return -1;
-    }
-    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+    if (inicializarSDL("BUSCAMINAS_PIXEL", 640, 640, &ventana, &renderer) != 0)
+    return -1;
 
     dibujarTablero(renderer, configuracion.dimensiones);
 
@@ -76,8 +65,6 @@ int main(int argc, char *argv[])
     SDL_Quit();
 
     free(matriz);
-
-    printf("facu gay");
 
     return 0;
 }

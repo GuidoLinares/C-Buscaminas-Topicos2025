@@ -29,10 +29,13 @@ int generarAleatorio(int ,int );
 int validar2 (int , int );
 void inicializarMatriz(int**, int);
 Archivo_conf leerArchivo();
-void dibujarTablero(SDL_Renderer *, int);
 
 
 //FUNCIONES SDL
 int verificarSDL();
+void dibujarTablero(SDL_Renderer*, int);
+void borrarPantalla(SDL_Window*, SDL_Renderer*);
+int inicializarSDL(const char*, int, int, SDL_Window**, SDL_Renderer**);
+
 
 #endif // HEADERS_H_INCLUDED
