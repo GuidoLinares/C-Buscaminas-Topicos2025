@@ -10,6 +10,7 @@
 #define FORMATO "CANTIDAD DE MINAS = %d| DIMENSION DEL TABLERO = %d"
 #define SIN_MEM "NO SE PUDO ASIGNAR MEMORIA"
 #define ARCH_CONFIG "buscaminas.conf"
+#define TAM_PIXEL 8
 
 typedef struct
 {
@@ -30,5 +31,6 @@ Archivo_conf leerArchivo();
 
 
 //FUNCIONES SDL
+int verificarSDL();
 
 #endif // HEADERS_H_INCLUDED
