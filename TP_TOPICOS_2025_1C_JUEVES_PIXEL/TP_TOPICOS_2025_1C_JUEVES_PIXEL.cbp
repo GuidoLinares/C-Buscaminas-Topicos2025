@@ -45,9 +45,6 @@
 			<Add library="SDL2" />
 			<Add directory="SDL2-2.0.22/x86_64-w64-mingw32/lib" />
 		</Linker>
-		<Unit filename="funciones.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="headers.h" />
 		<Unit filename="interfaz.c">
 			<Option compilerVar="CC" />
