@@ -31,9 +31,10 @@ int validar2 (int , int );
 void inicializarMatriz(int**, int);
 void trim(char*);
 Archivo_conf leerArchivo();
-void dibujarTablero(SDL_Renderer *, int);
+
 
 //FUNCIONES SDL
 int verificarSDL();
+void dibujarTablero(SDL_Renderer *, int);
 
 #endif // HEADERS_H_INCLUDED

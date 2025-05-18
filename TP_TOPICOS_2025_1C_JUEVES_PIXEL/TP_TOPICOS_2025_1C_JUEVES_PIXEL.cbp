@@ -16,6 +16,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="-Imingw32 -ISDL2main -ISDL2" />
+					<Add option="-mconsole" />
 					<Add library="SDL2" />
 					<Add directory="SDL2-2.0.22/x86_64-w64-mingw32/lib" />
 				</Linker>
@@ -30,6 +31,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="-Imingw32 -ISDL2main -ISDL2" />
+					<Add option="-mconsole" />
 					<Add library="SDL2" />
 					<Add directory="SDL2-2.0.22/x86_64-w64-mingw32/lib" />
 				</Linker>
@@ -42,6 +44,7 @@
 		</Compiler>
 		<Linker>
 			<Add option="-Imingw32 -ISDL2main -ISDL2" />
+			<Add option="-mconsole" />
 			<Add library="SDL2" />
 			<Add directory="SDL2-2.0.22/x86_64-w64-mingw32/lib" />
 		</Linker>
