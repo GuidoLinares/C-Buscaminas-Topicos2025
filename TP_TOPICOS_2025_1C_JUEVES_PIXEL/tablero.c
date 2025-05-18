@@ -81,11 +81,31 @@ void mostrarMatriz(int**m, int dimension)
 
 }
 
+void trim(char* str)
+{
+    char* end;
+    while (isspace((unsigned char)*str))
+        str++;
+
+    if (*str == 0)
+        return;
+
+    end = str + strlen(str) - 1;
+    while (end > str && isspace((unsigned char)*end))
+        end--;
+
+    *(end + 1) = '\0';
+}
+
 Archivo_conf leerArchivo()
 {
     Archivo_conf config;
+    char linea[MAX_LINEA];
+    char minasStr[20];
+    int dimensiones;
+
     FILE*arch;
-    arch = fopen(ARCH_CONFIG, "a+");
+    arch = fopen(ARCH_CONFIG, "r");
     if(!arch)
     {
         fclose(arch);
@@ -93,15 +113,43 @@ Archivo_conf leerArchivo()
         exit(-1);
     }
 
-    rewind(arch);
-
-    if(fscanf(arch,FORMATO,&config.minas, &config.dimensiones) != 2)
-    {
-        fprintf(stderr, "Error al leer el formato del archivo de configuración.\n"); // Mensaje de error más específico
+    if (!fgets(linea, MAX_LINEA, arch)) {
+        fprintf(stderr, "Error al leer la línea del archivo.\n");
         fclose(arch);
         exit(-2);
     }
+
     fclose(arch);
+
+    if (sscanf(linea, "CANTIDAD DE MINAS = %[^|]| DIMENSION DEL TABLERO = %d", minasStr, &dimensiones) != 2) {
+        fprintf(stderr, "Formato incorrecto en el archivo de configuración.\n");
+        exit(-3);
+    }
+
+    trim(minasStr); // Limpiar espacios
+    config.dimensiones = dimensiones;
+
+    int len = strlen(minasStr);
+    if (minasStr[len - 1] == '%')
+    {
+        minasStr[len - 1] = '\0'; // Quitar %
+        trim(minasStr);
+        int porcentaje = atoi(minasStr); //atoi se usa para convertir una cadena en entero
+        if (porcentaje < 0 || porcentaje > 100) {
+            fprintf(stderr, "Porcentaje de minas inválido: %d%%\n", porcentaje);
+            exit(-4);
+        }
+        int totalCasillas = dimensiones * dimensiones;
+        config.minas = (porcentaje * totalCasillas) / 100;
+    } else {
+        config.minas = atoi(minasStr);
+    }
+
+    if (config.minas < 0 || config.minas > config.dimensiones * config.dimensiones) {
+        fprintf(stderr, "Cantidad de minas inválida: %d\n", config.minas);
+        exit(-5);
+    }
+
     return config;
 }
 

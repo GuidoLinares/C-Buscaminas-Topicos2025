@@ -7,8 +7,9 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <time.h>
+#define MAX_LINEA 100
 
-#define FORMATO "CANTIDAD DE MINAS = %d| DIMENSION DEL TABLERO = %d"
+#define FORMATO "CANTIDAD DE MINAS = %[^|]| DIMENSION DEL TABLERO = %d"
 #define SIN_MEM "NO SE PUDO ASIGNAR MEMORIA"
 #define ARCH_CONFIG "buscaminas.conf"
 #define TAM_PIXEL 8
@@ -28,6 +29,7 @@ void mostrarMatriz(int**, int);
 int generarAleatorio(int ,int );
 int validar2 (int , int );
 void inicializarMatriz(int**, int);
+void trim(char*);
 Archivo_conf leerArchivo();
 void dibujarTablero(SDL_Renderer *, int);
 
