@@ -7,13 +7,14 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <time.h>
-#define MAX_LINEA 100
+#include <string.h>
 
+#define MAX_LINEA 100
 #define FORMATO "CANTIDAD DE MINAS = %[^|]| DIMENSION DEL TABLERO = %d"
 #define SIN_MEM "NO SE PUDO ASIGNAR MEMORIA"
 #define ARCH_CONFIG "buscaminas.conf"
 #define TAM_PIXEL 8
-#define PIXEL_CELDA 1
+#define PIXEL_CELDA 32
 
 typedef struct
 {
@@ -21,20 +22,28 @@ typedef struct
     int dimensiones;
 }Archivo_conf;
 
+typedef struct
+{
+    int esRevelada;
+    int tieneMina;
+    int tieneBandera;
+    int minasAdyacentes;
+}s_celdas;
+
+
 //FUNCIONES DE CONSOLA
-int** crearMatriz (int);
-void destruirMatriz(int**, size_t);
-void llenarMatriz(int**, Archivo_conf);
-void mostrarMatriz(int**, int);
+s_celdas** crearMatriz (int);
+void destruirMatriz(s_celdas**, int);
+void llenarMatriz(s_celdas**, Archivo_conf);
+void inicializarMatriz(s_celdas**, int);
+void mostrarMatriz(s_celdas**, int);
 int generarAleatorio(int ,int );
-int validar2 (int , int );
-void inicializarMatriz(int**, int);
 void trim(char*);
 Archivo_conf leerArchivo();
 
 
 //FUNCIONES SDL
-int verificarSDL();
 void dibujarTablero(SDL_Renderer *, int);
+void dibujarCeldas(SDL_Renderer *, s_celdas**, int);
 
 #endif // HEADERS_H_INCLUDED
