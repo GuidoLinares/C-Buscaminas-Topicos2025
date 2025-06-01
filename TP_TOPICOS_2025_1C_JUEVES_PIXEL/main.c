@@ -10,7 +10,7 @@ Entrega: Sí
 
 Apellido(s), nombre(s): Calvet, Lucas
 DNI:  (pongan su DNI)
-Entrega: Sí
+Entrega: NO
 */
 
 int main(int argc, char *argv[])
