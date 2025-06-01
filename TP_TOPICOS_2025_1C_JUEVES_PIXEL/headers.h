@@ -8,6 +8,8 @@
 #include <ctype.h>
 #include <time.h>
 #include <string.h>
+#include <SDL2/SDL_ttf.h>
+
 
 #define MAX_LINEA 100
 #define FORMATO "CANTIDAD DE MINAS = %[^|]| DIMENSION DEL TABLERO = %d"
