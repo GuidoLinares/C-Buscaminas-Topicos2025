@@ -8,7 +8,7 @@
 #include <ctype.h>
 #include <time.h>
 #include <string.h>
-#include <SDL2/SDL_ttf.h>
+//#include <SDL2/SDL_ttf.h>
 
 
 #define MAX_LINEA 100
@@ -17,7 +17,7 @@
 #define ARCH_CONFIG "buscaminas.conf"
 #define TAM_PIXEL 8
 #define PIXEL_CELDA 32
-static SistemaLog* g_sistemaLog = NULL;
+
 
 typedef struct
 {
@@ -40,6 +40,8 @@ typedef struct {
     char* nombreArchivo;
     time_t tiempoInicio;
 }SistemaLog;
+
+static SistemaLog* g_sistemaLog = NULL;
 
 
 //FUNCIONES DE CONSOLA
