@@ -1,6 +1,5 @@
 #include "headers.h"
 
-
 void contarMinasAdyacentes(s_celdas** matriz, int dimension, int fila, int columna)
 {
     s_celdas* celdaActual = *(matriz + fila) + columna;
