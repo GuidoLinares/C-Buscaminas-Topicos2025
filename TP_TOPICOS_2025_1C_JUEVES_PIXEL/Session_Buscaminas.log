@@ -42,3 +42,249 @@
 [(null)] CLICK IZQUIERDO en (7,2) - Mina:NO, Revelada:SI, Bandera:NO, Adyacentes:1
 [(null)] Celda revelada (7,2) - 1 minas adyacentes
 [(null)] === FIN DE SESION ===
+[(null)] === BUSCAMINAS - NUEVA SESION ===
+[(null)] CONFIGURACION CARGADA - Archivo: buscaminas.conf, Dim: 15, Minas: 10
+[(null)] INICIO PARTIDA - Dimensiones: 15x15, Minas: 10, Total celdas: 225
+[(null)] CLICK IZQUIERDO en (5,4) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:1
+[(null)] Celda revelada (5,4) - 1 minas adyacentes
+[(null)] CLICK IZQUIERDO en (6,3) - Mina:SI, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] BOOM! Mina detonada en (6,3)
+[(null)] CLICK IZQUIERDO en (6,1) - Mina:SI, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] BOOM! Mina detonada en (6,1)
+[(null)] === BUSCAMINAS - NUEVA SESION ===
+[(null)] CONFIGURACION CARGADA - Archivo: buscaminas.conf, Dim: 15, Minas: 10
+[(null)] INICIO PARTIDA - Dimensiones: 15x15, Minas: 10, Total celdas: 225
+[(null)] === FIN DE SESION ===
+[(null)] === BUSCAMINAS - NUEVA SESION ===
+[(null)] CONFIGURACION CARGADA - Archivo: buscaminas.conf, Dim: 15, Minas: 10
+[(null)] INICIO PARTIDA - Dimensiones: 15x15, Minas: 10, Total celdas: 225
+[(null)] === FIN DE SESION ===
+[(null)] === BUSCAMINAS - NUEVA SESION ===
+[(null)] CONFIGURACION CARGADA - Archivo: buscaminas.conf, Dim: 15, Minas: 10
+[(null)] INICIO PARTIDA - Dimensiones: 15x15, Minas: 10, Total celdas: 225
+[(null)] CLICK IZQUIERDO en (3,6) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (3,6) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (5,7) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (5,7) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (4,7) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (4,7) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (5,8) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:1
+[(null)] Celda revelada (5,8) - 1 minas adyacentes
+[(null)] CLICK IZQUIERDO en (4,8) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:1
+[(null)] Celda revelada (4,8) - 1 minas adyacentes
+[(null)] CLICK IZQUIERDO en (3,8) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:2
+[(null)] Celda revelada (3,8) - 2 minas adyacentes
+[(null)] CLICK IZQUIERDO en (3,9) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:2
+[(null)] Celda revelada (3,9) - 2 minas adyacentes
+[(null)] CLICK IZQUIERDO en (6,7) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (6,7) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (6,6) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (6,6) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (5,6) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (5,6) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (4,6) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (4,6) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (8,5) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:1
+[(null)] Celda revelada (8,5) - 1 minas adyacentes
+[(null)] CLICK IZQUIERDO en (9,6) - Mina:SI, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] BOOM! Mina detonada en (9,6)
+[(null)] === FIN DE SESION ===
+[(null)] === BUSCAMINAS - NUEVA SESION ===
+[(null)] CONFIGURACION CARGADA - Archivo: buscaminas.conf, Dim: 15, Minas: 10
+[(null)] INICIO PARTIDA - Dimensiones: 15x15, Minas: 10, Total celdas: 225
+[(null)] CLICK IZQUIERDO en (5,4) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (5,4) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (5,9) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (5,9) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (6,8) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:2
+[(null)] Celda revelada (6,8) - 2 minas adyacentes
+[(null)] CLICK IZQUIERDO en (7,8) - Mina:SI, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] BOOM! Mina detonada en (7,8)
+[(null)] === FIN DE SESION ===
+[(null)] === BUSCAMINAS - NUEVA SESION ===
+[(null)] CONFIGURACION CARGADA - Archivo: buscaminas.conf, Dim: 15, Minas: 10
+[(null)] INICIO PARTIDA - Dimensiones: 15x15, Minas: 10, Total celdas: 225
+[(null)] CLICK IZQUIERDO en (4,4) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:2
+[(null)] Celda revelada (4,4) - 2 minas adyacentes
+[(null)] CLICK IZQUIERDO en (2,8) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:1
+[(null)] Celda revelada (2,8) - 1 minas adyacentes
+[(null)] CLICK IZQUIERDO en (3,9) - Mina:SI, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] BOOM! Mina detonada en (3,9)
+[(null)] CLICK IZQUIERDO en (4,8) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:1
+[(null)] Celda revelada (4,8) - 1 minas adyacentes
+[(null)] CLICK IZQUIERDO en (5,8) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (5,8) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (6,8) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (6,8) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (7,8) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (7,8) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (8,8) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:1
+[(null)] Celda revelada (8,8) - 1 minas adyacentes
+[(null)] CLICK IZQUIERDO en (8,7) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (8,7) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (7,7) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (7,7) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (6,7) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:1
+[(null)] Celda revelada (6,7) - 1 minas adyacentes
+[(null)] CLICK IZQUIERDO en (6,6) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:1
+[(null)] Celda revelada (6,6) - 1 minas adyacentes
+[(null)] CLICK IZQUIERDO en (9,11) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (9,11) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (10,10) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:1
+[(null)] Celda revelada (10,10) - 1 minas adyacentes
+[(null)] CLICK IZQUIERDO en (11,9) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:1
+[(null)] Celda revelada (11,9) - 1 minas adyacentes
+[(null)] CLICK IZQUIERDO en (11,10) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:2
+[(null)] Celda revelada (11,10) - 2 minas adyacentes
+[(null)] CLICK IZQUIERDO en (11,11) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:2
+[(null)] Celda revelada (11,11) - 2 minas adyacentes
+[(null)] CLICK IZQUIERDO en (14,13) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:1
+[(null)] Celda revelada (14,13) - 1 minas adyacentes
+[(null)] CLICK IZQUIERDO en (14,14) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:1
+[(null)] Celda revelada (14,14) - 1 minas adyacentes
+[(null)] CLICK IZQUIERDO en (13,14) - Mina:SI, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] BOOM! Mina detonada en (13,14)
+[(null)] === BUSCAMINAS - NUEVA SESION ===
+[(null)] CONFIGURACION CARGADA - Archivo: buscaminas.conf, Dim: 15, Minas: 10
+[(null)] INICIO PARTIDA - Dimensiones: 15x15, Minas: 10, Total celdas: 225
+[(null)] === FIN DE SESION ===
+[(null)] === BUSCAMINAS - NUEVA SESION ===
+[(null)] CONFIGURACION CARGADA - Archivo: buscaminas.conf, Dim: 15, Minas: 10
+[(null)] INICIO PARTIDA - Dimensiones: 15x15, Minas: 10, Total celdas: 225
+[(null)] CLICK IZQUIERDO en (2,9) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (2,9) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (3,10) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (3,10) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (3,9) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:1
+[(null)] Celda revelada (3,9) - 1 minas adyacentes
+[(null)] CLICK IZQUIERDO en (4,9) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:1
+[(null)] Celda revelada (4,9) - 1 minas adyacentes
+[(null)] CLICK IZQUIERDO en (5,9) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:1
+[(null)] Celda revelada (5,9) - 1 minas adyacentes
+[(null)] CLICK IZQUIERDO en (6,11) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:1
+[(null)] Celda revelada (6,11) - 1 minas adyacentes
+[(null)] CLICK IZQUIERDO en (7,11) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (7,11) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (7,10) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (7,10) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (8,10) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (8,10) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (8,11) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (8,11) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (9,11) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (9,11) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (9,10) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (9,10) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (10,10) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (10,10) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (10,11) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (10,11) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (11,11) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (11,11) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (11,10) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (11,10) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (12,10) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (12,10) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (12,11) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (12,11) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (6,9) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (6,9) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (7,9) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (7,9) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (8,9) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (8,9) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (8,8) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (8,8) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (9,9) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (9,9) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (9,8) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (9,8) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (9,8) - Mina:NO, Revelada:SI, Bandera:NO, Adyacentes:0
+[(null)] CLICK IZQUIERDO en (10,9) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (10,9) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (10,9) - Mina:NO, Revelada:SI, Bandera:NO, Adyacentes:0
+[(null)] CLICK IZQUIERDO en (10,8) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (10,8) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (11,8) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (11,8) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (11,9) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (11,9) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (12,9) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (12,9) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (12,8) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (12,8) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (5,10) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (5,10) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (5,11) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:1
+[(null)] Celda revelada (5,11) - 1 minas adyacentes
+[(null)] CLICK IZQUIERDO en (4,11) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:1
+[(null)] Celda revelada (4,11) - 1 minas adyacentes
+[(null)] CLICK IZQUIERDO en (2,10) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (2,10) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (2,11) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:1
+[(null)] Celda revelada (2,11) - 1 minas adyacentes
+[(null)] CLICK IZQUIERDO en (2,11) - Mina:NO, Revelada:SI, Bandera:NO, Adyacentes:1
+[(null)] CLICK IZQUIERDO en (1,11) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:2
+[(null)] Celda revelada (1,11) - 2 minas adyacentes
+[(null)] CLICK IZQUIERDO en (6,10) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (6,10) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (4,10) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (4,10) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (6,12) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:1
+[(null)] Celda revelada (6,12) - 1 minas adyacentes
+[(null)] CLICK IZQUIERDO en (6,12) - Mina:NO, Revelada:SI, Bandera:NO, Adyacentes:1
+[(null)] CLICK IZQUIERDO en (5,12) - Mina:SI, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] BOOM! Mina detonada en (5,12)
+[(null)] === BUSCAMINAS - NUEVA SESION ===
+[(null)] CONFIGURACION CARGADA - Archivo: buscaminas.conf, Dim: 15, Minas: 10
+[(null)] INICIO PARTIDA - Dimensiones: 15x15, Minas: 10, Total celdas: 225
+[(null)] CLICK IZQUIERDO en (2,6) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (2,6) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (2,7) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (2,7) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (3,7) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (3,7) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (3,6) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (3,6) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (4,6) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (4,6) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (4,7) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (4,7) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (5,7) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (5,7) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (5,6) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (5,6) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (6,5) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (6,5) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (5,5) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (5,5) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (4,5) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (4,5) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (3,5) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (3,5) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (3,5) - Mina:NO, Revelada:SI, Bandera:NO, Adyacentes:0
+[(null)] CLICK IZQUIERDO en (2,5) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (2,5) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (3,10) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (3,10) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (4,9) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (4,9) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (5,9) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (5,9) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (5,8) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (5,8) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (7,8) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:1
+[(null)] Celda revelada (7,8) - 1 minas adyacentes
+[(null)] CLICK IZQUIERDO en (8,8) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:1
+[(null)] Celda revelada (8,8) - 1 minas adyacentes
+[(null)] CLICK IZQUIERDO en (8,6) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (8,6) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (7,7) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (7,7) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (7,6) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (7,6) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (8,7) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] Celda revelada (8,7) - 0 minas adyacentes
+[(null)] CLICK IZQUIERDO en (8,9) - Mina:SI, Revelada:NO, Bandera:NO, Adyacentes:0
+[(null)] BOOM! Mina detonada en (8,9)
+[(null)] === FIN DE SESION ===

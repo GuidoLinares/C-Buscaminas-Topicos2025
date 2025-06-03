@@ -8,7 +8,7 @@
 #include <ctype.h>
 #include <time.h>
 #include <string.h>
-//#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_ttf.h>
 
 
 #define MAX_LINEA 100
