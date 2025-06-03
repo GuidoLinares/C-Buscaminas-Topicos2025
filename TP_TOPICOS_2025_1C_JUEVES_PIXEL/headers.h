@@ -41,7 +41,7 @@ typedef struct {
     time_t tiempoInicio;
 }SistemaLog;
 
-static SistemaLog* g_sistemaLog = NULL;
+extern SistemaLog* g_sistemaLog;
 
 
 //FUNCIONES DE CONSOLA
@@ -57,7 +57,8 @@ Archivo_conf leerArchivo();
 
 //FUNCIONES SDL
 void dibujarTablero(SDL_Renderer *, int);
-void dibujarCeldas(SDL_Renderer *, s_celdas**, int);
+void dibujarCeldas(SDL_Renderer*, s_celdas**, int, TTF_Font*);
+
 
 //FUNCIONES LOG
 SistemaLog* inicializarLog(const char*);
