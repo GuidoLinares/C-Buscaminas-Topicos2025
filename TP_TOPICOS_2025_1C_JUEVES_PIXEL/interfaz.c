@@ -82,29 +82,31 @@ void dibujarCeldas(SDL_Renderer *renderizador, s_celdas** matriz, int dimensione
                     }
                     SDL_RenderFillRect(renderizador, &rectCelda);
                 }
+
+                // CORRECCIÓN: Solo dibuja números si la celda está REVELADA
+                if (punteroColumna->minasAdyacentes > 0 && fuente != NULL && !punteroColumna->tieneMina)
+                {
+                    char texto[12];
+                    sprintf(texto,"%d", punteroColumna->minasAdyacentes);
+                    SDL_Color colorTexto = {255, 255, 255};
+                    SDL_Surface* superficieTexto = TTF_RenderText_Solid(fuente, texto, colorTexto);
+                    SDL_Texture* texturaTexto = SDL_CreateTextureFromSurface(renderizador, superficieTexto);
+
+                    SDL_Rect destinoTexto;
+                    destinoTexto.w = superficieTexto->w;
+                    destinoTexto.h = superficieTexto->h;
+                    destinoTexto.x = rectCelda.x + (PIXEL_CELDA - destinoTexto.w) / 2;
+                    destinoTexto.y = rectCelda.y + (PIXEL_CELDA - destinoTexto.h) / 2;
+
+                    SDL_RenderCopy(renderizador, texturaTexto, NULL, &destinoTexto);
+
+                    SDL_FreeSurface(superficieTexto);
+                    SDL_DestroyTexture(texturaTexto);
+                }
             }
+
             SDL_SetRenderDrawColor(renderizador, 0, 0, 0, 255);
             SDL_RenderDrawRect(renderizador, &rectCelda);
-
-            if (punteroColumna->minasAdyacentes > 0 && fuente != NULL)
-            {
-                char texto[12];
-                sprintf(texto,"%d", punteroColumna->minasAdyacentes);
-                SDL_Color colorTexto = {255, 255, 255};
-                SDL_Surface* superficieTexto = TTF_RenderText_Solid(fuente, texto, colorTexto);
-                SDL_Texture* texturaTexto = SDL_CreateTextureFromSurface(renderizador, superficieTexto);
-
-                SDL_Rect destinoTexto;
-                destinoTexto.w = superficieTexto->w;
-                destinoTexto.h = superficieTexto->h;
-                destinoTexto.x = rectCelda.x + (PIXEL_CELDA - destinoTexto.w) / 2;
-                destinoTexto.y = rectCelda.y + (PIXEL_CELDA - destinoTexto.h) / 2;
-
-                SDL_RenderCopy(renderizador, texturaTexto, NULL, &destinoTexto);
-
-                SDL_FreeSurface(superficieTexto);
-                SDL_DestroyTexture(texturaTexto);
-            }
         }
     }
 }
