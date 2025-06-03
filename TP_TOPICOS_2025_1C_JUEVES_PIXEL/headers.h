@@ -18,12 +18,14 @@
 #define TAM_PIXEL 8
 #define PIXEL_CELDA 32
 
+
 typedef struct
 {
     int minas ;
     int dimensiones;
 }Archivo_conf;
 
+//estructura de interfaz de celdas
 typedef struct
 {
     int esRevelada;
@@ -31,6 +33,15 @@ typedef struct
     int tieneBandera;
     int minasAdyacentes;
 }s_celdas;
+
+//estructura del log
+typedef struct {
+    FILE* archivo;
+    char* nombreArchivo;
+    time_t tiempoInicio;
+}SistemaLog;
+
+static SistemaLog* g_sistemaLog = NULL;
 
 
 //FUNCIONES DE CONSOLA
@@ -47,5 +58,15 @@ Archivo_conf leerArchivo();
 //FUNCIONES SDL
 void dibujarTablero(SDL_Renderer *, int);
 void dibujarCeldas(SDL_Renderer *, s_celdas**, int);
+
+//FUNCIONES LOG
+SistemaLog* inicializarLog(const char*);
+void destruirLog();
+void logInicioPartida(Archivo_conf);
+void logClickCelda(s_celdas**, int, int, int, const char*);
+void logRevelarCelda(s_celdas**, int, int, int);
+void logBandera(s_celdas**, int, int, int, int);
+void logFinPartida(const char*);
+void logConfiguracion(Archivo_conf);
 
 #endif // HEADERS_H_INCLUDED

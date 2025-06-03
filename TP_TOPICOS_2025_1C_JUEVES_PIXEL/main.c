@@ -22,6 +22,13 @@ int main(int argc, char *argv[])
 
     matrizLogica = crearMatriz(configuracion.dimensiones);
     if(!matrizLogica)
+
+    inicializarLog("Session_Buscaminas.log");
+    logConfiguracion(configuracion);
+    logInicioPartida(configuracion);
+
+    matriz = crearMatriz(configuracion.dimensiones);
+    if(!matriz)
         printf("%s",SIN_MEM);
     else
     {
@@ -32,15 +39,27 @@ int main(int argc, char *argv[])
        for (int r = 0; r < configuracion.dimensiones; r++) {
             for (int c = 0; c < configuracion.dimensiones; c++) {
                 matrizLogica[r][c].esRevelada = 1;
+
+    /*
+       for (int r = 0; r < configuracion.dimensiones; r++)
+        {
+            for (int c = 0; c < configuracion.dimensiones; c++)
+            {
+                matriz[r][c].esRevelada = 1;
             }
         }
-
     }
 
 
     mostrarMatriz(matrizLogica,configuracion.dimensiones);
 
      if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+
+*/
+    mostrarMatriz(matriz,configuracion.dimensiones);
+
+    if (SDL_Init(SDL_INIT_VIDEO) < 0)
+    {
         printf("Error al inicializar SDL: %s\n", SDL_GetError());
         destruirMatriz(matrizLogica, configuracion.dimensiones); // Libera memoria antes de salir
         return -1;
@@ -105,7 +124,20 @@ int main(int argc, char *argv[])
                             !matrizLogica[fila_cliqueada][columna_cliqueada].tieneBandera) {
                             matrizLogica[fila_cliqueada][columna_cliqueada].esRevelada = 1;
 
+                    if (fila_cliqueada >= 0 && fila_cliqueada < configuracion.dimensiones &&
+                        columna_cliqueada >= 0 && columna_cliqueada < configuracion.dimensiones)
+                    {
+                        logClickCelda(matriz, fila_cliqueada, columna_cliqueada, configuracion.dimensiones, "IZQUIERDO");
+
+                        // Revela la celda si no está ya revelada o marcada con bandera
+                        if (!matriz[fila_cliqueada][columna_cliqueada].esRevelada &&
+                            !matriz[fila_cliqueada][columna_cliqueada].tieneBandera)
+                        {
+                            matriz[fila_cliqueada][columna_cliqueada].esRevelada = 1;
+                            logRevelarCelda(matriz, fila_cliqueada, columna_cliqueada, configuracion.dimensiones);
                         }
+
+                        printf("Clic Izquierdo en celda: (%d, %d)\n", fila_cliqueada, columna_cliqueada);
                     }
                 }
                 else if (e.button.button == SDL_BUTTON_RIGHT) {
@@ -115,13 +147,22 @@ int main(int argc, char *argv[])
                     int columna_cliqueada = mouse_x / PIXEL_CELDA;
                     int fila_cliqueada = mouse_y / PIXEL_CELDA;
 
-                    if (fila_cliqueada >= 0 && fila_cliqueada < configuracion.dimensiones && columna_cliqueada >= 0 && columna_cliqueada < configuracion.dimensiones)
+                    if (fila_cliqueada >= 0 && fila_cliqueada < configuracion.dimensiones &&
+                        columna_cliqueada >= 0 && columna_cliqueada < configuracion.dimensiones)
                     {
-                        printf("Clic Derecho (Bandera) en celda: (%d, %d)\n", fila_cliqueada, columna_cliqueada);
                         // Pone/quita bandera si la celda no está revelada
                         if (!matrizLogica[fila_cliqueada][columna_cliqueada].esRevelada) {
                              matrizLogica[fila_cliqueada][columna_cliqueada].tieneBandera = !matrizLogica[fila_cliqueada][columna_cliqueada].tieneBandera;
+
+                        if (!matriz[fila_cliqueada][columna_cliqueada].esRevelada)
+                        {
+                            logBandera(matriz, fila_cliqueada, columna_cliqueada, configuracion.dimensiones,
+                                      matriz[fila_cliqueada][columna_cliqueada].tieneBandera);
+                            matriz[fila_cliqueada][columna_cliqueada].tieneBandera =
+                                !matriz[fila_cliqueada][columna_cliqueada].tieneBandera;
                         }
+
+                        printf("Clic Derecho (Bandera) en celda: (%d, %d)\n", fila_cliqueada, columna_cliqueada);
                     }
                 }
             }
@@ -132,18 +173,25 @@ int main(int argc, char *argv[])
 
         // 1. Dibuja el contenido de las celdas (basado en el estado de matrizLogica)
         dibujarCeldas(renderer, matrizLogica, configuracion.dimensiones);
+        // Dibuja el contenido de las celdas (basado en el estado de matriz)
+        dibujarCeldas(renderer, matriz, configuracion.dimensiones, fuente);
 
-        // 2. Dibuja las líneas de la cuadrícula (para que se vean encima de las celdas)
+        // Dibuja las líneas de la cuadrícula (para que se vean encima de las celdas)
         dibujarTablero(renderer, configuracion.dimensiones);
 
         SDL_RenderPresent(renderer); // Muestra lo que se ha dibujado
     }
 
+    // Limpieza de recursos en el orden correcto
+    TTF_CloseFont(fuente);
+    TTF_Quit();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(ventana);
     SDL_Quit();
 
     destruirMatriz(matrizLogica, configuracion.dimensiones);
+    destruirMatriz(matriz, configuracion.dimensiones);
+    destruirLog();
 
     return 0;
 
