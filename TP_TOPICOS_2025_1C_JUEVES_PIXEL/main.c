@@ -33,17 +33,16 @@ int main(int argc, char *argv[])
         puts("ARRANCA SETEO DEL JUEGO");
         llenarMatriz(matriz, configuracion);
 
-       /*for (int r = 0; r < configuracion.dimensiones; r++) {
-            for (int c = 0; c < configuracion.dimensiones; c++) {
+    /*
        for (int r = 0; r < configuracion.dimensiones; r++)
         {
             for (int c = 0; c < configuracion.dimensiones; c++)
             {
                 matriz[r][c].esRevelada = 1;
             }
-        }*/
+        }
     }
-
+*/
     mostrarMatriz(matriz,configuracion.dimensiones);
 
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
