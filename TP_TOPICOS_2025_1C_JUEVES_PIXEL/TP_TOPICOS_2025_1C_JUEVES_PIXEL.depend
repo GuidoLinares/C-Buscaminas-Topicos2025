@@ -1,8 +1,8 @@
 # depslib dependency file v1.0
-1748911159 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\interfaz.c
+1748922764 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\interfaz.c
 	"headers.h"
 
-1748910616 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\headers.h
+1748922307 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\headers.h
 	<SDL2/SDL.h>
 	<stdio.h>
 	<stdlib.h>
@@ -389,10 +389,10 @@
 	"begin_code.h"
 	"close_code.h"
 
-1748914555 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\main.c
+1748955851 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\main.c
 	"headers.h"
 
-1748908883 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\tablero.c
+1748921351 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\tablero.c
 	"headers.h"
 
 1748791047 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\sdl2_ttf-2.24.0\x86_64-w64-mingw32\include\sdl2\sdl_ttf.h
@@ -802,5 +802,8 @@
 	"headers.h"
 
 1748917728 source:c:\users\facua\onedrive\documents\github\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\logs.c
+	"headers.h"
+
+1748921959 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\logs.c
 	"headers.h"
 

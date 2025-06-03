@@ -26,20 +26,15 @@ int main(int argc, char *argv[])
 
     matriz = crearMatriz(configuracion.dimensiones);
     if(!matriz)
-        printf("%s",SIN_MEM);
+    {
+        printf("%s\n",SIN_MEM);
+        return -1;
+    }
     else
     {
         inicializarMatriz(matriz, configuracion.dimensiones);
         puts("ARRANCA SETEO DEL JUEGO");
         llenarMatriz(matriz, configuracion);
-
-       for (int r = 0; r < configuracion.dimensiones; r++)
-        {
-            for (int c = 0; c < configuracion.dimensiones; c++)
-            {
-                matriz[r][c].esRevelada = 1;
-            }
-        }
     }
 
     mostrarMatriz(matriz,configuracion.dimensiones);
@@ -47,7 +42,17 @@ int main(int argc, char *argv[])
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
         printf("Error al inicializar SDL: %s\n", SDL_GetError());
-        destruirMatriz(matriz, configuracion.dimensiones); // Libera memoria antes de salir
+        destruirMatriz(matriz, configuracion.dimensiones);
+        destruirLog();
+        return -1;
+    }
+
+    // Inicializar TTF
+    if (TTF_Init() == -1) {
+        printf("Error al inicializar TTF: %s\n", TTF_GetError());
+        SDL_Quit();
+        destruirMatriz(matriz, configuracion.dimensiones);
+        destruirLog();
         return -1;
     }
 
@@ -55,42 +60,79 @@ int main(int argc, char *argv[])
     int ventana_ancho = configuracion.dimensiones * PIXEL_CELDA;
     int ventana_alto = configuracion.dimensiones * PIXEL_CELDA;
 
-    SDL_Window *ventana = SDL_CreateWindow("BUSCAMINAS_PIXEL",SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, ventana_ancho, ventana_alto, SDL_WINDOW_SHOWN);
+    SDL_Window *ventana = SDL_CreateWindow("BUSCAMINAS_PIXEL",
+                                         SDL_WINDOWPOS_CENTERED,
+                                         SDL_WINDOWPOS_CENTERED,
+                                         ventana_ancho,
+                                         ventana_alto,
+                                         SDL_WINDOW_SHOWN);
 
     if (!ventana)
     {
         printf("Error al crear la ventana: %s\n", SDL_GetError());
-        SDL_Quit(); // Limpiar SDL si la ventana falla
+        TTF_Quit();
+        SDL_Quit();
         destruirMatriz(matriz, configuracion.dimensiones);
+        destruirLog();
         return -1;
     }
 
-    // Usar SDL_RENDERER_PRESENTVSYNC para una mejor sincronización de fotogramas
-    SDL_Renderer *renderer = SDL_CreateRenderer(ventana, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    SDL_Renderer *renderer = SDL_CreateRenderer(ventana, -1,
+                                              SDL_RENDERER_ACCELERATED |
+                                              SDL_RENDERER_PRESENTVSYNC);
 
     if (!renderer)
     {
         printf("Error al crear el renderizador: %s\n", SDL_GetError());
-        SDL_DestroyWindow(ventana); // Limpiar ventana si el renderizador falla
+        SDL_DestroyWindow(ventana);
+        TTF_Quit();
         SDL_Quit();
         destruirMatriz(matriz, configuracion.dimensiones);
+        destruirLog();
         return -1;
     }
 
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 
-    TTF_Init();
-    TTF_Font* fuente = TTF_OpenFont("arial.ttf", 16);
+    // Intentar cargar múltiples fuentes como fallback
+    TTF_Font* fuente = NULL;
+    const char* fuentes[] = {
+        "arial.ttf",
+        "C:/Windows/Fonts/arial.ttf",
+        "C:/Windows/Fonts/calibri.ttf",
+        "/System/Library/Fonts/Arial.ttf",  // macOS
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",  // Linux
+        NULL
+    };
+
+    for (int i = 0; fuentes[i] != NULL; i++) {
+        fuente = TTF_OpenFont(fuentes[i], 16);
+        if (fuente) {
+            printf("Fuente cargada: %s\n", fuentes[i]);
+            break;
+        }
+    }
+
+    if (!fuente) {
+        printf("Advertencia: No se pudo cargar ninguna fuente. Los números no se mostrarán.\n");
+        printf("Error TTF: %s\n", TTF_GetError());
+        // No salimos del programa, solo continuamos sin fuente
+    }
 
     SDL_Event e;
     int corriendo = 1;
+
+    printf("Entrando al bucle principal...\n");
 
     while (corriendo)
     {
         while (SDL_PollEvent(&e))
         {
             if (e.type == SDL_QUIT)
-                corriendo = 0; // Cierra la ventana cuando el usuario la cierre
+            {
+                corriendo = 0;
+                printf("Usuario cerró la ventana\n");
+            }
 
             // revela celdas con el clic:
             if (e.type == SDL_MOUSEBUTTONDOWN)
@@ -114,6 +156,36 @@ int main(int argc, char *argv[])
                         {
                             matriz[fila_cliqueada][columna_cliqueada].esRevelada = 1;
                             logRevelarCelda(matriz, fila_cliqueada, columna_cliqueada, configuracion.dimensiones);
+
+                            // VERIFICAR SI HAY MINA - GAME OVER
+                            if (matriz[fila_cliqueada][columna_cliqueada].tieneMina)
+                            {
+                                printf("\n*** BOOM! HAS ENCONTRADO UNA MINA ***\n");
+                                printf("GAME OVER - Mina en posición (%d, %d)\n", fila_cliqueada, columna_cliqueada);
+                                logFinPartida("DERROTA - MINA ENCONTRADA");
+
+                                // Revelar todas las minas para mostrar el tablero final
+                                for (int r = 0; r < configuracion.dimensiones; r++) {
+                                    for (int c = 0; c < configuracion.dimensiones; c++) {
+                                        if (matriz[r][c].tieneMina) {
+                                            matriz[r][c].esRevelada = 1;
+                                        }
+                                    }
+                                }
+
+                                // Renderizar una vez más para mostrar todas las minas
+                                SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+                                SDL_RenderClear(renderer);
+                                dibujarCeldas(renderer, matriz, configuracion.dimensiones, fuente);
+                                dibujarTablero(renderer, configuracion.dimensiones);
+                                SDL_RenderPresent(renderer);
+
+                                // Esperar 3 segundos para que el usuario vea el resultado
+                                SDL_Delay(5000);
+
+                                // Terminar el programa
+                                corriendo = 0;
+                            }
                         }
 
                         printf("Clic Izquierdo en celda: (%d, %d)\n", fila_cliqueada, columna_cliqueada);
@@ -133,32 +205,43 @@ int main(int argc, char *argv[])
                         // Pone/quita bandera si la celda no está revelada
                         if (!matriz[fila_cliqueada][columna_cliqueada].esRevelada)
                         {
-                            logBandera(matriz, fila_cliqueada, columna_cliqueada, configuracion.dimensiones,
-                                      matriz[fila_cliqueada][columna_cliqueada].tieneBandera);
                             matriz[fila_cliqueada][columna_cliqueada].tieneBandera =
                                 !matriz[fila_cliqueada][columna_cliqueada].tieneBandera;
-                        }
 
-                        printf("Clic Derecho (Bandera) en celda: (%d, %d)\n", fila_cliqueada, columna_cliqueada);
+                            logBandera(matriz, fila_cliqueada, columna_cliqueada,
+                                     configuracion.dimensiones,
+                                     matriz[fila_cliqueada][columna_cliqueada].tieneBandera);
+
+                            printf("Clic Derecho (Bandera) en celda: (%d, %d)\n",
+                                   fila_cliqueada, columna_cliqueada);
+                        }
                     }
                 }
             }
         }
 
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Fondo negro para limpiar
-        SDL_RenderClear(renderer); // Limpia toda la pantalla
+        // Renderizado
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Fondo negro
+        SDL_RenderClear(renderer);
 
-        // Dibuja el contenido de las celdas (basado en el estado de matriz)
+        // Dibuja el contenido de las celdas
         dibujarCeldas(renderer, matriz, configuracion.dimensiones, fuente);
 
-        // Dibuja las líneas de la cuadrícula (para que se vean encima de las celdas)
+        // Dibuja las líneas de la cuadrícula
         dibujarTablero(renderer, configuracion.dimensiones);
 
-        SDL_RenderPresent(renderer); // Muestra lo que se ha dibujado
+        SDL_RenderPresent(renderer);
+
+        // Pequeña pausa para no saturar la CPU
+        SDL_Delay(16); // ~60 FPS
     }
 
+    printf("Limpiando recursos...\n");
+
     // Limpieza de recursos en el orden correcto
-    TTF_CloseFont(fuente);
+    if (fuente) {
+        TTF_CloseFont(fuente);
+    }
     TTF_Quit();
 
     SDL_DestroyRenderer(renderer);
@@ -168,5 +251,6 @@ int main(int argc, char *argv[])
     destruirMatriz(matriz, configuracion.dimensiones);
     destruirLog();
 
+    printf("Programa terminado correctamente\n");
     return 0;
 }
