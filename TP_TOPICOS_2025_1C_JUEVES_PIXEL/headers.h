@@ -3,13 +3,12 @@
 
 #define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <time.h>
 #include <string.h>
-#include <SDL2/SDL_ttf.h>
-
 
 #define MAX_LINEA 100
 #define FORMATO "CANTIDAD DE MINAS = %[^|]| DIMENSION DEL TABLERO = %d"
@@ -41,7 +40,8 @@ typedef struct {
     time_t tiempoInicio;
 }SistemaLog;
 
-static SistemaLog* g_sistemaLog = NULL;
+// DECLARACIÓN externa de la variable global (no definición)
+extern SistemaLog* g_sistemaLog;
 
 
 //FUNCIONES DE CONSOLA
@@ -59,6 +59,7 @@ Archivo_conf leerArchivo();
 void dibujarTablero(SDL_Renderer *, int);
 void dibujarCeldas(SDL_Renderer *, s_celdas**, int, TTF_Font*);
 
+
 //FUNCIONES LOG
 SistemaLog* inicializarLog(const char*);
 void destruirLog();
@@ -68,5 +69,6 @@ void logRevelarCelda(s_celdas**, int, int, int);
 void logBandera(s_celdas**, int, int, int, int);
 void logFinPartida(const char*);
 void logConfiguracion(Archivo_conf);
+char* obtenerTimestamp();
 
 #endif // HEADERS_H_INCLUDED

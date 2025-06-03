@@ -33,7 +33,6 @@ int main(int argc, char *argv[])
         puts("ARRANCA SETEO DEL JUEGO");
         llenarMatriz(matriz, configuracion);
 
-    /*
        for (int r = 0; r < configuracion.dimensiones; r++)
         {
             for (int c = 0; c < configuracion.dimensiones; c++)
@@ -42,7 +41,7 @@ int main(int argc, char *argv[])
             }
         }
     }
-*/
+
     mostrarMatriz(matriz,configuracion.dimensiones);
 
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -161,6 +160,7 @@ int main(int argc, char *argv[])
     // Limpieza de recursos en el orden correcto
     TTF_CloseFont(fuente);
     TTF_Quit();
+
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(ventana);
     SDL_Quit();

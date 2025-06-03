@@ -32,9 +32,9 @@ void dibujarCeldas(SDL_Renderer *renderizador, s_celdas** matriz, int dimensione
             if (!(punteroColumna->esRevelada))
             {
                 if (punteroColumna->tieneBandera)
-                    SDL_SetRenderDrawColor(renderizador, 255, 165, 0, 255);
+                    SDL_SetRenderDrawColor(renderizador, 0, 0, 0, 255); // Negro para banderas
                 else
-                    SDL_SetRenderDrawColor(renderizador, 100, 100, 100, 255);
+                    SDL_SetRenderDrawColor(renderizador, 100, 100, 100, 255); // Gris para celdas no reveladas
 
                 SDL_RenderFillRect(renderizador, &rectCelda);
             }
@@ -42,53 +42,54 @@ void dibujarCeldas(SDL_Renderer *renderizador, s_celdas** matriz, int dimensione
             {
                 if (punteroColumna->tieneMina)
                 {
-                    SDL_SetRenderDrawColor(renderizador, 255, 0, 0, 255);
+                    SDL_SetRenderDrawColor(renderizador, 180, 50, 60, 255); // Rojo para minas
                     SDL_RenderFillRect(renderizador, &rectCelda);
                 }
                 else
                 {
+                    // Nuevos colores basados en cantidad de minas adyacentes
                     switch (punteroColumna->minasAdyacentes)
-                    { //COLOR DEPENDIENDO CANT DE MINAS ADYACENTES
+                    {
                         case 0:
-                            SDL_SetRenderDrawColor(renderizador, 200, 200, 200, 255);
+                            SDL_SetRenderDrawColor(renderizador, 175, 215, 235, 255); // Azul muy claro
                             break;
                         case 1:
-                            SDL_SetRenderDrawColor(renderizador, 0, 0, 200, 255);
+                            SDL_SetRenderDrawColor(renderizador, 145, 195, 220, 255); // Azul suave
                             break;
                         case 2:
-                            SDL_SetRenderDrawColor(renderizador, 0, 150, 0, 255);
+                            SDL_SetRenderDrawColor(renderizador, 115, 170, 200, 255); // Azul celeste
                             break;
                         case 3:
-                            SDL_SetRenderDrawColor(renderizador, 200, 0, 0, 255);
+                            SDL_SetRenderDrawColor(renderizador, 90, 145, 180, 255);  // Azul claro
                             break;
                         case 4:
-                            SDL_SetRenderDrawColor(renderizador, 0, 0, 100, 255);
+                            SDL_SetRenderDrawColor(renderizador, 70, 120, 160, 255);  // Azul brillante
                             break;
                         case 5:
-                            SDL_SetRenderDrawColor(renderizador, 150, 0, 0, 255);
+                            SDL_SetRenderDrawColor(renderizador, 55, 95, 135, 255);   // Azul mediterráneo
                             break;
                         case 6:
-                            SDL_SetRenderDrawColor(renderizador, 0, 100, 100, 255);
+                            SDL_SetRenderDrawColor(renderizador, 45, 75, 110, 255);   // Azul marino
                             break;
                         case 7:
-                            SDL_SetRenderDrawColor(renderizador, 50, 50, 50, 255);
+                            SDL_SetRenderDrawColor(renderizador, 35, 55, 85, 255);    // Azul oscuro
                             break;
                         case 8:
-                            SDL_SetRenderDrawColor(renderizador, 100, 0, 100, 255);
+                            SDL_SetRenderDrawColor(renderizador, 25, 35, 55, 255);    // Azul noche
                             break;
                         default:
-                            SDL_SetRenderDrawColor(renderizador, 255, 255, 0, 255);
+                            SDL_SetRenderDrawColor(renderizador, 115, 170, 200, 255);
                             break;
                     }
                     SDL_RenderFillRect(renderizador, &rectCelda);
                 }
 
-                // CORRECCIÓN: Solo dibuja números si la celda está REVELADA
+                // Solo dibuja números si la celda está REVELADA
                 if (punteroColumna->minasAdyacentes > 0 && fuente != NULL && !punteroColumna->tieneMina)
                 {
                     char texto[12];
                     sprintf(texto,"%d", punteroColumna->minasAdyacentes);
-                    SDL_Color colorTexto = {255, 255, 255};
+                    SDL_Color colorTexto = {255, 255, 255}; // Cambié a negro para mejor contraste
                     SDL_Surface* superficieTexto = TTF_RenderText_Solid(fuente, texto, colorTexto);
                     SDL_Texture* texturaTexto = SDL_CreateTextureFromSurface(renderizador, superficieTexto);
 
