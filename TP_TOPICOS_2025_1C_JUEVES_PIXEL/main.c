@@ -151,14 +151,14 @@ int main(int argc, char *argv[])
                         logClickCelda(matriz, fila_cliqueada, columna_cliqueada, configuracion.dimensiones, "IZQUIERDO");
 
                         // Revela la celda si no está ya revelada o marcada con bandera
-                        if (!matriz[fila_cliqueada][columna_cliqueada].esRevelada &&
-                            !matriz[fila_cliqueada][columna_cliqueada].tieneBandera)
+                        if (!(*(matriz+fila_cliqueada)+columna_cliqueada)->esRevelada &&
+                            !(*(matriz+fila_cliqueada)+columna_cliqueada)->tieneBandera)
                         {
-                            matriz[fila_cliqueada][columna_cliqueada].esRevelada = 1;
+                            (*(matriz+fila_cliqueada)+columna_cliqueada)->esRevelada = 1;
                             logRevelarCelda(matriz, fila_cliqueada, columna_cliqueada, configuracion.dimensiones);
 
                             // VERIFICAR SI HAY MINA - GAME OVER
-                            if (matriz[fila_cliqueada][columna_cliqueada].tieneMina)
+                            if ((*(matriz+fila_cliqueada)+columna_cliqueada)->tieneMina)
                             {
                                 printf("\n*** BOOM! HAS ENCONTRADO UNA MINA ***\n");
                                 printf("GAME OVER - Mina en posición (%d, %d)\n", fila_cliqueada, columna_cliqueada);
@@ -167,8 +167,8 @@ int main(int argc, char *argv[])
                                 // Revelar todas las minas para mostrar el tablero final
                                 for (int r = 0; r < configuracion.dimensiones; r++) {
                                     for (int c = 0; c < configuracion.dimensiones; c++) {
-                                        if (matriz[r][c].tieneMina) {
-                                            matriz[r][c].esRevelada = 1;
+                                        if ((*(matriz+r)+c)->esRevelada) {
+                                            (*(matriz+r)+c)->esRevelada = 1;
                                         }
                                     }
                                 }
@@ -181,7 +181,7 @@ int main(int argc, char *argv[])
                                 SDL_RenderPresent(renderer);
 
                                 // Esperar 3 segundos para que el usuario vea el resultado
-                                SDL_Delay(5000);
+                                SDL_Delay(3000);
 
                                 // Terminar el programa
                                 corriendo = 0;
@@ -203,14 +203,12 @@ int main(int argc, char *argv[])
                         columna_cliqueada >= 0 && columna_cliqueada < configuracion.dimensiones)
                     {
                         // Pone/quita bandera si la celda no está revelada
-                        if (!matriz[fila_cliqueada][columna_cliqueada].esRevelada)
+                        if (!(*(matriz+fila_cliqueada)+columna_cliqueada)->esRevelada)
                         {
-                            matriz[fila_cliqueada][columna_cliqueada].tieneBandera =
-                                !matriz[fila_cliqueada][columna_cliqueada].tieneBandera;
+                            (*(matriz+fila_cliqueada)+columna_cliqueada)->tieneBandera =
+                                !(*(matriz+fila_cliqueada)+columna_cliqueada)->tieneBandera;
 
-                            logBandera(matriz, fila_cliqueada, columna_cliqueada,
-                                     configuracion.dimensiones,
-                                     matriz[fila_cliqueada][columna_cliqueada].tieneBandera);
+                            logBandera(matriz, fila_cliqueada, columna_cliqueada,configuracion.dimensiones,matriz[fila_cliqueada][columna_cliqueada].tieneBandera);
 
                             printf("Clic Derecho (Bandera) en celda: (%d, %d)\n",
                                    fila_cliqueada, columna_cliqueada);
