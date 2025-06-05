@@ -47,6 +47,8 @@ int main(int argc, char *argv[])
         return -1;
     }
 
+
+
     // Inicializar TTF
     if (TTF_Init() == -1) {
         printf("Error al inicializar TTF: %s\n", TTF_GetError());
@@ -94,6 +96,14 @@ int main(int argc, char *argv[])
 
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 
+
+    for (int r = 0; r < configuracion.dimensiones; r++) {
+                                    for (int c = 0; c < configuracion.dimensiones; c++) {
+                                        if ((*(matriz+r)+c)->esRevelada) {
+                                            (*(matriz+r)+c)->esRevelada = 1;
+                                        }
+                                    }
+                                }
     // Intentar cargar múltiples fuentes como fallback
     TTF_Font* fuente = NULL;
     const char* fuentes[] = {
@@ -126,6 +136,14 @@ int main(int argc, char *argv[])
 
     while (corriendo)
     {
+
+        for (int r = 0; r < configuracion.dimensiones; r++) {
+                                    for (int c = 0; c < configuracion.dimensiones; c++) {
+                                        if ((*(matriz+r)+c)->esRevelada) {
+                                            (*(matriz+r)+c)->esRevelada = 1;
+                                        }
+                                    }
+                                }
         while (SDL_PollEvent(&e))
         {
             if (e.type == SDL_QUIT)
@@ -165,11 +183,9 @@ int main(int argc, char *argv[])
                                 logFinPartida("DERROTA - MINA ENCONTRADA");
 
                                 // Revelar todas las minas para mostrar el tablero final
-                                for (int r = 0; r < configuracion.dimensiones; r++) {
+                                 for (int r = 0; r < configuracion.dimensiones; r++) {
                                     for (int c = 0; c < configuracion.dimensiones; c++) {
-                                        if ((*(matriz+r)+c)->esRevelada) {
-                                            (*(matriz+r)+c)->esRevelada = 1;
-                                        }
+                                        (*(matriz+r)+c)->esRevelada = 1;
                                     }
                                 }
 
