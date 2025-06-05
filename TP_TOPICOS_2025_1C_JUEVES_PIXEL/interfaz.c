@@ -16,9 +16,6 @@ void dibujarTablero(SDL_Renderer *renderizador, int dimensiones)
 
 void dibujarCeldas(SDL_Renderer* renderizador, s_celdas** matriz, int dimensiones, TTF_Font* fuente)
 {
-    // Usar bucles con índices 'r' y 'c' es más común y a menudo más claro
-    // que la aritmética de punteros para matrices 2D, aunque ambos son válidos.
-    // Mantengo tu estilo original de punteros.
 
     s_celdas** punteroFila = matriz;
     s_celdas** punteroFilaFin = matriz + dimensiones;
@@ -133,8 +130,7 @@ void dibujarCeldas(SDL_Renderer* renderizador, s_celdas** matriz, int dimensione
                     }
                     SDL_RenderFillRect(renderizador, &rectCelda);
 
-                    // **Aquí la lógica para dibujar el número está ahora correctamente anidada**
-                    // Solo dibuja números si la celda está REVELADA, no tiene mina y tiene minas adyacentes > 0
+
                     if (punteroColumna->minasAdyacentes > 0 && fuente != NULL)
                     {
                         char texto[12]; // Suficiente para números de hasta 8 dígitos + null terminator
