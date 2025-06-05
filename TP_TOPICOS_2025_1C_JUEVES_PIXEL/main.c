@@ -137,13 +137,6 @@ int main(int argc, char *argv[])
     while (corriendo)
     {
 
-        for (int r = 0; r < configuracion.dimensiones; r++) {
-                                    for (int c = 0; c < configuracion.dimensiones; c++) {
-                                        if ((*(matriz+r)+c)->esRevelada) {
-                                            (*(matriz+r)+c)->esRevelada = 1;
-                                        }
-                                    }
-                                }
         while (SDL_PollEvent(&e))
         {
             if (e.type == SDL_QUIT)
@@ -152,7 +145,6 @@ int main(int argc, char *argv[])
                 printf("Usuario cerró la ventana\n");
             }
 
-            // revela celdas con el clic:
             if (e.type == SDL_MOUSEBUTTONDOWN)
             {
                 if (e.button.button == SDL_BUTTON_LEFT)
@@ -252,7 +244,7 @@ int main(int argc, char *argv[])
 
     printf("Limpiando recursos...\n");
 
-    // Limpieza de recursos en el orden correcto
+
     if (fuente) {
         TTF_CloseFont(fuente);
     }
