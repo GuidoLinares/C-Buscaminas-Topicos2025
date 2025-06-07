@@ -22,7 +22,6 @@
 					<Add option="-mpc64" />
 					<Add library="SDL2" />
 					<Add library="rpcrt4" />
-					<Add library="SDL2_ttf-2.24.0/x86_64-w64-mingw32/lib/libSDL2_ttf.a" />
 					<Add directory="SDL2-2.0.22/x86_64-w64-mingw32/lib" />
 					<Add directory="SDL2_ttf-2.24.0/x86_64-w64-mingw32/lib" />
 				</Linker>
@@ -43,7 +42,6 @@
 					<Add option="-mpc64" />
 					<Add library="SDL2" />
 					<Add library="rpcrt4" />
-					<Add library="SDL2_ttf-2.24.0/x86_64-w64-mingw32/lib/libSDL2_ttf.a" />
 					<Add directory="SDL2-2.0.22/x86_64-w64-mingw32/lib" />
 					<Add directory="SDL2_ttf-2.24.0/x86_64-w64-mingw32/lib" />
 				</Linker>
@@ -68,9 +66,6 @@
 		</Linker>
 		<Unit filename="headers.h" />
 		<Unit filename="interfaz.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="logs.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="main.c">

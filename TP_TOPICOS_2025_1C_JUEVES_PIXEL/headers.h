@@ -3,12 +3,12 @@
 
 #define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <time.h>
 #include <string.h>
-#include <SDL2/SDL_ttf.h>
 
 
 #define MAX_LINEA 100
@@ -17,11 +17,19 @@
 #define ARCH_CONFIG "buscaminas.conf"
 #define TAM_PIXEL 8
 #define PIXEL_CELDA 32
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+static SistemaLog* g_sistemaLog = NULL;
+=======
+=======
+>>>>>>> Stashed changes
+#define ALTURA_HEADER 64
 
+>>>>>>> Stashed changes
 
 typedef struct
 {
-    int minas ;
+    int cantMinas ;
     int dimensiones;
 }Archivo_conf;
 
@@ -32,7 +40,7 @@ typedef struct
     int tieneMina;
     int tieneBandera;
     int minasAdyacentes;
-}s_celdas;
+}sCelda;
 
 //estructura del log
 typedef struct {
@@ -41,32 +49,40 @@ typedef struct {
     time_t tiempoInicio;
 }SistemaLog;
 
-extern SistemaLog* g_sistemaLog;
-
 
 //FUNCIONES DE CONSOLA
-s_celdas** crearMatriz (int);
-void destruirMatriz(s_celdas**, int);
-void llenarMatriz(s_celdas**, Archivo_conf);
-void inicializarMatriz(s_celdas**, int);
-void mostrarMatriz(s_celdas**, int);
+sCelda** crearMatriz (int);
+void destruirMatriz(sCelda**, int);
+void llenarMatriz(sCelda**, Archivo_conf);
+void inicializarMatriz(sCelda**, int);
+void mostrarMatriz(sCelda**, int);
 int generarAleatorio(int ,int );
 void trim(char*);
 Archivo_conf leerArchivo();
+void revelarEspaciosVacios(sCelda**, int, int, int);
 
 
 //FUNCIONES SDL
 void dibujarTablero(SDL_Renderer *, int);
-void dibujarCeldas(SDL_Renderer*, s_celdas**, int, TTF_Font*);
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+void dibujarCeldas(SDL_Renderer *, s_celdas**, int);
+=======
+=======
+>>>>>>> Stashed changes
+void dibujarCeldas(SDL_Renderer*, sCelda**, int, TTF_Font*);
+void dibujarContadorMinas(SDL_Renderer*, TTF_Font*, int);
+void dibujarHeader(SDL_Renderer*, TTF_Font*, int, int);
 
+>>>>>>> Stashed changes
 
 //FUNCIONES LOG
 SistemaLog* inicializarLog(const char*);
 void destruirLog();
 void logInicioPartida(Archivo_conf);
-void logClickCelda(s_celdas**, int, int, int, const char*);
-void logRevelarCelda(s_celdas**, int, int, int);
-void logBandera(s_celdas**, int, int, int, int);
+void logClickCelda(sCelda**, int, int, int, const char*);
+void logRevelarCelda(sCelda**, int, int, int);
+void logBandera(sCelda**, int, int, int, int);
 void logFinPartida(const char*);
 void logConfiguracion(Archivo_conf);
 
