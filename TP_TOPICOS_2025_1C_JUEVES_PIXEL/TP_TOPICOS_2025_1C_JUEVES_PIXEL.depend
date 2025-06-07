@@ -1,15 +1,15 @@
 # depslib dependency file v1.0
-1747953564 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\interfaz.c
+1749317899 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\interfaz.c
 	"headers.h"
 
-1748907229 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\headers.h
+1749313221 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\headers.h
 	<SDL2/SDL.h>
+	<SDL2/SDL_ttf.h>
 	<stdio.h>
 	<stdlib.h>
 	<ctype.h>
 	<time.h>
 	<string.h>
-	<SDL2/SDL_ttf.h>
 
 1747522085 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\sdl2-2.0.22\x86_64-w64-mingw32\include\sdl2\sdl.h
 	"SDL_main.h"
@@ -389,10 +389,10 @@
 	"begin_code.h"
 	"close_code.h"
 
-1748789615 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\main.c
+1749313662 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\main.c
 	"headers.h"
 
-1747945497 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\tablero.c
+1749313440 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\tablero.c
 	"headers.h"
 
 1748791047 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\sdl2_ttf-2.24.0\x86_64-w64-mingw32\include\sdl2\sdl_ttf.h
@@ -400,19 +400,15 @@
 	"begin_code.h"
 	"close_code.h"
 
-<<<<<<< Updated upstream
-1748791047 ated upstream
+1748790076 ated upstream
 
-1749309671 source:c:\users\facua\onedrive\documents\github\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\interfaz.c
-	"headers.h"
-
-1749309671 c:\users\facua\onedrive\documents\github\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\headers.h
-=======
 1749309585 source:c:\users\facua\onedrive\documents\github\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\interfaz.c
+	"headers.h"
 	"headers.h"
 
 1749309465 c:\users\facua\onedrive\documents\github\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\headers.h
->>>>>>> Stashed changes
+
+1748956192 shed changes
 	<SDL2/SDL.h>
 	<SDL2/SDL_ttf.h>
 	<stdio.h>
@@ -420,6 +416,7 @@
 	<ctype.h>
 	<time.h>
 	<string.h>
+	"headers.h"
 
 1748789868 c:\users\facua\onedrive\documents\github\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\sdl2-2.0.22\x86_64-w64-mingw32\include\sdl2\sdl.h
 	"SDL_main.h"
@@ -804,27 +801,16 @@
 	"begin_code.h"
 	"close_code.h"
 
-<<<<<<< Updated upstream
-1749309671 source:c:\users\facua\onedrive\documents\github\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\main.c
-	"headers.h"
-
-1749309671 source:c:\users\facua\onedrive\documents\github\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\tablero.c
-	"headers.h"
-
-1749309671 source:c:\users\facua\onedrive\documents\github\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\logs.c
-=======
 1749309056 source:c:\users\facua\onedrive\documents\github\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\main.c
+	"headers.h"
 	"headers.h"
 
 1749304616 source:c:\users\facua\onedrive\documents\github\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\tablero.c
 	"headers.h"
+	"headers.h"
 
 1749304559 source:c:\users\facua\onedrive\documents\github\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\logs.c
->>>>>>> Stashed changes
-	"headers.h"
 
 1748956192 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\logs.c
 	"headers.h"
-
-1748956192 shed changes
 
