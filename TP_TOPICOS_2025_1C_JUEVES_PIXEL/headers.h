@@ -18,8 +18,11 @@
 #define TAM_PIXEL 8
 #define PIXEL_CELDA 32
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 static SistemaLog* g_sistemaLog = NULL;
 =======
+=======
+>>>>>>> Stashed changes
 #define ALTURA_HEADER 64
 
 >>>>>>> Stashed changes
@@ -62,8 +65,11 @@ void revelarEspaciosVacios(sCelda**, int, int, int);
 //FUNCIONES SDL
 void dibujarTablero(SDL_Renderer *, int);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 void dibujarCeldas(SDL_Renderer *, s_celdas**, int);
 =======
+=======
+>>>>>>> Stashed changes
 void dibujarCeldas(SDL_Renderer*, sCelda**, int, TTF_Font*);
 void dibujarContadorMinas(SDL_Renderer*, TTF_Font*, int);
 void dibujarHeader(SDL_Renderer*, TTF_Font*, int, int);

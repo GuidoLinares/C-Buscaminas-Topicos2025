@@ -3293,6 +3293,7 @@
 [2025-06-07 12:20:53] BOOM! Mina detonada en (1,4)
 [2025-06-07 12:20:53] FIN PARTIDA - Resultado: DERROTA - MINA ENCONTRADA, Tiempo: 3 segundos
 [2025-06-07 12:20:57] === FIN DE SESION ===
+<<<<<<< Updated upstream
 >>>>>>> Stashed changes
 [2025-06-07 12:22:19] === BUSCAMINAS - NUEVA SESION ===
 [2025-06-07 12:22:19] CONFIGURACION CARGADA - Archivo: buscaminas.conf, Dim: 15, Minas: 10
@@ -3333,3 +3334,5 @@
 [2025-06-07 12:23:25] INICIO PARTIDA - Dimensiones: 15x15, Minas: 10, Total celdas: 225
 [2025-06-07 12:23:26] CLICK IZQUIERDO en (1,3) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:1
 [2025-06-07 12:23:26] Celda revelada (1,3) - 1 minas adyacentes
+=======
+>>>>>>> Stashed changes

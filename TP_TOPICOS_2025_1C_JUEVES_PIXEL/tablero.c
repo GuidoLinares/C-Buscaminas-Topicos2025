@@ -210,6 +210,7 @@ Archivo_conf leerArchivo()
 }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 //FUNCIONES LOG
 char* obtenerTimestamp()
@@ -474,6 +475,8 @@ void logEstadoTablero(s_celdas** matriz, int dimensiones)
 
 
 =======
+=======
+>>>>>>> Stashed changes
 void revelarEspaciosVacios(sCelda **matriz, int dimensiones, int fila, int col)
 {
     // Verificar límites
@@ -513,4 +516,7 @@ void revelarEspaciosVacios(sCelda **matriz, int dimensiones, int fila, int col)
         }
     }
 }
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes

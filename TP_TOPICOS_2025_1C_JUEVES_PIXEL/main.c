@@ -51,6 +51,20 @@ int main(int argc, char *argv[])
         return -1;
     }
 
+<<<<<<< Updated upstream
+=======
+
+
+    // Inicializar TTF
+    if (TTF_Init() == -1) {
+        printf("Error al inicializar TTF: %s\n", TTF_GetError());
+        SDL_Quit();
+        destruirMatriz(matriz, configuracion.dimensiones);
+        destruirLog();
+        return -1;
+    }
+
+>>>>>>> Stashed changes
     // Definir el tamaño de la ventana según la configuración y PIXEL_CELDA
     int ventana_ancho = configuracion.dimensiones * PIXEL_CELDA;
     int ventana_alto = configuracion.dimensiones * PIXEL_CELDA + ALTURA_HEADER;
@@ -146,6 +160,7 @@ int main(int argc, char *argv[])
                     { // Solo procesar clics debajo del header
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                     if (fila_cliqueada >= 0 && fila_cliqueada < configuracion.dimensiones && columna_cliqueada >= 0 && columna_cliqueada < configuracion.dimensiones)
                         {
                             logClickCelda(matriz,fila_cliqueada,columna_cliqueada,configuracion.dimensiones,"IZQUIERDO");
@@ -160,6 +175,11 @@ int main(int argc, char *argv[])
                         int columna_cliqueada = mouse_x / PIXEL_CELDA;
                         int fila_cliqueada = (mouse_y - ALTURA_HEADER) / PIXEL_CELDA; // ← RESTAR HEADER
 
+=======
+                        int columna_cliqueada = mouse_x / PIXEL_CELDA;
+                        int fila_cliqueada = (mouse_y - ALTURA_HEADER) / PIXEL_CELDA; // ← RESTAR HEADER
+
+>>>>>>> Stashed changes
                         if (fila_cliqueada >= 0 && fila_cliqueada < configuracion.dimensiones &&
                             columna_cliqueada >= 0 && columna_cliqueada < configuracion.dimensiones)
                         {
@@ -217,12 +237,15 @@ int main(int argc, char *argv[])
                     { // Solo procesar clics debajo del header
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                     if (fila_cliqueada >= 0 && fila_cliqueada < configuracion.dimensiones && columna_cliqueada >= 0 && columna_cliqueada < configuracion.dimensiones)
                     {
                         logBandera(matriz, fila_cliqueada, columna_cliqueada, configuracion.dimensiones,matriz[fila_cliqueada][columna_cliqueada].tieneBandera);                        // Pone/quita bandera si la celda no est� revelada
                         if (!matriz[fila_cliqueada][columna_cliqueada].esRevelada) {
                              matriz[fila_cliqueada][columna_cliqueada].tieneBandera = !matriz[fila_cliqueada][columna_cliqueada].tieneBandera;
 =======
+=======
+>>>>>>> Stashed changes
                         int columna_cliqueada = mouse_x / PIXEL_CELDA;
                         int fila_cliqueada = (mouse_y - ALTURA_HEADER) / PIXEL_CELDA; // ← RESTAR HEADER
 
@@ -250,6 +273,9 @@ int main(int argc, char *argv[])
                                 printf("Clic Derecho (Bandera) en celda: (%d, %d) - Minas restantes: %d\n",
                                        fila_cliqueada, columna_cliqueada, minasRestantes);
                             }
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
                         }
                     }
