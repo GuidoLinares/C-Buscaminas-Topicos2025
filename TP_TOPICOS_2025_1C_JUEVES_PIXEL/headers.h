@@ -41,14 +41,13 @@ typedef struct {
     time_t tiempoInicio;
 }SistemaLog;
 
-static SistemaLog* g_sistemaLog = NULL;
+
 
 //FUNCIONES DE CONSOLA
 sCelda** crearMatriz (int);
 void destruirMatriz(sCelda**, int);
 void llenarMatriz(sCelda**, Archivo_conf);
 void inicializarMatriz(sCelda**, int);
-void mostrarMatriz(sCelda**, int);
 void mostrarMatriz(sCelda**, int);
 int generarAleatorio(int ,int );
 void trim(char*);
@@ -61,7 +60,9 @@ void dibujarTablero(SDL_Renderer *, int);
 void dibujarCeldas(SDL_Renderer*, sCelda**, int, TTF_Font*);
 void dibujarContadorMinas(SDL_Renderer*, TTF_Font*, int);
 void dibujarHeader(SDL_Renderer*, TTF_Font*, int, int);
-
+void mostrarGameOver(SDL_Renderer*, TTF_Font*, int);
+void mostrarVictoria(SDL_Renderer*, TTF_Font*, int);
+int verificarVictoria(sCelda**, int, int);
 
 //FUNCIONES LOG
 SistemaLog* inicializarLog(const char*);
@@ -72,5 +73,10 @@ void logRevelarCelda(sCelda**, int, int, int);
 void logBandera(sCelda**, int, int, int, int);
 void logFinPartida(const char*);
 void logConfiguracion(Archivo_conf);
+
+//FUNCIONES JUEGO
+void jugar(SDL_Window *ventana, SDL_Renderer *, TTF_Font *,TTF_Font *, sCelda **, Archivo_conf , int *, int );
+void limpiarTodosLosRecursos(SDL_Window *, SDL_Renderer *,TTF_Font *,TTF_Font *, sCelda **, Archivo_conf );
+
 
 #endif // HEADERS_H_INCLUDED

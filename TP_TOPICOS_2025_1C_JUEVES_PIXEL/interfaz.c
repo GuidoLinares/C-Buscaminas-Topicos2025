@@ -36,7 +36,7 @@ void dibujarCeldas(SDL_Renderer* renderizador, sCelda** matriz, int dimensiones,
             if (!(punteroColumna->esRevelada)) // Celda no revelada (oculta)
             {
                 // Fondo gris para celda no revelada
-                SDL_SetRenderDrawColor(renderizador, 100, 100, 100, 255);
+                SDL_SetRenderDrawColor(renderizador, 30, 42, 75, 255);
                 SDL_RenderFillRect(renderizador, &rectCelda);
 
                 if (punteroColumna->tieneBandera)
@@ -49,13 +49,14 @@ void dibujarCeldas(SDL_Renderer* renderizador, sCelda** matriz, int dimensiones,
                     SDL_RenderDrawLine(renderizador, cx, cy - 6, cx, cy + 6);
 
                     // Bandera (triángulo rojo a la izquierda del mástil)
-                    SDL_SetRenderDrawColor(renderizador, 255, 0, 0, 255); // Rojo
-                    // Dibuja un triángulo sólido o un contorno
-                    // Para un triángulo sólido, puedes usar SDL_RenderGeometry si SDL2 lo soporta,
-                    // o dibujar varias líneas. Aquí simulo un triángulo simple con líneas.
-                    SDL_RenderDrawLine(renderizador, cx, cy - 6, cx - 6, cy - 3);
-                    SDL_RenderDrawLine(renderizador, cx - 6, cy - 3, cx, cy);
-                    SDL_RenderDrawLine(renderizador, cx, cy, cx, cy - 6);
+                    SDL_Rect banderaRect;
+                    banderaRect.x = cx - 7;
+                    banderaRect.y = cy - 6;
+                    banderaRect.w = 6;
+                    banderaRect.h = 6;
+
+                    SDL_SetRenderDrawColor(renderizador, 255, 0, 0, 255); // Rojo intenso
+                    SDL_RenderFillRect(renderizador, &banderaRect);
                 }
             }
             else // Celda revelada
@@ -172,7 +173,6 @@ void dibujarCeldas(SDL_Renderer* renderizador, sCelda** matriz, int dimensiones,
 }
 
 
-
 void dibujarHeader(SDL_Renderer *renderer, TTF_Font *fuente, int minasRestantes, int anchoVentana)
 {
     // Dibujar fondo del header (azul oscuro)
@@ -240,5 +240,126 @@ void dibujarHeader(SDL_Renderer *renderer, TTF_Font *fuente, int minasRestantes,
             SDL_FreeSurface(superficieSombraTexto);
         }
     }
+}
+
+void mostrarGameOver(SDL_Renderer* renderizador, TTF_Font* fuente, int dimensiones)
+{
+    const char* texto = "GAME OVER";
+
+    // Usar fuente ya cargada si no tenés otra más grande
+    if (!fuente) {
+        printf("No hay fuente disponible para mostrar GAME OVER.\n");
+        return;
+    }
+
+    SDL_Color blanco = {255, 255, 255, 255};
+    SDL_Color sombra = {0, 0, 0, 255};
+
+    SDL_Surface* sombraSurf = TTF_RenderText_Solid(fuente, texto, sombra);
+    SDL_Surface* textoSurf = TTF_RenderText_Solid(fuente, texto, blanco);
+
+    if (!sombraSurf || !textoSurf) {
+        printf("Error renderizando texto: %s\n", TTF_GetError());
+        return;
+    }
+
+    SDL_Texture* sombraTex = SDL_CreateTextureFromSurface(renderizador, sombraSurf);
+    SDL_Texture* textoTex = SDL_CreateTextureFromSurface(renderizador, textoSurf);
+
+    int w = textoSurf->w;
+    int h = textoSurf->h;
+
+    SDL_Rect rectTexto = {
+        (dimensiones * PIXEL_CELDA - w) / 2,
+        (dimensiones * PIXEL_CELDA + ALTURA_HEADER - h) / 2,
+        w, h
+    };
+
+    SDL_Rect rectSombra = rectTexto;
+    rectSombra.x += 2;
+    rectSombra.y += 2;
+
+    SDL_RenderCopy(renderizador, sombraTex, NULL, &rectSombra);
+    SDL_RenderCopy(renderizador, textoTex, NULL, &rectTexto);
+
+    SDL_FreeSurface(sombraSurf);
+    SDL_FreeSurface(textoSurf);
+    SDL_DestroyTexture(sombraTex);
+    SDL_DestroyTexture(textoTex);
+}
+
+
+int verificarVictoria(sCelda** matriz, int dimensiones, int totalMinas)
+{
+    int reveladas = 0;
+    for (int r = 0; r < dimensiones; r++) {
+        for (int c = 0; c < dimensiones; c++) {
+            if ((*(matriz + r) + c)->esRevelada)
+                reveladas++;
+        }
+    }
+    int totalCeldas = dimensiones * dimensiones;
+    return (reveladas == totalCeldas - totalMinas);
+}
+
+void mostrarVictoria(SDL_Renderer* renderizador, TTF_Font* fuente, int dimensiones) {
+    const char* linea1 = "!FELICIDADES!";
+    const char* linea2 = "GANASTE";
+
+    if (!fuente) {
+        printf("No hay fuente disponible para mostrar VICTORIA.\n");
+        return;
+    }
+
+    SDL_Color blanco = {255, 255, 255, 255};
+    SDL_Color sombra = {0, 0, 0, 255};
+
+    // Renderizar sombras
+    SDL_Surface* sombra1 = TTF_RenderText_Solid(fuente, linea1, sombra);
+    SDL_Surface* sombra2 = TTF_RenderText_Solid(fuente, linea2, sombra);
+
+    // Renderizar texto blanco
+    SDL_Surface* texto1 = TTF_RenderText_Solid(fuente, linea1, blanco);
+    SDL_Surface* texto2 = TTF_RenderText_Solid(fuente, linea2, blanco);
+
+    if (!sombra1 || !sombra2 || !texto1 || !texto2) {
+        printf("Error al renderizar texto VICTORIA: %s\n", TTF_GetError());
+        return;
+    }
+
+    SDL_Texture* texSombra1 = SDL_CreateTextureFromSurface(renderizador, sombra1);
+    SDL_Texture* texSombra2 = SDL_CreateTextureFromSurface(renderizador, sombra2);
+    SDL_Texture* texTexto1 = SDL_CreateTextureFromSurface(renderizador, texto1);
+    SDL_Texture* texTexto2 = SDL_CreateTextureFromSurface(renderizador, texto2);
+
+    int w1 = texto1->w, h1 = texto1->h;
+    int w2 = texto2->w, h2 = texto2->h;
+
+    // Calcula coordenadas centradas
+    int cx = (dimensiones * PIXEL_CELDA) / 2;
+    int cy = (dimensiones * PIXEL_CELDA + ALTURA_HEADER) / 2;
+
+    SDL_Rect r1 = {cx - w1 / 2, cy - h1 - 5, w1, h1};       // primera línea
+    SDL_Rect r2 = {cx - w2 / 2, cy + 5, w2, h2};            // segunda línea
+    SDL_Rect s1 = r1; s1.x += 2; s1.y += 2;
+    SDL_Rect s2 = r2; s2.x += 2; s2.y += 2;
+
+    // Dibujar sombras
+    SDL_RenderCopy(renderizador, texSombra1, NULL, &s1);
+    SDL_RenderCopy(renderizador, texSombra2, NULL, &s2);
+
+    // Dibujar texto encima
+    SDL_RenderCopy(renderizador, texTexto1, NULL, &r1);
+    SDL_RenderCopy(renderizador, texTexto2, NULL, &r2);
+
+    // Liberar
+    SDL_FreeSurface(sombra1);
+    SDL_FreeSurface(sombra2);
+    SDL_FreeSurface(texto1);
+    SDL_FreeSurface(texto2);
+    SDL_DestroyTexture(texSombra1);
+    SDL_DestroyTexture(texSombra2);
+    SDL_DestroyTexture(texTexto1);
+    SDL_DestroyTexture(texTexto2);
 }
 

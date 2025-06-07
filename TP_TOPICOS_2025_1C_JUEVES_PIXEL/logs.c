@@ -1,7 +1,6 @@
 #include "headers.h"
 
-// DEFINICIÓN de la variable global (solo en este archivo)
-SistemaLog* g_sistemaLog = NULL;
+static SistemaLog* g_sistemaLog = NULL;
 
 char* obtenerTimestamp()
 {
@@ -242,3 +241,7 @@ void logEstadoTablero(sCelda** matriz, int dimensiones)
     escribirEvento(mensaje);
     free(mensaje);
 }
+
+
+
+
