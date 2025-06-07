@@ -1,8 +1,8 @@
 #include "headers.h"
 
-void contarMinasAdyacentes(s_celdas** matriz, int dimension, int fila, int columna)
+void contarMinasAdyacentes(sCelda** matriz, int dimension, int fila, int columna)
 {
-    s_celdas* celdaActual = *(matriz + fila) + columna;
+    sCelda* celdaActual = *(matriz + fila) + columna;
 
     if (celdaActual->tieneMina)
         return;
@@ -20,7 +20,7 @@ void contarMinasAdyacentes(s_celdas** matriz, int dimension, int fila, int colum
 
             if (nuevaFila >= 0 && nuevaFila < dimension && nuevaColumna >= 0 && nuevaColumna < dimension)
             {
-                s_celdas* celdaVecina = *(matriz + nuevaFila) + nuevaColumna;
+                sCelda* celdaVecina = *(matriz + nuevaFila) + nuevaColumna;
 
                 if (celdaVecina->tieneMina)
                     contador++;
@@ -31,23 +31,23 @@ void contarMinasAdyacentes(s_celdas** matriz, int dimension, int fila, int colum
     celdaActual->minasAdyacentes = contador;
 }
 
-s_celdas** crearMatriz (int dimension)
+sCelda** crearMatriz (int dimension)
 {
-    s_celdas** matriz = (s_celdas**)malloc(sizeof(s_celdas*) * dimension);
+    sCelda** matriz = (sCelda**)malloc(sizeof(sCelda*) * dimension);
     if (!matriz) {
         return NULL;
     }
 
-    s_celdas** punteroFilaActual = matriz;
-    s_celdas** punteroFilaFin = matriz + dimension;
+    sCelda** punteroFilaActual = matriz;
+    sCelda** punteroFilaFin = matriz + dimension;
 
     for( ; punteroFilaActual < punteroFilaFin ; punteroFilaActual++)
     {
-        *punteroFilaActual = (s_celdas*)malloc(sizeof(s_celdas) * dimension);
+        *punteroFilaActual = (sCelda*)malloc(sizeof(sCelda) * dimension);
         if(!*punteroFilaActual)
         {
 
-            for (s_celdas** punteroLimpieza = matriz ; punteroLimpieza < punteroFilaActual; punteroLimpieza++)
+            for (sCelda** punteroLimpieza = matriz ; punteroLimpieza < punteroFilaActual; punteroLimpieza++)
                 free(*punteroLimpieza);
 
             free(matriz);
@@ -57,12 +57,12 @@ s_celdas** crearMatriz (int dimension)
     return matriz;
 }
 
-void destruirMatriz(s_celdas** matriz, int tamano)
+void destruirMatriz(sCelda** matriz, int tamano)
 {
     if (!matriz) return;
 
-    s_celdas** punteroFilaActual = matriz;
-    s_celdas** punteroFilaFin = matriz + tamano;
+    sCelda** punteroFilaActual = matriz;
+    sCelda** punteroFilaFin = matriz + tamano;
 
     for( ; punteroFilaActual < punteroFilaFin ; punteroFilaActual++) {
         free(*punteroFilaActual);
@@ -70,14 +70,14 @@ void destruirMatriz(s_celdas** matriz, int tamano)
     free(matriz);
 }
 
-void inicializarMatriz(s_celdas** matriz, int dimension)
+void inicializarMatriz(sCelda** matriz, int dimension)
 {
-    s_celdas** punteroFila = matriz;
-    s_celdas** punteroFilaFin = matriz + dimension;
+    sCelda** punteroFila = matriz;
+    sCelda** punteroFilaFin = matriz + dimension;
 
     for ( ; punteroFila < punteroFilaFin; punteroFila++) {
-        s_celdas* punteroColumna = *punteroFila;
-        s_celdas* punteroColumnaFin = *punteroFila + dimension;
+        sCelda* punteroColumna = *punteroFila;
+        sCelda* punteroColumnaFin = *punteroFila + dimension;
 
         for ( ; punteroColumna < punteroColumnaFin; punteroColumna++) {
             punteroColumna->esRevelada = 0;
@@ -93,16 +93,16 @@ int generarAleatorio(int minimo, int maximo)
     return rand() % (maximo - minimo + 1) + minimo;
 }
 
-void llenarMatriz(s_celdas** matriz, Archivo_conf configuracion)
+void llenarMatriz(sCelda** matriz, Archivo_conf configuracion)
 {
     srand(time(NULL));
 
     size_t minasColocadas = 0;
-    while (minasColocadas < configuracion.minas) {
+    while (minasColocadas < configuracion.cantMinas) {
         int fila = generarAleatorio(0, configuracion.dimensiones - 1);
         int columna = generarAleatorio(0, configuracion.dimensiones - 1);
 
-        s_celdas* celdaObjetivo = *(matriz + fila) + columna;
+        sCelda* celdaObjetivo = *(matriz + fila) + columna;
 
         if (celdaObjetivo->tieneMina == 0) {
             celdaObjetivo->tieneMina = 1;
@@ -117,15 +117,15 @@ void llenarMatriz(s_celdas** matriz, Archivo_conf configuracion)
     }
 }
 
-void mostrarMatriz(s_celdas** matriz, int dimension)
+void mostrarMatriz(sCelda** matriz, int dimension)
 {
     printf("\n--- Estado de la Matriz (Consola) ---\n");
-    s_celdas** punteroFila = matriz;
-    s_celdas** punteroFilaFin = matriz + dimension;
+    sCelda** punteroFila = matriz;
+    sCelda** punteroFilaFin = matriz + dimension;
 
     for( ; punteroFila < punteroFilaFin ; punteroFila++) {
-        s_celdas* punteroColumna = *punteroFila;
-        s_celdas* punteroColumnaFin = *punteroFila + dimension;
+        sCelda* punteroColumna = *punteroFila;
+        sCelda* punteroColumnaFin = *punteroFila + dimension;
 
         for( ; punteroColumna < punteroColumnaFin ; punteroColumna++ ) {
             if (punteroColumna->tieneMina) {
@@ -196,19 +196,20 @@ Archivo_conf leerArchivo()
             exit(-4);
         }
         int totalCasillas = configuracion.dimensiones * configuracion.dimensiones;
-        configuracion.minas = (porcentaje * totalCasillas) / 100;
+        configuracion.cantMinas = (porcentaje * totalCasillas) / 100;
     } else {
-        configuracion.minas = atoi(minasCadena);
+        configuracion.cantMinas = atoi(minasCadena);
     }
 
-    if (configuracion.minas < 0 || configuracion.minas > configuracion.dimensiones * configuracion.dimensiones) {
-        fprintf(stderr, "ERROR: Cantidad de minas inválida: %d (Fuera de rango para %dx%d).\n", configuracion.minas, configuracion.dimensiones, configuracion.dimensiones);
+    if (configuracion.cantMinas < 0 || configuracion.cantMinas > configuracion.dimensiones * configuracion.dimensiones) {
+        fprintf(stderr, "ERROR: Cantidad de minas inválida: %d (Fuera de rango para %dx%d).\n", configuracion.cantMinas, configuracion.dimensiones, configuracion.dimensiones);
         exit(-5);
     }
-    printf("Configuracion leida: Dimensiones=%d, Minas=%d\n", configuracion.dimensiones, configuracion.minas);
+    printf("Configuracion leida: Dimensiones=%d, Minas=%d\n", configuracion.dimensiones, configuracion.cantMinas);
     return configuracion;
 }
 
+<<<<<<< Updated upstream
 
 //FUNCIONES LOG
 char* obtenerTimestamp()
@@ -472,3 +473,44 @@ void logEstadoTablero(s_celdas** matriz, int dimensiones)
 
 
 
+=======
+void revelarEspaciosVacios(sCelda **matriz, int dimensiones, int fila, int col)
+{
+    // Verificar límites
+    if (fila < 0 || fila >= dimensiones || col < 0 || col >= dimensiones)
+        return;
+
+    // Si ya está revelada, no hacer nada
+    if ((*(matriz + fila) + col)->esRevelada)
+        return;
+
+    // Si tiene mina, no revelar
+    if ((*(matriz + fila) + col)->tieneMina)
+        return;
+
+    // Si tiene bandera, no revelar
+    if ((*(matriz + fila) + col)->tieneBandera)
+        return;
+
+    // Revelar la celda actual
+    (*(matriz + fila) + col)->esRevelada = 1;
+
+    // Si la celda tiene número de minas adyacentes > 0, no expandir más
+    if ((*(matriz + fila) + col)->minasAdyacentes > 0)
+        return;
+
+    // Si es espacio vacío (minasAdyacentes == 0), revelar celdas adyacentes
+    if ((*(matriz + fila) + col)->minasAdyacentes == 0)
+    {
+        // Revelar las 8 celdas adyacentes
+        for (int i = -1; i <= 1; i++)
+        {
+            for (int j = -1; j <= 1; j++)
+            {
+                if (i != 0 || j != 0)  // No procesar la celda actual
+                    revelarEspaciosVacios(matriz, dimensiones, fila + i, col + j);
+            }
+        }
+    }
+}
+>>>>>>> Stashed changes

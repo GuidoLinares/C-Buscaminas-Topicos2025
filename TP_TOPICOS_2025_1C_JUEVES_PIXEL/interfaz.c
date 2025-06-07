@@ -4,6 +4,7 @@ void dibujarTablero(SDL_Renderer *renderizador, int dimensiones)
 {
     SDL_SetRenderDrawColor(renderizador, 255, 255, 255, 255);
 
+<<<<<<< Updated upstream
     for (int i = 0; i <= dimensiones; i++) {
         SDL_RenderDrawLine(renderizador, i * PIXEL_CELDA, 0, i * PIXEL_CELDA, dimensiones * PIXEL_CELDA);
         SDL_RenderDrawLine(renderizador, 0, i * PIXEL_CELDA, dimensiones * PIXEL_CELDA, i * PIXEL_CELDA);
@@ -11,18 +12,40 @@ void dibujarTablero(SDL_Renderer *renderizador, int dimensiones)
 }
 
 void dibujarCeldas(SDL_Renderer *renderizador, s_celdas** matrizLogica, int dimensiones)
+=======
+    for (int i = 0; i <= dimensiones; i++)
+    {
+        // Dibujar líneas verticales
+        SDL_RenderDrawLine(renderizador, i * PIXEL_CELDA, ALTURA_HEADER, i * PIXEL_CELDA, dimensiones * PIXEL_CELDA + ALTURA_HEADER);
+        // Dibujar líneas horizontales
+        SDL_RenderDrawLine(renderizador, 0, i * PIXEL_CELDA + ALTURA_HEADER, dimensiones * PIXEL_CELDA, i * PIXEL_CELDA + ALTURA_HEADER);
+    }
+}
+
+void dibujarCeldas(SDL_Renderer* renderizador, sCelda** matriz, int dimensiones, TTF_Font* fuente)
+>>>>>>> Stashed changes
 {
     s_celdas** punteroFila = matrizLogica;
     s_celdas** punteroFilaFin = matrizLogica + dimensiones;
 
+<<<<<<< Updated upstream
     for (int r = 0; punteroFila < punteroFilaFin; punteroFila++, r++) {
         s_celdas* punteroColumna = *punteroFila;
         s_celdas* punteroColumnaFin = *punteroFila + dimensiones;
+=======
+    sCelda** punteroFila = matriz;
+    sCelda** punteroFilaFin = matriz + dimensiones;
+
+    for (int r = 0; punteroFila < punteroFilaFin; punteroFila++, r++)
+    {
+        sCelda* punteroColumna = *punteroFila;
+        sCelda* punteroColumnaFin = *punteroFila + dimensiones;
+>>>>>>> Stashed changes
 
         for (int c = 0; punteroColumna < punteroColumnaFin; punteroColumna++, c++) {
             SDL_Rect rectCelda;
             rectCelda.x = c * PIXEL_CELDA;
-            rectCelda.y = r * PIXEL_CELDA;
+            rectCelda.y = r * PIXEL_CELDA + ALTURA_HEADER; // ← AGREGAR ALTURA_HEADER
             rectCelda.w = PIXEL_CELDA;
             rectCelda.h = PIXEL_CELDA;
 
@@ -76,6 +99,63 @@ void dibujarCeldas(SDL_Renderer *renderizador, s_celdas** matrizLogica, int dime
             }
             SDL_SetRenderDrawColor(renderizador, 0, 0, 0, 255);
             SDL_RenderDrawRect(renderizador, &rectCelda);
+        }
+    }
+}
+
+void dibujarHeader(SDL_Renderer *renderer, TTF_Font *fuente, int minasRestantes, int anchoVentana)
+{
+    // Dibujar fondo del header (gris oscuro)
+    SDL_SetRenderDrawColor(renderer, 64, 64, 64, 255);
+    SDL_Rect rectHeader = {0, 0, anchoVentana, ALTURA_HEADER};
+    SDL_RenderFillRect(renderer, &rectHeader);
+
+    if (fuente != NULL)
+    {
+        // Color del texto (blanco)
+        SDL_Color colorTexto = {255, 255, 255, 255};
+
+        // ========== DIBUJAR TÍTULO "BUSCAMINAS PIXEL" ==========
+        SDL_Surface *superficieTitulo = TTF_RenderText_Solid(fuente, "BUSCAMINAS PIXEL", colorTexto);
+        if (superficieTitulo != NULL)
+        {
+            SDL_Texture *texturaTitulo = SDL_CreateTextureFromSurface(renderer, superficieTitulo);
+            if (texturaTitulo != NULL)
+            {
+                // Posicionar el título en la parte superior del header
+                int anchoTitulo = superficieTitulo->w;
+                int altoTitulo = superficieTitulo->h;
+                int xTitulo = (anchoVentana - anchoTitulo) / 2;
+                int yTitulo = 10; // Margen superior
+
+                SDL_Rect rectTitulo = {xTitulo, yTitulo, anchoTitulo, altoTitulo};
+                SDL_RenderCopy(renderer, texturaTitulo, NULL, &rectTitulo);
+                SDL_DestroyTexture(texturaTitulo);
+            }
+            SDL_FreeSurface(superficieTitulo);
+        }
+
+        // ========== DIBUJAR CONTADOR DE MINAS ==========
+        char texto[50];
+        snprintf(texto, sizeof(texto), "Minas restantes: %d", minasRestantes);
+
+        SDL_Surface *superficieTexto = TTF_RenderText_Solid(fuente, texto, colorTexto);
+        if (superficieTexto != NULL)
+        {
+            SDL_Texture *texturaTexto = SDL_CreateTextureFromSurface(renderer, superficieTexto);
+            if (texturaTexto != NULL)
+            {
+                // Posicionar el contador debajo del título
+                int anchoTexto = superficieTexto->w;
+                int altoTexto = superficieTexto->h;
+                int xTexto = (anchoVentana - anchoTexto) / 2;
+                int yTexto = ALTURA_HEADER - altoTexto - 10; // Margen inferior
+
+                SDL_Rect rectTexto = {xTexto, yTexto, anchoTexto, altoTexto};
+                SDL_RenderCopy(renderer, texturaTexto, NULL, &rectTexto);
+                SDL_DestroyTexture(texturaTexto);
+            }
+            SDL_FreeSurface(superficieTexto);
         }
     }
 }
