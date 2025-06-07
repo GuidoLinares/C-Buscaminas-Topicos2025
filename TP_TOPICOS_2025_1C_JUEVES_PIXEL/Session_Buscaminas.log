@@ -4469,3 +4469,96 @@
 [2025-06-07 16:50:22] BOOM! Mina detonada en (4,4)
 [2025-06-07 16:50:22] FIN PARTIDA - Resultado: DERROTA - MINA ENCONTRADA, Tiempo: 3 segundos
 [2025-06-07 16:50:26] === FIN DE SESION ===
+[2025-06-07 17:10:39] === BUSCAMINAS - NUEVA SESION ===
+[2025-06-07 17:10:39] CONFIGURACION CARGADA - Archivo: buscaminas.conf, Dim: 15, Minas: 10
+[2025-06-07 17:10:39] INICIO PARTIDA - Dimensiones: 15x15, Minas: 10, Total celdas: 225
+[2025-06-07 17:10:40] === FIN DE SESION ===
+[2025-06-07 17:27:05] === BUSCAMINAS - NUEVA SESION ===
+[2025-06-07 17:27:05] CONFIGURACION CARGADA - Archivo: buscaminas.conf, Dim: 15, Minas: 10
+[2025-06-07 17:27:05] INICIO PARTIDA - Dimensiones: 15x15, Minas: 10, Total celdas: 225
+[2025-06-07 17:27:06] CLICK IZQUIERDO en (0,10) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[2025-06-07 17:27:06] Celda revelada (0,10) - 0 minas adyacentes
+[2025-06-07 17:27:06] CLICK IZQUIERDO en (3,6) - Mina:NO, Revelada:SI, Bandera:NO, Adyacentes:3
+[2025-06-07 17:27:07] CLICK IZQUIERDO en (2,6) - Mina:SI, Revelada:NO, Bandera:NO, Adyacentes:0
+[2025-06-07 17:27:07] BOOM! Mina detonada en (2,6)
+[2025-06-07 17:27:07] FIN PARTIDA - Resultado: DERROTA - MINA ENCONTRADA, Tiempo: 2 segundos
+[2025-06-07 17:30:01] === BUSCAMINAS - NUEVA SESION ===
+[2025-06-07 17:30:01] CONFIGURACION CARGADA - Archivo: buscaminas.conf, Dim: 15, Minas: 10
+[2025-06-07 17:30:01] INICIO PARTIDA - Dimensiones: 15x15, Minas: 10, Total celdas: 225
+[2025-06-07 17:30:02] CLICK IZQUIERDO en (1,4) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[2025-06-07 17:30:02] Celda revelada (1,4) - 0 minas adyacentes
+[2025-06-07 17:30:02] CLICK IZQUIERDO en (5,9) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[2025-06-07 17:30:02] Celda revelada (5,9) - 0 minas adyacentes
+[2025-06-07 17:30:03] CLICK IZQUIERDO en (7,13) - Mina:SI, Revelada:NO, Bandera:NO, Adyacentes:0
+[2025-06-07 17:30:03] BOOM! Mina detonada en (7,13)
+[2025-06-07 17:30:03] FIN PARTIDA - Resultado: DERROTA - MINA ENCONTRADA, Tiempo: 2 segundos
+[2025-06-07 17:30:06] === FIN DE SESION ===
+[2025-06-07 17:52:34] === BUSCAMINAS - NUEVA SESION ===
+[2025-06-07 17:52:34] CONFIGURACION CARGADA - Archivo: buscaminas.conf, Dim: 15, Minas: 10
+[2025-06-07 17:52:34] INICIO PARTIDA - Dimensiones: 15x15, Minas: 10, Total celdas: 225
+[2025-06-07 17:52:35] CLICK IZQUIERDO en (3,2) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:1
+[2025-06-07 17:52:35] Celda revelada (3,2) - 1 minas adyacentes
+[2025-06-07 17:52:35] CLICK IZQUIERDO en (3,6) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[2025-06-07 17:52:35] Celda revelada (3,6) - 0 minas adyacentes
+[2025-06-07 17:52:39] CLICK IZQUIERDO en (2,3) - Mina:SI, Revelada:NO, Bandera:NO, Adyacentes:0
+[2025-06-07 17:52:39] BOOM! Mina detonada en (2,3)
+[2025-06-07 17:52:39] FIN PARTIDA - Resultado: DERROTA - MINA ENCONTRADA, Tiempo: 5 segundos
+[2025-06-07 17:52:43] === FIN DE SESION ===
+[2025-06-07 17:54:52] === BUSCAMINAS - NUEVA SESION ===
+[2025-06-07 17:54:52] CONFIGURACION CARGADA - Archivo: buscaminas.conf, Dim: 15, Minas: 10
+[2025-06-07 17:54:52] INICIO PARTIDA - Dimensiones: 15x15, Minas: 10, Total celdas: 225
+[2025-06-07 17:54:55] CLICK IZQUIERDO en (0,14) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[2025-06-07 17:54:55] Celda revelada (0,14) - 0 minas adyacentes
+[2025-06-07 17:54:57] BANDERA COLOCADA en (7,9)
+[2025-06-07 17:54:57] BANDERA COLOCADA en (6,10)
+[2025-06-07 17:54:58] BANDERA COLOCADA en (11,10)
+[2025-06-07 17:54:58] BANDERA COLOCADA en (10,7)
+[2025-06-07 17:54:59] BANDERA COLOCADA en (5,1)
+[2025-06-07 17:55:00] CLICK IZQUIERDO en (3,2) - Mina:SI, Revelada:NO, Bandera:NO, Adyacentes:0
+[2025-06-07 17:55:00] BOOM! Mina detonada en (3,2)
+[2025-06-07 17:55:00] FIN PARTIDA - Resultado: DERROTA - MINA ENCONTRADA, Tiempo: 8 segundos
+[2025-06-07 17:55:03] === FIN DE SESION ===
+[2025-06-07 18:08:51] === BUSCAMINAS - NUEVA SESION ===
+[2025-06-07 18:08:51] CONFIGURACION CARGADA - Archivo: buscaminas.conf, Dim: 15, Minas: 10
+[2025-06-07 18:08:51] INICIO PARTIDA - Dimensiones: 15x15, Minas: 10, Total celdas: 225
+[2025-06-07 18:08:53] === FIN DE SESION ===
+[2025-06-07 18:09:12] === BUSCAMINAS - NUEVA SESION ===
+[2025-06-07 18:09:12] CONFIGURACION CARGADA - Archivo: buscaminas.conf, Dim: 20, Minas: 25
+[2025-06-07 18:09:12] INICIO PARTIDA - Dimensiones: 20x20, Minas: 25, Total celdas: 400
+[2025-06-07 18:09:14] CLICK IZQUIERDO en (0,3) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[2025-06-07 18:09:14] Celda revelada (0,3) - 0 minas adyacentes
+[2025-06-07 18:09:16] BANDERA COLOCADA en (11,8)
+[2025-06-07 18:09:17] BANDERA COLOCADA en (14,12)
+[2025-06-07 18:09:17] BANDERA COLOCADA en (17,15)
+[2025-06-07 18:09:20] CLICK IZQUIERDO en (6,16) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[2025-06-07 18:09:20] Celda revelada (6,16) - 0 minas adyacentes
+[2025-06-07 18:09:22] BANDERA COLOCADA en (0,8)
+[2025-06-07 18:10:46] BANDERA COLOCADA en (6,5)
+[2025-06-07 18:10:46] BANDERA COLOCADA en (7,6)
+[2025-06-07 18:10:48] BANDERA COLOCADA en (5,0)
+[2025-06-07 18:10:54] BANDERA COLOCADA en (19,18)
+[2025-06-07 18:10:54] BANDERA COLOCADA en (19,19)
+[2025-06-07 18:10:57] CLICK IZQUIERDO en (17,0) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[2025-06-07 18:10:57] Celda revelada (17,0) - 0 minas adyacentes
+[2025-06-07 18:10:58] BANDERA COLOCADA en (19,3)
+[2025-06-07 18:10:59] BANDERA COLOCADA en (17,2)
+[2025-06-07 18:11:02] BANDERA COLOCADA en (16,2)
+[2025-06-07 18:11:04] BANDERA COLOCADA en (15,2)
+[2025-06-07 18:11:08] BANDERA COLOCADA en (14,1)
+[2025-06-07 18:11:08] BANDERA COLOCADA en (14,0)
+[2025-06-07 18:11:11] BANDERA REMOVIDA en (14,0)
+[2025-06-07 18:11:15] BANDERA COLOCADA en (13,0)
+[2025-06-07 18:11:21] BANDERA COLOCADA en (10,1)
+[2025-06-07 18:11:25] CLICK IZQUIERDO en (8,12) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:1
+[2025-06-07 18:11:25] Celda revelada (8,12) - 1 minas adyacentes
+[2025-06-07 18:11:27] CLICK IZQUIERDO en (12,14) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:2
+[2025-06-07 18:11:27] Celda revelada (12,14) - 2 minas adyacentes
+[2025-06-07 18:11:28] CLICK IZQUIERDO en (12,15) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:2
+[2025-06-07 18:11:28] Celda revelada (12,15) - 2 minas adyacentes
+[2025-06-07 18:11:30] BANDERA COLOCADA en (11,16)
+[2025-06-07 18:11:31] BANDERA COLOCADA en (12,17)
+[2025-06-07 18:11:32] BANDERA COLOCADA en (12,16)
+[2025-06-07 18:11:33] CLICK IZQUIERDO en (12,18) - Mina:SI, Revelada:NO, Bandera:NO, Adyacentes:0
+[2025-06-07 18:11:33] BOOM! Mina detonada en (12,18)
+[2025-06-07 18:11:33] FIN PARTIDA - Resultado: DERROTA - MINA ENCONTRADA, Tiempo: 141 segundos
+[2025-06-07 18:11:36] === FIN DE SESION ===

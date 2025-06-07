@@ -1,4 +1,8 @@
-#include "headers.h"
+#include "common.h"
+#include "juego.h"
+#include "logs.h"
+#include "tablero.h"
+#include "interfaz.h"
 
 void jugar(SDL_Window *ventana, SDL_Renderer *renderer, TTF_Font *fuente,TTF_Font *fuenteGrande, sCelda **matriz, Archivo_conf configuracion, int *minasRestantes, int ventana_ancho)
 {
@@ -85,7 +89,6 @@ void jugar(SDL_Window *ventana, SDL_Renderer *renderer, TTF_Font *fuente,TTF_Fon
                                         dibujarCeldas(renderer, matriz, configuracion.dimensiones, fuente);
                                         dibujarTablero(renderer, configuracion.dimensiones);
 
-
                                         mostrarGameOver(renderer, fuenteGrande, configuracion.dimensiones);
                                         SDL_RenderPresent(renderer);
 
@@ -160,7 +163,6 @@ void jugar(SDL_Window *ventana, SDL_Renderer *renderer, TTF_Font *fuente,TTF_Fon
     }
 
 }
-
 
 void limpiarTodosLosRecursos(SDL_Window *ventana, SDL_Renderer *renderer, TTF_Font *fuente,TTF_Font *fuenteGrande, sCelda **matriz, Archivo_conf configuracion)
 {

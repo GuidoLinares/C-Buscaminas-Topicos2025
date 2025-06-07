@@ -1,4 +1,8 @@
-#include "headers.h"
+#include "common.h"
+#include "tablero.h"
+#include "juego.h"
+#include "interfaz.h"
+#include "logs.h"
 /*
 Apellido(s), nombre(s): Linares, Guido Hernan
 DNI: 43170056
@@ -9,7 +13,7 @@ DNI: 44595085
 Entrega: Sí
 
 Apellido(s), nombre(s): Calvet, Lucas
-DNI:  (pongan su DNI)
+DNI:
 Entrega: NO
 */
 
@@ -96,7 +100,6 @@ int main(int argc, char *argv[])
 
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 
-
     // Intentar cargar múltiples fuentes como fallback
     TTF_Font* fuente = NULL;
     TTF_Font* fuenteGrande = NULL;
@@ -140,11 +143,10 @@ int main(int argc, char *argv[])
 
     printf("Entrando al bucle principal...\n");
 
-
-
     jugar(ventana, renderer, fuente,fuenteGrande, matriz, configuracion, &minasRestantes, ventana_ancho);
 
     limpiarTodosLosRecursos(ventana, renderer, fuente, fuenteGrande, matriz, configuracion);
+
     printf("Programa terminado correctamente\n");
 
     return 0;

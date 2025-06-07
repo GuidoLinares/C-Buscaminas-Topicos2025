@@ -15,7 +15,7 @@ int generarAleatorio(int minimo, int maximo);
 void trim(char* cadena);
 Archivo_conf leerArchivo();
 void revelarEspaciosVacios(sCelda** matriz, int dimensiones, int fila, int col);
-void contarMinasAdyacentes(sCelda** matriz, int dimension, int fila, int columna);
+void contarMinasAdyacentes(sCelda** matriz, int dimension, int fila, int columna);
 
 
 #endif // TABLERO_H_INCLUDED

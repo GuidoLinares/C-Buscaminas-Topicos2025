@@ -16,7 +16,7 @@ void logEstadoTablero(sCelda** matriz, int dimensiones);
 
 // Funciones auxiliares internas
 char* obtenerTimestamp();
-void escribirEvento(const char* evento);
+void escribirEvento(const char*);
 
 
 #endif // LOGS_H_INCLUDED

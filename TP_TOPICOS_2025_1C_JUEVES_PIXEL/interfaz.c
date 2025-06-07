@@ -1,4 +1,5 @@
-#include "headers.h"
+#include "common.h"
+#include "interfaz.h"
 
 void dibujarTablero(SDL_Renderer *renderizador, int dimensiones)
 {

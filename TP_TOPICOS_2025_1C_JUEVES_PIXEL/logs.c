@@ -1,4 +1,5 @@
-#include "headers.h"
+#include "common.h"
+#include "logs.h"
 
 static SistemaLog* g_sistemaLog = NULL;
 

@@ -1,4 +1,5 @@
-#include "headers.h"
+#include "common.h"
+#include "tablero.h"
 
 void contarMinasAdyacentes(sCelda** matriz, int dimension, int fila, int columna)
 {

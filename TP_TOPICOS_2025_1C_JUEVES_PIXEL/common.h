@@ -38,6 +38,13 @@ typedef struct {
     FILE* archivo;
     char* nombreArchivo;
     time_t tiempoInicio;
-} SistemaLog;
+}SistemaLog;
+
+typedef struct {
+    SDL_Window* ventana;
+    SDL_Renderer* renderer;
+    TTF_Font* fuente;
+    TTF_Font* fuenteGrande;
+}RecursosSDL;
 
 #endif // COMMON_H_INCLUDED
