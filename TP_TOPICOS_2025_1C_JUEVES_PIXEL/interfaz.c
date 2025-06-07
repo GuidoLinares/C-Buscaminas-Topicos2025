@@ -1,6 +1,5 @@
 #include "headers.h"
 
-
 void dibujarTablero(SDL_Renderer *renderizador, int dimensiones)
 {
     SDL_SetRenderDrawColor(renderizador, 255, 255, 255, 255);
@@ -8,28 +7,29 @@ void dibujarTablero(SDL_Renderer *renderizador, int dimensiones)
     for (int i = 0; i <= dimensiones; i++)
     {
         // Dibujar líneas verticales
-        SDL_RenderDrawLine(renderizador, i * PIXEL_CELDA, 0, i * PIXEL_CELDA, dimensiones * PIXEL_CELDA);
+        SDL_RenderDrawLine(renderizador, i * PIXEL_CELDA, ALTURA_HEADER, i * PIXEL_CELDA, dimensiones * PIXEL_CELDA + ALTURA_HEADER);
         // Dibujar líneas horizontales
-        SDL_RenderDrawLine(renderizador, 0, i * PIXEL_CELDA, dimensiones * PIXEL_CELDA, i * PIXEL_CELDA);
+        SDL_RenderDrawLine(renderizador, 0, i * PIXEL_CELDA + ALTURA_HEADER, dimensiones * PIXEL_CELDA, i * PIXEL_CELDA + ALTURA_HEADER);
     }
 }
 
-void dibujarCeldas(SDL_Renderer* renderizador, s_celdas** matriz, int dimensiones, TTF_Font* fuente)
+
+void dibujarCeldas(SDL_Renderer* renderizador, sCelda** matriz, int dimensiones, TTF_Font* fuente)
 {
 
-    s_celdas** punteroFila = matriz;
-    s_celdas** punteroFilaFin = matriz + dimensiones;
+    sCelda** punteroFila = matriz;
+    sCelda** punteroFilaFin = matriz + dimensiones;
 
     for (int r = 0; punteroFila < punteroFilaFin; punteroFila++, r++)
     {
-        s_celdas* punteroColumna = *punteroFila;
-        s_celdas* punteroColumnaFin = *punteroFila + dimensiones;
+        sCelda* punteroColumna = *punteroFila;
+        sCelda* punteroColumnaFin = *punteroFila + dimensiones;
 
         for (int c = 0; punteroColumna < punteroColumnaFin; punteroColumna++, c++)
         {
             SDL_Rect rectCelda;
             rectCelda.x = c * PIXEL_CELDA;
-            rectCelda.y = r * PIXEL_CELDA;
+            rectCelda.y = r * PIXEL_CELDA + ALTURA_HEADER; // ← AGREGAR ALTURA_HEADER
             rectCelda.w = PIXEL_CELDA;
             rectCelda.h = PIXEL_CELDA;
 
@@ -170,3 +170,75 @@ void dibujarCeldas(SDL_Renderer* renderizador, s_celdas** matriz, int dimensione
         }
     }
 }
+
+
+
+void dibujarHeader(SDL_Renderer *renderer, TTF_Font *fuente, int minasRestantes, int anchoVentana)
+{
+    // Dibujar fondo del header (azul oscuro)
+    SDL_SetRenderDrawColor(renderer, 30, 42, 75, 255);
+    SDL_Rect rectHeader = {0, 0, anchoVentana, ALTURA_HEADER};
+    SDL_RenderFillRect(renderer, &rectHeader);
+
+    if (fuente != NULL)
+    {
+        SDL_Color sombra = {0, 0, 0, 255};                // Negro
+        SDL_Color colorTexto = {173, 216, 230, 255};      // Celeste claro
+
+        // ========== DIBUJAR TÍTULO "BUSCAMINAS PIXEL" CON SOMBRA ==========
+        SDL_Surface *superficieSombraTitulo = TTF_RenderText_Solid(fuente, "BUSCAMINAS PIXEL", sombra);
+        SDL_Surface *superficieTitulo = TTF_RenderText_Solid(fuente, "BUSCAMINAS PIXEL", colorTexto);
+
+        if (superficieTitulo != NULL && superficieSombraTitulo != NULL)
+        {
+            SDL_Texture *texturaTitulo = SDL_CreateTextureFromSurface(renderer, superficieTitulo);
+            SDL_Texture *texturaSombraTitulo = SDL_CreateTextureFromSurface(renderer, superficieSombraTitulo);
+
+            int anchoTitulo = superficieTitulo->w;
+            int altoTitulo = superficieTitulo->h;
+            int xTitulo = (anchoVentana - anchoTitulo) / 2;
+            int yTitulo = 10;
+
+            SDL_Rect rectTitulo = {xTitulo, yTitulo, anchoTitulo, altoTitulo};
+            SDL_Rect rectSombra = {xTitulo + 1, yTitulo + 1, anchoTitulo, altoTitulo};
+
+            SDL_RenderCopy(renderer, texturaSombraTitulo, NULL, &rectSombra);
+            SDL_RenderCopy(renderer, texturaTitulo, NULL, &rectTitulo);
+
+            SDL_DestroyTexture(texturaTitulo);
+            SDL_DestroyTexture(texturaSombraTitulo);
+            SDL_FreeSurface(superficieTitulo);
+            SDL_FreeSurface(superficieSombraTitulo);
+        }
+
+        // ========== DIBUJAR CONTADOR DE MINAS CON SOMBRA ==========
+        char texto[50];
+        snprintf(texto, sizeof(texto), "Minas restantes: %d", minasRestantes);
+
+        SDL_Surface *superficieSombraTexto = TTF_RenderText_Solid(fuente, texto, sombra);
+        SDL_Surface *superficieTexto = TTF_RenderText_Solid(fuente, texto, colorTexto);
+
+        if (superficieTexto != NULL && superficieSombraTexto != NULL)
+        {
+            SDL_Texture *texturaTexto = SDL_CreateTextureFromSurface(renderer, superficieTexto);
+            SDL_Texture *texturaSombraTexto = SDL_CreateTextureFromSurface(renderer, superficieSombraTexto);
+
+            int anchoTexto = superficieTexto->w;
+            int altoTexto = superficieTexto->h;
+            int xTexto = (anchoVentana - anchoTexto) / 2;
+            int yTexto = ALTURA_HEADER - altoTexto - 10;
+
+            SDL_Rect rectTexto = {xTexto, yTexto, anchoTexto, altoTexto};
+            SDL_Rect rectSombraTexto = {xTexto + 1, yTexto + 1, anchoTexto, altoTexto};
+
+            SDL_RenderCopy(renderer, texturaSombraTexto, NULL, &rectSombraTexto);
+            SDL_RenderCopy(renderer, texturaTexto, NULL, &rectTexto);
+
+            SDL_DestroyTexture(texturaTexto);
+            SDL_DestroyTexture(texturaSombraTexto);
+            SDL_FreeSurface(superficieTexto);
+            SDL_FreeSurface(superficieSombraTexto);
+        }
+    }
+}
+

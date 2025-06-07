@@ -94,18 +94,18 @@ void logInicioPartida(Archivo_conf configuracion)
     snprintf(mensaje, 200,
              "INICIO PARTIDA - Dimensiones: %dx%d, Minas: %d, Total celdas: %d",
              configuracion.dimensiones, configuracion.dimensiones,
-             configuracion.minas, configuracion.dimensiones * configuracion.dimensiones);
+             configuracion.cantMinas, configuracion.dimensiones * configuracion.dimensiones);
 
     escribirEvento(mensaje);
     free(mensaje);
 }
 
-void logClickCelda(s_celdas** matriz, int fila, int columna, int dimensiones, const char* tipoClick)
+void logClickCelda(sCelda** matriz, int fila, int columna, int dimensiones, const char* tipoClick)
 {
     if (!g_sistemaLog || fila < 0 || fila >= dimensiones || columna < 0 || columna >= dimensiones)
         return;
 
-    s_celdas* celdaClickeada = *(matriz + fila) + columna;
+    sCelda* celdaClickeada = *(matriz + fila) + columna;
 
     char* mensaje = (char*)malloc(250 * sizeof(char));
     if (!mensaje) return;
@@ -122,12 +122,12 @@ void logClickCelda(s_celdas** matriz, int fila, int columna, int dimensiones, co
     free(mensaje);
 }
 
-void logRevelarCelda(s_celdas** matriz, int fila, int columna, int dimensiones)
+void logRevelarCelda(sCelda** matriz, int fila, int columna, int dimensiones)
 {
     if (!g_sistemaLog)
         return;
 
-    s_celdas* celda = *(matriz + fila) + columna;
+    sCelda* celda = *(matriz + fila) + columna;
 
     char* mensaje = (char*)malloc(150 * sizeof(char));
     if (!mensaje)
@@ -146,7 +146,7 @@ void logRevelarCelda(s_celdas** matriz, int fila, int columna, int dimensiones)
 }
 
 // Log para banderas
-void logBandera(s_celdas** matriz, int fila, int columna, int dimensiones, int colocada)
+void logBandera(sCelda** matriz, int fila, int columna, int dimensiones, int colocada)
 {
     if (!g_sistemaLog)
         return;
@@ -196,14 +196,14 @@ void logConfiguracion(Archivo_conf config)
         return;
 
     snprintf(mensaje, 150, "CONFIGURACION CARGADA - Archivo: %s, Dim: %d, Minas: %d",
-             ARCH_CONFIG, config.dimensiones, config.minas);
+             ARCH_CONFIG, config.dimensiones, config.cantMinas);
 
     escribirEvento(mensaje);
     free(mensaje);
 }
 
 // Log de estado del tablero (para debugging)
-void logEstadoTablero(s_celdas** matriz, int dimensiones)
+void logEstadoTablero(sCelda** matriz, int dimensiones)
 {
     if (!g_sistemaLog)
         return;
@@ -212,12 +212,12 @@ void logEstadoTablero(s_celdas** matriz, int dimensiones)
     int banderasColocadas = 0;
     int minasReveladas = 0;
 
-    s_celdas** punteroFila = matriz;
-    s_celdas** punteroFilaFin = matriz + dimensiones;
+    sCelda** punteroFila = matriz;
+    sCelda** punteroFilaFin = matriz + dimensiones;
 
     for (; punteroFila < punteroFilaFin; punteroFila++) {
-        s_celdas* punteroColumna = *punteroFila;
-        s_celdas* punteroColumnaFin = *punteroFila + dimensiones;
+        sCelda* punteroColumna = *punteroFila;
+        sCelda* punteroColumnaFin = *punteroFila + dimensiones;
 
         for (; punteroColumna < punteroColumnaFin; punteroColumna++)
         {
