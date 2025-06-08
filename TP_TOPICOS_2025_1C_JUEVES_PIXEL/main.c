@@ -1,8 +1,12 @@
+
 #include "common.h"
 #include "tablero.h"
 #include "juego.h"
-#include "interfaz.h"
 #include "logs.h"
+#include "menu.h"     // Solo para funciones de menú
+#include "usuario.h"  // Solo para gestión de usuarios
+
+
 /*
 Apellido(s), nombre(s): Linares, Guido Hernan
 DNI: 43170056
@@ -13,73 +17,42 @@ DNI: 44595085
 Entrega: Sí
 
 Apellido(s), nombre(s): Calvet, Lucas
-DNI:
+DNI: (pongan su DNI)
 Entrega: NO
 */
 
 int main(int argc, char *argv[])
 {
-    sCelda **matriz;
+    // === CONFIGURACIÓN DESDE ARCHIVO (como siempre) ===
+    Archivo_conf configuracion = leerArchivo();
 
-    Archivo_conf configuracion;
-    configuracion = leerArchivo();
-
-    inicializarLog("Session_Buscaminas.log");
-    logConfiguracion(configuracion);
-    logInicioPartida(configuracion);
-    int minasRestantes = configuracion.cantMinas;
-
-    matriz = crearMatriz(configuracion.dimensiones);
-    if(!matriz)
-    {
-        printf("%s\n",SIN_MEM);
-        return -1;
-    }
-    else
-    {
-        inicializarMatriz(matriz, configuracion.dimensiones);
-        puts("ARRANCA SETEO DEL JUEGO");
-        llenarMatriz(matriz, configuracion);
-    }
-
-    mostrarMatriz(matriz,configuracion.dimensiones);
-
-
-    if (SDL_Init(SDL_INIT_VIDEO) < 0)
-    {
+    // === INICIALIZACIÓN SDL (como siempre) ===
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         printf("Error al inicializar SDL: %s\n", SDL_GetError());
-        destruirMatriz(matriz, configuracion.dimensiones);
-        destruirLog();
         return -1;
     }
 
-    // Inicializar TTF
     if (TTF_Init() == -1) {
         printf("Error al inicializar TTF: %s\n", TTF_GetError());
         SDL_Quit();
-        destruirMatriz(matriz, configuracion.dimensiones);
-        destruirLog();
         return -1;
     }
 
-    // Definir el tamaño de la ventana según la configuración y PIXEL_CELDA
-    int ventana_ancho = configuracion.dimensiones * PIXEL_CELDA;
-    int ventana_alto = configuracion.dimensiones * PIXEL_CELDA + ALTURA_HEADER;
+    // Tamaño inicial para menús, se ajustará dinámicamente para el juego
+    int ventana_ancho = 900;
+    int ventana_alto = 800;
 
-    SDL_Window *ventana = SDL_CreateWindow("BUSCAMINAS_PIXEL",
+    SDL_Window *ventana = SDL_CreateWindow("BUSCAMINAS AVANZADO",
                                            SDL_WINDOWPOS_CENTERED,
                                            SDL_WINDOWPOS_CENTERED,
                                            ventana_ancho,
                                            ventana_alto,
                                            SDL_WINDOW_SHOWN);
 
-    if (!ventana)
-    {
+    if (!ventana) {
         printf("Error al crear la ventana: %s\n", SDL_GetError());
         TTF_Quit();
         SDL_Quit();
-        destruirMatriz(matriz, configuracion.dimensiones);
-        destruirLog();
         return -1;
     }
 
@@ -87,67 +60,95 @@ int main(int argc, char *argv[])
                                                  SDL_RENDERER_ACCELERATED |
                                                  SDL_RENDERER_PRESENTVSYNC);
 
-    if (!renderer)
-    {
+    if (!renderer) {
         printf("Error al crear el renderizador: %s\n", SDL_GetError());
         SDL_DestroyWindow(ventana);
         TTF_Quit();
         SDL_Quit();
-        destruirMatriz(matriz, configuracion.dimensiones);
-        destruirLog();
         return -1;
     }
 
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 
-    // Intentar cargar múltiples fuentes como fallback
+    // Cargar fuentes (tu código original)
     TTF_Font* fuente = NULL;
     TTF_Font* fuenteGrande = NULL;
     const char* fuentes[] = {
         "arial.ttf",
         "C:/Windows/Fonts/arial.ttf",
         "C:/Windows/Fonts/calibri.ttf",
-        "/System/Library/Fonts/Arial.ttf",  // macOS
-        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",  // Linux
+        "/System/Library/Fonts/Arial.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
         NULL
     };
 
     for (int i = 0; fuentes[i] != NULL; i++) {
-        fuente = TTF_OpenFont(fuentes[i], 16);
-        if (fuente) {
-            printf("Fuente cargada: %s\n", fuentes[i]);
-            break;
-        }
+        fuente = TTF_OpenFont(fuentes[i], 18);
+        if (fuente) break;
+    }
+
+    for (int i = 0; fuentes[i] != NULL; i++) {
+        fuenteGrande = TTF_OpenFont(fuentes[i], 32);
+        if (fuenteGrande) break;
     }
 
     if (!fuente) {
-        printf("Advertencia: No se pudo cargar ninguna fuente. Los números no se mostrarán.\n");
-        printf("Error TTF: %s\n", TTF_GetError());
-        // No salimos del programa, solo continuamos sin fuente
+        printf("Advertencia: No se pudo cargar fuente\n");
     }
-
-    for (int i = 0; fuentes[i] != NULL; i++)
-    {
-        fuenteGrande = TTF_OpenFont(fuentes[i], 40);
-        if (fuenteGrande)
-        {
-            printf("Fuente grande cargada: %s\n", fuentes[i]);
-            break;
-        }
-    }
-
     if (!fuenteGrande) {
-        printf("⚠️ No se pudo cargar fuente grande, se usará la normal.\n");
         fuenteGrande = fuente;
     }
 
-    printf("Entrando al bucle principal...\n");
+    // === GESTIÓN DE USUARIO EN SDL ===
+    Usuario usuarioActual = {0};
+    if (pantallaIngreso(ventana, renderer, fuente, fuenteGrande, &usuarioActual) != 0) {
+        printf("Error en el sistema de usuarios\n");
+        // Limpieza y salida
+        if (fuenteGrande && fuenteGrande != fuente) TTF_CloseFont(fuenteGrande);
+        if (fuente) TTF_CloseFont(fuente);
+        TTF_Quit();
+        SDL_DestroyRenderer(renderer);
+        SDL_DestroyWindow(ventana);
+        SDL_Quit();
+        return -1;
+    }
 
-    jugar(ventana, renderer, fuente,fuenteGrande, matriz, configuracion, &minasRestantes, ventana_ancho);
+    // === BUCLE DE MENÚ PRINCIPAL EN SDL ===
+    int continuar = 1;
+    while (continuar) {
+        int opcion = mostrarMenuSDL(ventana, renderer, fuente, fuenteGrande, &usuarioActual);
 
-    limpiarTodosLosRecursos(ventana, renderer, fuente, fuenteGrande, matriz, configuracion);
+        switch (opcion) {
+            case 1: // Nueva partida
+                ejecutarPartida(ventana, renderer, fuente, fuenteGrande, &usuarioActual, configuracion);
+                break;
+            case 2: // Estadísticas
+                mostrarEstadisticasSDL(ventana, renderer, fuente, fuenteGrande, &usuarioActual);
+                break;
+            case 3: // Cargar partida
+                cargarPartidaSDL(ventana, renderer, fuente, fuenteGrande, &usuarioActual, configuracion);
+                break;
+            case 4: // Recargar configuración
+                configuracion = leerArchivo();
+                printf("Configuracion recargada: Dimensiones=%d, Minas=%d\n",
+                       configuracion.dimensiones, configuracion.cantMinas);
+                break;
+            case 5: // Salir
+                continuar = 0;
+                break;
+        }
+    }
 
-    printf("Programa terminado correctamente\n");
+    // Guardar datos del usuario al salir
+    guardarUsuario(&usuarioActual);
+
+    // Limpieza final
+    if (fuenteGrande && fuenteGrande != fuente) TTF_CloseFont(fuenteGrande);
+    if (fuente) TTF_CloseFont(fuente);
+    TTF_Quit();
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(ventana);
+    SDL_Quit();
 
     return 0;
 }

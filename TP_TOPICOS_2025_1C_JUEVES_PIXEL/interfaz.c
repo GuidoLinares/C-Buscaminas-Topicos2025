@@ -289,7 +289,6 @@ void mostrarGameOver(SDL_Renderer* renderizador, TTF_Font* fuente, int dimension
     SDL_DestroyTexture(textoTex);
 }
 
-
 int verificarVictoria(sCelda** matriz, int dimensiones, int totalMinas)
 {
     int reveladas = 0;
@@ -363,4 +362,6 @@ void mostrarVictoria(SDL_Renderer* renderizador, TTF_Font* fuente, int dimension
     SDL_DestroyTexture(texTexto1);
     SDL_DestroyTexture(texTexto2);
 }
+
+
 
