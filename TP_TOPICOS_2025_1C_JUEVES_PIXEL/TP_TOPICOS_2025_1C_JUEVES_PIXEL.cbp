@@ -17,9 +17,7 @@
 					<Add directory="SDL2_ttf-2.24.0/x86_64-w64-mingw32/include" />
 				</Compiler>
 				<Linker>
-					<Add option="-Imingw32 -ISDL2main -ISDL2" />
-					<Add option="-mconsole" />
-					<Add option="-mpc64" />
+					<Add option="-lSDL2 -lSDL2main  -lSDL2_ttf" />
 					<Add library="SDL2" />
 					<Add library="rpcrt4" />
 					<Add directory="SDL2-2.0.22/x86_64-w64-mingw32/lib" />
@@ -37,9 +35,7 @@
 					<Add directory="SDL2_ttf-2.24.0/x86_64-w64-mingw32/include" />
 				</Compiler>
 				<Linker>
-					<Add option="-Imingw32 -ISDL2main -lSDL2" />
-					<Add option="-mconsole" />
-					<Add option="-mpc64" />
+					<Add option="-lSDL2 -lSDL2main  -lSDL2_ttf" />
 					<Add library="SDL2" />
 					<Add library="rpcrt4" />
 					<Add directory="SDL2-2.0.22/x86_64-w64-mingw32/lib" />
@@ -55,9 +51,7 @@
 			<Add directory="SDL2_ttf-2.24.0/x86_64-w64-mingw32/include" />
 		</Compiler>
 		<Linker>
-			<Add option="-Imingw32 -ISDL2main -ISDL2" />
-			<Add option="-mconsole" />
-			<Add option="-mpc64" />
+			<Add option="-lSDL2 -lSDL2main  -lSDL2_ttf" />
 			<Add library="SDL2" />
 			<Add library="SDL2_ttf-2.24.0/x86_64-w64-mingw32/lib/libSDL2_ttf.a" />
 			<Add library="rpcrt4" />

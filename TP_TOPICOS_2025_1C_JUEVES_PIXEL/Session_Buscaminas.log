@@ -4789,3 +4789,17 @@
 [2025-06-08 01:58:13] Celda revelada (1,6) - 0 minas adyacentes
 [2025-06-08 01:58:13] FIN PARTIDA - Resultado: VICTORIA, Tiempo: 1 segundos
 [2025-06-08 01:58:17] === FIN DE SESION ===
+[2025-06-08 15:40:22] === BUSCAMINAS - NUEVA SESION ===
+[2025-06-08 15:40:22] CONFIGURACION CARGADA - Archivo: buscaminas.conf, Dim: 10, Minas: 1
+[2025-06-08 15:40:22] INICIO PARTIDA - Dimensiones: 10x10, Minas: 1, Total celdas: 100
+[2025-06-08 15:40:23] CLICK IZQUIERDO en (1,7) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[2025-06-08 15:40:23] Celda revelada (1,7) - 0 minas adyacentes
+[2025-06-08 15:40:23] FIN PARTIDA - Resultado: VICTORIA, Tiempo: 1 segundos
+[2025-06-08 15:40:27] === FIN DE SESION ===
+[2025-06-08 16:13:14] === BUSCAMINAS - NUEVA SESION ===
+[2025-06-08 16:13:14] CONFIGURACION CARGADA - Archivo: buscaminas.conf, Dim: 10, Minas: 1
+[2025-06-08 16:13:14] INICIO PARTIDA - Dimensiones: 10x10, Minas: 1, Total celdas: 100
+[2025-06-08 16:13:15] CLICK IZQUIERDO en (0,0) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[2025-06-08 16:13:15] Celda revelada (0,0) - 0 minas adyacentes
+[2025-06-08 16:13:15] FIN PARTIDA - Resultado: VICTORIA, Tiempo: 1 segundos
+[2025-06-08 16:13:19] === FIN DE SESION ===

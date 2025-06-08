@@ -91,7 +91,7 @@ int pantallaIngreso(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuent
                         if (resultado >= 0)
                         {
                             SDL_StopTextInput();
-                            return 0; // Éxito
+                            return 0; // Exito
                         }
                     }
                 }
@@ -108,15 +108,15 @@ int pantallaIngreso(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuent
         SDL_SetRenderDrawColor(renderer, azul.r, azul.g, azul.b, 255);
         SDL_RenderClear(renderer);
 
-        // Título
+        // Titulo
         if (fuenteGrande)
-renderizarTextoCentrado(renderer, fuenteGrande, "BUSCAMINAS PIXEL", 100, blanco, negro);
+            renderizarTextoCentrado(renderer, fuenteGrande, "BUSCAMINAS PIXEL", 100, blanco, negro);
 
         // Instrucciones
         if (fuente)
         {
-renderizarTextoCentrado(renderer, fuente, "Ingresa tu nombre de usuario:", 200, blanco, negro);
-renderizarTextoCentrado(renderer, fuente, "(3-20 caracteres, presiona ENTER)", 220, gris, negro);
+            renderizarTextoCentrado(renderer, fuente, "Ingresa tu nombre de usuario:", 200, blanco, negro);
+            renderizarTextoCentrado(renderer, fuente, "(3-20 caracteres, presiona ENTER)", 220, gris, negro);
         }
 
         // Campo de entrada (centrado horizontalmente)
@@ -166,9 +166,9 @@ renderizarTextoCentrado(renderer, fuente, "(3-20 caracteres, presiona ENTER)", 2
             SDL_RenderDrawLine(renderer, xCursor, 265, xCursor, 285);
         }
 
-        // Instrucción inferior
+        // Instruccion inferior
         if (fuente)
-renderizarTextoCentrado(renderer, fuente, "ESC para salir", 400, gris, negro);
+            renderizarTextoCentrado(renderer, fuente, "ESC para salir", 400, gris, negro);
 
         SDL_RenderPresent(renderer);
         SDL_Delay(16);
@@ -187,9 +187,9 @@ int mostrarMenuSDL(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente
     const int numOpciones = 5;
     const char* opciones[] = {
         "1. Nueva Partida",
-        "2. Ver Estadísticas",
+        "2. Ver Estadisticas",
         "3. Cargar Partida",
-        "4. Recargar Configuración",
+        "4. Recargar Configuracion",
         "5. Salir"
     };
 
@@ -234,11 +234,11 @@ int mostrarMenuSDL(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente
         SDL_SetRenderDrawColor(renderer, azul.r, azul.g, azul.b, 255);
         SDL_RenderClear(renderer);
 
-        // Título
+        // Titulo
         if (fuenteGrande)
-        renderizarTextoCentrado(renderer, fuenteGrande, "MENÚ PRINCIPAL", 50, blanco, negro);
+            renderizarTextoCentrado(renderer, fuenteGrande, "MENU PRINCIPAL", 50, blanco, negro);
 
-        // Información del usuario
+        // Informacion del usuario
         if (fuente)
         {
             char infoUsuario[100];
@@ -250,7 +250,7 @@ int mostrarMenuSDL(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente
             renderizarTextoCentrado(renderer, fuente, infoUsuario, 140, gris, negro);
         }
 
-        // Opciones del menú
+        // Opciones del menu
         for (int i = 0; i < numOpciones; i++)
         {
             SDL_Color colorOpcion;
@@ -259,7 +259,7 @@ int mostrarMenuSDL(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente
             else
                 colorOpcion = blanco;
 
-            int y = 200 + i * 40; // Calcula la posición 'y' para la opción
+            int y = 200 + i * 40; // Calcula la posicion 'y' para la opcion
 
             int anchoOpcionTexto = 0;
             if (fuente)
@@ -285,7 +285,7 @@ int mostrarMenuSDL(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente
 
             // Instrucciones
             if (fuente)
-                renderizarTextoCentrado(renderer, fuente, "Usa las flechas y ENTER, o presiona el número", 420, gris, negro);
+                renderizarTextoCentrado(renderer, fuente, "Usa las flechas y ENTER, o presiona el numero", 420, gris, negro);
 
             SDL_RenderPresent(renderer);
             SDL_Delay(16);
@@ -305,16 +305,16 @@ void mostrarEstadisticasSDL(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Fon
         while (SDL_PollEvent(&e))
         {
             if (e.type == SDL_QUIT || e.type == SDL_KEYDOWN)
-                return; // Regresar al menú
+                return; // Regresar al menu
         }
 
         // Renderizado
         SDL_SetRenderDrawColor(renderer, azul.r, azul.g, azul.b, 255);
         SDL_RenderClear(renderer);
 
-        // Título
+        // Titulo
         if (fuenteGrande)
-            renderizarTextoConSombra(renderer, fuenteGrande, "ESTADÍSTICAS", 200, 50, blanco, negro);
+            renderizarTextoConSombra(renderer, fuenteGrande, "ESTADISTICAS", 200, 50, blanco, negro);
 
         if (fuente)
         {
@@ -327,7 +327,7 @@ void mostrarEstadisticasSDL(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Fon
             renderizarTextoConSombra(renderer, fuente, buffer, 100, y, blanco, negro);
             y += espaciado;
 
-            // Estadísticas
+            // Estadisticas
             snprintf(buffer, sizeof(buffer), "Partidas jugadas: %d", usuario->estadisticas.partidasJugadas);
             renderizarTextoConSombra(renderer, fuente, buffer, 100, y, blanco, negro);
             y += espaciado;
@@ -372,7 +372,7 @@ void mostrarEstadisticasSDL(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Fon
             }
 
             // Instrucciones
-            renderizarTextoConSombra(renderer, fuente, "Presiona cualquier tecla para volver", 250, 400, gris, negro);
+            renderizarTextoConSombra(renderer, fuente, "Presiona cualquier tecla para volver", 250, y + espaciado, gris, negro);
         }
 
         SDL_RenderPresent(renderer);
@@ -385,34 +385,204 @@ int cargarPartidaSDL(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuen
     SDL_Color blanco = {255, 255, 255, 255};
     SDL_Color negro = {0, 0, 0, 255};
     SDL_Color azul = {30, 42, 75, 255};
+    SDL_Color amarillo = {255, 255, 0, 255};
+    SDL_Color gris = {128, 128, 128, 255};
+    SDL_Color verde = {0, 255, 0, 255};
 
-    Uint32 tiempoInicio = SDL_GetTicks();
+    int opcionSeleccionada = 0;
+    int partidasDisponibles = 0;
 
-    while (SDL_GetTicks() - tiempoInicio < 2000)
-    { // Mostrar por 2 segundos
+    // Contar partidas validas
+    for (int i = 0; i < MAX_PARTIDAS_GUARDADAS; i++) {
+        if (usuario->partidas[i].esValida) {
+            partidasDisponibles++;
+        }
+    }
+
+    // Si no hay partidas guardadas
+    if (partidasDisponibles == 0) {
+        Uint32 tiempoInicio = SDL_GetTicks();
+
+        while (SDL_GetTicks() - tiempoInicio < 2000) {
+            SDL_Event e;
+            while (SDL_PollEvent(&e)) {
+                if (e.type == SDL_QUIT || e.type == SDL_KEYDOWN)
+                    return -1;
+            }
+
+            SDL_SetRenderDrawColor(renderer, azul.r, azul.g, azul.b, 255);
+            SDL_RenderClear(renderer);
+
+            if (fuenteGrande)
+                renderizarTextoCentrado(renderer, fuenteGrande, "CARGAR PARTIDA", 150, blanco, negro);
+
+            if (fuente) {
+                renderizarTextoCentrado(renderer, fuente, "No tienes partidas guardadas", 250, blanco, negro);
+                renderizarTextoCentrado(renderer, fuente, "Presiona cualquier tecla para volver", 300, gris, negro);
+            }
+
+            SDL_RenderPresent(renderer);
+            SDL_Delay(16);
+        }
+        return -1;
+    }
+
+    // Interfaz para seleccionar partida
+    while (1) {
         SDL_Event e;
-        while (SDL_PollEvent(&e))
-        {
-            if (e.type == SDL_QUIT || e.type == SDL_KEYDOWN)
+        while (SDL_PollEvent(&e)) {
+            if (e.type == SDL_QUIT) {
                 return -1;
+            }
+
+            if (e.type == SDL_KEYDOWN) {
+                switch (e.key.keysym.sym) {
+                    case SDLK_UP:
+                        do {
+                            opcionSeleccionada = (opcionSeleccionada - 1 + MAX_PARTIDAS_GUARDADAS) % MAX_PARTIDAS_GUARDADAS;
+                        } while (!usuario->partidas[opcionSeleccionada].esValida);
+                        break;
+
+                    case SDLK_DOWN:
+                        do {
+                            opcionSeleccionada = (opcionSeleccionada + 1) % MAX_PARTIDAS_GUARDADAS;
+                        } while (!usuario->partidas[opcionSeleccionada].esValida);
+                        break;
+
+                    case SDLK_RETURN:
+                        // Cargar la partida seleccionada
+                        return cargarYEjecutarPartida(ventana, renderer, fuente, fuenteGrande, usuario, opcionSeleccionada, configuracion);
+
+                    case SDLK_DELETE:
+                        // Eliminar partida seleccionada
+                        eliminarPartida(usuario, opcionSeleccionada);
+                        guardarUsuario(usuario);
+
+                        // Recontear partidas disponibles
+                        partidasDisponibles = 0;
+                        for (int i = 0; i < MAX_PARTIDAS_GUARDADAS; i++) {
+                            if (usuario->partidas[i].esValida) {
+                                partidasDisponibles++;
+                            }
+                        }
+
+                        if (partidasDisponibles == 0) {
+                            return -1; // No quedan partidas
+                        }
+
+                        // Ajustar seleccion si es necesario
+                        while (!usuario->partidas[opcionSeleccionada].esValida) {
+                            opcionSeleccionada = (opcionSeleccionada + 1) % MAX_PARTIDAS_GUARDADAS;
+                        }
+                        break;
+
+                    case SDLK_ESCAPE:
+                        return -1;
+                }
+            }
         }
 
+        // Renderizado
         SDL_SetRenderDrawColor(renderer, azul.r, azul.g, azul.b, 255);
         SDL_RenderClear(renderer);
 
+        // Titulo
         if (fuenteGrande)
-renderizarTextoCentrado(renderer, fuenteGrande, "FUNCIÓN NO IMPLEMENTADA", 200, blanco, negro);
+            renderizarTextoCentrado(renderer, fuenteGrande, "CARGAR PARTIDA", 50, blanco, negro);
 
-        if (fuente)
-renderizarTextoCentrado(renderer, fuente, "Esta función estará disponible en futuras versiones", 280, blanco, negro);
+        // Mostrar partidas guardadas
+        int yInicial = 120;
+        int espaciado = 50;
+
+        for (int i = 0; i < MAX_PARTIDAS_GUARDADAS; i++) {
+            if (!usuario->partidas[i].esValida)
+                continue;
+
+            PartidaGuardada* partida = &usuario->partidas[i];
+
+            SDL_Color colorTexto = (i == opcionSeleccionada) ? amarillo : blanco;
+
+            // Nombre de la partida
+            char infoPartida[200];
+            snprintf(infoPartida, sizeof(infoPartida), "• %s", partida->nombre);
+
+            int y = yInicial + (i * espaciado);
+
+            if (fuente) {
+                renderizarTextoConSombra(renderer, fuente, infoPartida, 100, y, colorTexto, negro);
+
+                // Informacion adicional
+                char detalles[150];
+                char tiempoFormateado[20];
+                formatearTiempo(partida->tiempoTranscurrido, tiempoFormateado);
+
+                snprintf(detalles, sizeof(detalles),
+                    "  Tamano: %dx%d | Minas: %d | Tiempo: %s",
+                    partida->dimensiones, partida->dimensiones,
+                    partida->cantMinas, tiempoFormateado);
+
+                renderizarTextoConSombra(renderer, fuente, detalles, 120, y + 20, gris, negro);
+            }
+
+            // Indicador de seleccion
+            if (i == opcionSeleccionada && fuente) {
+                renderizarTextoConSombra(renderer, fuente, ">>", 70, y, amarillo, negro);
+            }
+        }
+
+        // Instrucciones
+        if (fuente) {
+            renderizarTextoCentrado(renderer, fuente, "Arriba/Abajo Seleccionar | ENTER Cargar | DEL Eliminar | ESC Volver", 450, gris, negro);
+        }
 
         SDL_RenderPresent(renderer);
         SDL_Delay(16);
     }
+}
+
+// Nueva funcion auxiliar para cargar y ejecutar la partida
+int cargarYEjecutarPartida(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande, Usuario* usuario, int indicePartida, Archivo_conf configuracion)
+{
+    if (indicePartida < 0 || indicePartida >= MAX_PARTIDAS_GUARDADAS || !usuario->partidas[indicePartida].esValida) {
+        return -1;
+    }
+
+    PartidaGuardada* partida = &usuario->partidas[indicePartida];
+
+    // Crear configuracion temporal con los datos de la partida guardada
+    Archivo_conf configPartida;
+    configPartida.dimensiones = partida->dimensiones;
+    configPartida.cantMinas = partida->cantMinas;
+
+    // Mostrar mensaje de carga
+    SDL_Color blanco = {255, 255, 255, 255};
+    SDL_Color negro = {0, 0, 0, 255};
+    SDL_Color azul = {30, 42, 75, 255};
+
+    SDL_SetRenderDrawColor(renderer, azul.r, azul.g, azul.b, 255);
+    SDL_RenderClear(renderer);
+
+    if (fuenteGrande)
+        renderizarTextoCentrado(renderer, fuenteGrande, "CARGANDO PARTIDA...", 200, blanco, negro);
+
+    char nombrePartida[100];
+    snprintf(nombrePartida, sizeof(nombrePartida), "Cargando: %s", partida->nombre);
+    if (fuente)
+        renderizarTextoCentrado(renderer, fuente, nombrePartida, 280, blanco, negro);
+
+    SDL_RenderPresent(renderer);
+    SDL_Delay(1000);
+
+    // Aqui deberias llamar a tu funcion de ejecutar partida con los datos cargados
+    // Por ahora, creamos una nueva partida con la configuracion guardada
+    ejecutarPartida(ventana, renderer, fuente, fuenteGrande, usuario, configPartida);
+
+    // Despues de la partida, eliminar la partida guardada (opcional)
+    // eliminarPartida(usuario, indicePartida);
+    // guardarUsuario(usuario);
 
     return 0;
 }
-
 void dibujarTextoCentrado(SDL_Renderer* renderer, TTF_Font* fuente, const char* texto, int x, int y, int ancho, SDL_Color color)
 {
     if (!fuente || !texto || !renderer)
@@ -443,7 +613,7 @@ void dibujarBotonSDL(SDL_Renderer* renderer, TTF_Font* fuente, const char* texto
     SDL_Color colorTexto = seleccionado ? (SDL_Color){255, 255, 0, 255} : (SDL_Color){255, 255, 255, 255};
     SDL_Color colorBorde = {200, 200, 200, 255};
 
-    // Dibujar fondo del botón
+    // Dibujar fondo del boton
     SDL_SetRenderDrawColor(renderer, colorFondo.r, colorFondo.g, colorFondo.b, colorFondo.a);
     SDL_RenderFillRect(renderer, &rect);
 
@@ -518,8 +688,3 @@ void renderizarTextoCentrado(SDL_Renderer* renderer, TTF_Font* fuente, const cha
     SDL_DestroyTexture(texturaSombra);
     SDL_DestroyTexture(texturaTexto);
 }
-
-
-
-
-

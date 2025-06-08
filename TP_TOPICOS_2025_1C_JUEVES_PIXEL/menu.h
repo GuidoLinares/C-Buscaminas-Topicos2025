@@ -23,4 +23,7 @@ int manejarEntradaTextoSDL(SDL_Event* evento, char* buffer, int maxLen);
 
 void renderizarTextoCentrado(SDL_Renderer* , TTF_Font* , const char* , int , SDL_Color , SDL_Color );
 
+int cargarYEjecutarPartida(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande, Usuario* usuario, int indicePartida, Archivo_conf configuracion);
+
+
 #endif // MENU_H_INCLUDED
