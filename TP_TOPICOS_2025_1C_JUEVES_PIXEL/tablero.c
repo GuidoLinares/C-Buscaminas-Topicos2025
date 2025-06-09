@@ -156,6 +156,7 @@ void trim(char* cadena)
     *(fin + 1) = '\0';
 }
 
+
 Archivo_conf leerArchivo()
 {
 

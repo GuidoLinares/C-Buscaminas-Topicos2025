@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1749340729 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\interfaz.c
+1749486966 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\interfaz.c
 	"common.h"
 	"interfaz.h"
 
@@ -390,7 +390,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1749358421 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\main.c
+1749487060 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\main.c
 	"common.h"
 	"tablero.h"
 	"juego.h"
@@ -398,7 +398,7 @@
 	"menu.h"
 	"usuario.h"
 
-1749358421 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\tablero.c
+1749483437 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\tablero.c
 	"common.h"
 	"tablero.h"
 
@@ -822,7 +822,7 @@
 	"common.h"
 	"logs.h"
 
-1749350510 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\juego.c
+1749486966 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\juego.c
 	"common.h"
 	"juego.h"
 	"logs.h"
@@ -843,7 +843,7 @@
 1749331304 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\interfaz.h
 	"common.h"
 
-1749331304 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\juego.h
+1749486791 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\juego.h
 	"common.h"
 
 1749331304 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\logs.h
@@ -852,18 +852,14 @@
 1749331304 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\tablero.h
 	"common.h"
 
-1749358686 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\menu.h
+1749419846 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\menu.h
 	"common.h"
 	"usuario.h"
 
 1749342778 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\usuario.h
 	"common.h"
 
-1749359517 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\menu.c
-	"common.h"
-	"menu.h"
-	"usuario.h"
-	"juego.h"
+1749482720 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\menu.c
 	"common.h"
 	"menu.h"
 	"usuario.h"

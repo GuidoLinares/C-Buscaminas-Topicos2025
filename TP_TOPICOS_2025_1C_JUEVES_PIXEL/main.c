@@ -3,8 +3,8 @@
 #include "tablero.h"
 #include "juego.h"
 #include "logs.h"
-#include "menu.h"     // Solo para funciones de menú
-#include "usuario.h"  // Solo para gestión de usuarios
+#include "menu.h"
+#include "usuario.h"
 
 
 /*
@@ -21,12 +21,16 @@ DNI: (pongan su DNI)
 Entrega: NO
 */
 
+
+
+
 int main(int argc, char *argv[])
 {
-    // === CONFIGURACIÓN DESDE ARCHIVO (como siempre) ===
+
+    // === CONFIGURACIÓN DESDE ARCHIVOg===
     Archivo_conf configuracion = leerArchivo();
 
-    // === INICIALIZACIÓN SDL (como siempre) ===
+    // === INICIALIZACIÓN SDL ===
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         printf("Error al inicializar SDL: %s\n", SDL_GetError());
         return -1;

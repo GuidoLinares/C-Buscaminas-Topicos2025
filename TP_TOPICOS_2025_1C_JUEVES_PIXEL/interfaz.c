@@ -14,7 +14,6 @@ void dibujarTablero(SDL_Renderer *renderizador, int dimensiones)
     }
 }
 
-
 void dibujarCeldas(SDL_Renderer* renderizador, sCelda** matriz, int dimensiones, TTF_Font* fuente)
 {
 
@@ -172,7 +171,6 @@ void dibujarCeldas(SDL_Renderer* renderizador, sCelda** matriz, int dimensiones,
         }
     }
 }
-
 
 void dibujarHeader(SDL_Renderer *renderer, TTF_Font *fuente, int minasRestantes, int anchoVentana)
 {

@@ -387,7 +387,6 @@ int cargarPartidaSDL(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuen
     SDL_Color azul = {30, 42, 75, 255};
     SDL_Color amarillo = {255, 255, 0, 255};
     SDL_Color gris = {128, 128, 128, 255};
-    SDL_Color verde = {0, 255, 0, 255};
 
     int opcionSeleccionada = 0;
     int partidasDisponibles = 0;
@@ -540,7 +539,6 @@ int cargarPartidaSDL(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuen
     }
 }
 
-// Nueva funcion auxiliar para cargar y ejecutar la partida
 int cargarYEjecutarPartida(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande, Usuario* usuario, int indicePartida, Archivo_conf configuracion)
 {
     if (indicePartida < 0 || indicePartida >= MAX_PARTIDAS_GUARDADAS || !usuario->partidas[indicePartida].esValida) {
