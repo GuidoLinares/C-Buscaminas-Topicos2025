@@ -547,12 +547,10 @@ int cargarYEjecutarPartida(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font
 
     PartidaGuardada* partida = &usuario->partidas[indicePartida];
 
-    // Crear configuracion temporal con los datos de la partida guardada
     Archivo_conf configPartida;
     configPartida.dimensiones = partida->dimensiones;
     configPartida.cantMinas = partida->cantMinas;
 
-    // Mostrar mensaje de carga
     SDL_Color blanco = {255, 255, 255, 255};
     SDL_Color negro = {0, 0, 0, 255};
     SDL_Color azul = {30, 42, 75, 255};
@@ -571,13 +569,8 @@ int cargarYEjecutarPartida(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font
     SDL_RenderPresent(renderer);
     SDL_Delay(1000);
 
-    // Aqui deberias llamar a tu funcion de ejecutar partida con los datos cargados
-    // Por ahora, creamos una nueva partida con la configuracion guardada
-    ejecutarPartida(ventana, renderer, fuente, fuenteGrande, usuario, configPartida);
 
-    // Despues de la partida, eliminar la partida guardada (opcional)
-    // eliminarPartida(usuario, indicePartida);
-    // guardarUsuario(usuario);
+    ejecutarPartida(ventana, renderer, fuente, fuenteGrande, usuario, configPartida);
 
     return 0;
 }

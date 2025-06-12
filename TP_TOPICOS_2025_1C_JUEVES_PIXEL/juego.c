@@ -18,7 +18,7 @@ void ejecutarPartida(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuen
     SDL_SetWindowSize(ventana, ventana_ancho, ventana_alto);
     SDL_SetWindowPosition(ventana, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 
-    // === TU CÓDIGO ORIGINAL DE JUEGO ===
+    // === CÓDIGO ORIGINAL DE JUEGO ===
     inicializarLog("Session_Buscaminas.log");
     logConfiguracion(configuracion);
     logInicioPartida(configuracion);
@@ -37,18 +37,18 @@ void ejecutarPartida(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuen
 
     printf("Entrando al bucle principal...\n");
 
-    // JUGAR (tu función original, sin cambios)
+
     jugar(ventana, renderer, fuente, fuenteGrande, matriz, configuracion, &minasRestantes, ventana_ancho);
 
-    // Al terminar la partida, actualizar estadísticas del usuario
+
     time_t tiempoFin = time(NULL);
     int tiempoTranscurrido = (int)difftime(tiempoFin, tiempoInicio);
 
-    // Determinar si ganó o perdió (esto ya lo tienes en tu lógica)
+
     int gano = verificarVictoria(matriz, configuracion.dimensiones, configuracion.cantMinas);
     actualizarEstadisticas(usuarios, gano, tiempoTranscurrido);
 
-    // Limpieza de la matriz y logs
+
     destruirMatriz(matriz, configuracion.dimensiones);
     destruirLog();
 
@@ -96,12 +96,10 @@ void recalcularMinasAdyacentes(sCelda **matriz, int dimensiones)
                     {
                         int nr = r + dr;
                         int nc = c + dc;
-                        if (nr >= 0 && nr < dimensiones &&
-                            nc >= 0 && nc < dimensiones &&
-                            (*(matriz+nr)+nc)->tieneMina)
-                        {
+
+                        if (nr >= 0 && nr < dimensiones && nc >= 0 && nc < dimensiones && (*(matriz+nr)+nc)->tieneMina)
                             minasAdyacentes++;
-                        }
+
                     }
                 }
                 (*(matriz+r)+c)->minasAdyacentes = minasAdyacentes;
@@ -125,7 +123,7 @@ void procesarVictoria(SDL_Renderer *renderer, TTF_Font *fuente, TTF_Font *fuente
     mostrarVictoria(renderer, fuenteGrande, dimensiones);
     SDL_RenderPresent(renderer);
 
-    SDL_Delay(4000); // Muestra la victoria por un tiempo
+    SDL_Delay(4000);
 }
 
 void procesarGameOver(SDL_Renderer *renderer, TTF_Font *fuente, TTF_Font *fuenteGrande,sCelda **matriz, int dimensiones, int *minasRestantes, int ventana_ancho,int fila, int columna)
@@ -134,7 +132,7 @@ void procesarGameOver(SDL_Renderer *renderer, TTF_Font *fuente, TTF_Font *fuente
     printf("GAME OVER - Mina en posicion (%d, %d)\n", fila, columna);
     logFinPartida("DERROTA - MINA ENCONTRADA");
 
-    // Revelar todas las minas para mostrar el tablero final
+
     for (int r = 0; r < dimensiones; r++)
     {
         for (int c = 0; c < dimensiones; c++)
@@ -143,7 +141,6 @@ void procesarGameOver(SDL_Renderer *renderer, TTF_Font *fuente, TTF_Font *fuente
         }
     }
 
-    // Renderizar una vez más para mostrar todas las minas y el GAME OVER
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
     dibujarHeader(renderer, fuente, *minasRestantes, ventana_ancho);
@@ -153,7 +150,6 @@ void procesarGameOver(SDL_Renderer *renderer, TTF_Font *fuente, TTF_Font *fuente
     mostrarGameOver(renderer, fuenteGrande, dimensiones);
     SDL_RenderPresent(renderer);
 
-    // Esperar 3 segundos para que el usuario vea el resultado
     SDL_Delay(3000);
 }
 
@@ -281,8 +277,7 @@ void jugar(SDL_Window *ventana, SDL_Renderer *renderer, TTF_Font *fuente, TTF_Fo
             {
                 if (e.button.button == SDL_BUTTON_LEFT)
                 {
-                    corriendo = manejarClicIzquierdo(&e, renderer, fuente, fuenteGrande, matriz,
-                                                   configuracion, minasRestantes, ventana_ancho, &primerClic);
+                    corriendo = manejarClicIzquierdo(&e, renderer, fuente, fuenteGrande, matriz,configuracion, minasRestantes, ventana_ancho, &primerClic);
                 }
                 else if (e.button.button == SDL_BUTTON_RIGHT)
                 {
@@ -294,8 +289,8 @@ void jugar(SDL_Window *ventana, SDL_Renderer *renderer, TTF_Font *fuente, TTF_Fo
         // Renderizado
         renderizarJuego(renderer, fuente, matriz, configuracion.dimensiones, minasRestantes, ventana_ancho);
 
-        // Pequeña pausa para no saturar la CPU
-        SDL_Delay(16); // ~60 FPS
+        // Pequeña pausa
+        SDL_Delay(16);
     }
 }
 

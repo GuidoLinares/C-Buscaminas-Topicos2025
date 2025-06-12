@@ -33,7 +33,7 @@ void dibujarCeldas(SDL_Renderer* renderizador, sCelda** matriz, int dimensiones,
             rectCelda.w = PIXEL_CELDA;
             rectCelda.h = PIXEL_CELDA;
 
-            if (!(punteroColumna->esRevelada)) // Celda no revelada (oculta)
+            if (!(punteroColumna->esRevelada)) // Celda no revelada
             {
                 // Fondo gris para celda no revelada
                 SDL_SetRenderDrawColor(renderizador, 30, 42, 75, 255);
@@ -44,18 +44,15 @@ void dibujarCeldas(SDL_Renderer* renderizador, sCelda** matriz, int dimensiones,
                     int cx = rectCelda.x + PIXEL_CELDA / 2;
                     int cy = rectCelda.y + PIXEL_CELDA / 2;
 
-                    // Mástil (línea vertical marrón)
-                    SDL_SetRenderDrawColor(renderizador, 139, 69, 19, 255); // Marrón
+                    //DIBUJAR BANDERA
+                    SDL_SetRenderDrawColor(renderizador, 139, 69, 19, 255);
                     SDL_RenderDrawLine(renderizador, cx, cy - 6, cx, cy + 6);
-
-                    // Bandera (triángulo rojo a la izquierda del mástil)
                     SDL_Rect banderaRect;
                     banderaRect.x = cx - 7;
                     banderaRect.y = cy - 6;
                     banderaRect.w = 6;
                     banderaRect.h = 6;
-
-                    SDL_SetRenderDrawColor(renderizador, 255, 0, 0, 255); // Rojo intenso
+                    SDL_SetRenderDrawColor(renderizador, 255, 0, 0, 255);
                     SDL_RenderFillRect(renderizador, &banderaRect);
                 }
             }
@@ -63,32 +60,22 @@ void dibujarCeldas(SDL_Renderer* renderizador, sCelda** matriz, int dimensiones,
             {
                 if (punteroColumna->tieneMina)
                 {
-                    // Fondo negro para celda con mina
+
                     SDL_SetRenderDrawColor(renderizador, 0, 0, 0, 255);
                     SDL_RenderFillRect(renderizador, &rectCelda);
 
+                    //DIBUJAR MINA
                     int cx = rectCelda.x + PIXEL_CELDA / 2;
                     int cy = rectCelda.y + PIXEL_CELDA / 2;
-                    int brazo = 5; // longitud de cada brazo del asterisco
-
-                    // Asterisco rojo en forma de bomba
-                    SDL_SetRenderDrawColor(renderizador, 255, 0, 0, 255); // Rojo
-
-                    // Línea vertical
+                    int brazo = 5;
+                    SDL_SetRenderDrawColor(renderizador, 255, 0, 0, 255);
                     SDL_RenderDrawLine(renderizador, cx, cy - brazo, cx, cy + brazo);
-                    // Línea horizontal
                     SDL_RenderDrawLine(renderizador, cx - brazo, cy, cx + brazo, cy);
-                    // Diagonal 1
                     SDL_RenderDrawLine(renderizador, cx - brazo, cy - brazo, cx + brazo, cy + brazo);
-                    // Diagonal 2
                     SDL_RenderDrawLine(renderizador, cx - brazo, cy + brazo, cx + brazo, cy - brazo);
-
-                    // Mecha blanca hacia arriba
-                    SDL_SetRenderDrawColor(renderizador, 255, 255, 255, 255); // Blanco
+                    SDL_SetRenderDrawColor(renderizador, 255, 255, 255, 255);
                     SDL_RenderDrawLine(renderizador, cx, cy - brazo - 1, cx, cy - brazo - 6);
-
-                    // Chispa amarilla
-                    SDL_SetRenderDrawColor(renderizador, 255, 255, 0, 255); // Amarillo
+                    SDL_SetRenderDrawColor(renderizador, 255, 255, 0, 255);
                     SDL_RenderDrawPoint(renderizador, cx, cy - brazo - 7);
                     SDL_RenderDrawPoint(renderizador, cx - 1, cy - brazo - 6);
                     SDL_RenderDrawPoint(renderizador, cx + 1, cy - brazo - 6);
@@ -99,33 +86,33 @@ void dibujarCeldas(SDL_Renderer* renderizador, sCelda** matriz, int dimensiones,
                     switch (punteroColumna->minasAdyacentes)
                     {
                         case 0:
-                            SDL_SetRenderDrawColor(renderizador, 190, 225, 245, 255); // Espuma marina
+                            SDL_SetRenderDrawColor(renderizador, 190, 225, 245, 255);
                             break;
                         case 1:
-                            SDL_SetRenderDrawColor(renderizador, 150, 195, 220, 255); // Azul cielo
+                            SDL_SetRenderDrawColor(renderizador, 150, 195, 220, 255);
                             break;
                         case 2:
-                            SDL_SetRenderDrawColor(renderizador, 115, 165, 195, 255); // Azul claro
+                            SDL_SetRenderDrawColor(renderizador, 115, 165, 195, 255);
                             break;
                         case 3:
-                            SDL_SetRenderDrawColor(renderizador, 85, 135, 170, 255);  // Azul medio
+                            SDL_SetRenderDrawColor(renderizador, 85, 135, 170, 255);
                             break;
                         case 4:
-                            SDL_SetRenderDrawColor(renderizador, 60, 105, 140, 255);  // Azul profundo
+                            SDL_SetRenderDrawColor(renderizador, 60, 105, 140, 255);
                             break;
                         case 5:
-                            SDL_SetRenderDrawColor(renderizador, 40, 75, 110, 255);   // Azul océano
+                            SDL_SetRenderDrawColor(renderizador, 40, 75, 110, 255);
                             break;
                         case 6:
-                            SDL_SetRenderDrawColor(renderizador, 25, 50, 80, 255);   // Azul marino
+                            SDL_SetRenderDrawColor(renderizador, 25, 50, 80, 255);
                             break;
                         case 7:
-                            SDL_SetRenderDrawColor(renderizador, 15, 30, 55, 255);   // Azul abisal
+                            SDL_SetRenderDrawColor(renderizador, 15, 30, 55, 255);
                             break;
                         case 8:
-                            SDL_SetRenderDrawColor(renderizador, 8, 15, 35, 255);    // Abismo profundo
+                            SDL_SetRenderDrawColor(renderizador, 8, 15, 35, 255);
                             break;
-                        default: // Para cualquier otro valor (seguridad)
+                        default:
                             SDL_SetRenderDrawColor(renderizador, 115, 165, 195, 255);
                             break;
                     }
@@ -134,22 +121,22 @@ void dibujarCeldas(SDL_Renderer* renderizador, sCelda** matriz, int dimensiones,
 
                     if (punteroColumna->minasAdyacentes > 0 && fuente != NULL)
                     {
-                        char texto[12]; // Suficiente para números de hasta 8 dígitos + null terminator
+                        char texto[12];
                         sprintf(texto,"%d", punteroColumna->minasAdyacentes);
-                        SDL_Color colorTexto = {255, 255, 255}; // Color del texto (blanco)
+                        SDL_Color colorTexto = {255, 255, 255}; )
 
-                        // Renderiza el texto a una superficie
+
                         SDL_Surface* superficieTexto = TTF_RenderText_Solid(fuente, texto, colorTexto);
                         if (superficieTexto == NULL) {
                             fprintf(stderr, "Error al crear superficie de texto: %s\n", TTF_GetError());
-                            // Continúa para evitar un crash, pero el número no se dibujará
+
                         } else {
-                            // Crea una textura a partir de la superficie
+
                             SDL_Texture* texturaTexto = SDL_CreateTextureFromSurface(renderizador, superficieTexto);
                             if (texturaTexto == NULL) {
                                 fprintf(stderr, "Error al crear textura de texto: %s\n", SDL_GetError());
                                 SDL_FreeSurface(superficieTexto); // Libera la superficie si la textura falla
-                                // Continúa para evitar un crash
+
                             } else {
                                 SDL_Rect destinoTexto;
                                 destinoTexto.w = superficieTexto->w;
@@ -157,10 +144,9 @@ void dibujarCeldas(SDL_Renderer* renderizador, sCelda** matriz, int dimensiones,
                                 destinoTexto.x = rectCelda.x + (PIXEL_CELDA - destinoTexto.w) / 2; // Centra horizontalmente
                                 destinoTexto.y = rectCelda.y + (PIXEL_CELDA - destinoTexto.h) / 2; // Centra verticalmente
 
-                                // Copia la textura a la posición deseada en el renderizador
+
                                 SDL_RenderCopy(renderizador, texturaTexto, NULL, &destinoTexto);
 
-                                // Libera los recursos de la superficie y la textura
                                 SDL_FreeSurface(superficieTexto);
                                 SDL_DestroyTexture(texturaTexto);
                             }
@@ -245,7 +231,7 @@ void mostrarGameOver(SDL_Renderer* renderizador, TTF_Font* fuente, int dimension
 {
     const char* texto = "GAME OVER";
 
-    // Usar fuente ya cargada si no tenés otra más grande
+
     if (!fuente) {
         printf("No hay fuente disponible para mostrar GAME OVER.\n");
         return;

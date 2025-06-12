@@ -1,7 +1,7 @@
 #include "common.h"
 #include "usuario.h"
 
-// Función para crear un nuevo usuario
+
 void crearNuevoUsuario(const char* nombre, Usuario* usuario)
 {
     if (!usuario || !nombre)
