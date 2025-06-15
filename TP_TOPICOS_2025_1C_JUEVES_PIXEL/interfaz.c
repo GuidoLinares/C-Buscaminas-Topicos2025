@@ -1,10 +1,16 @@
 #include "common.h"
 #include "interfaz.h"
 
+/**
+ * Dibuja las líneas del tablero (cuadrícula) en el renderizador SDL
+ * @param renderizador - Puntero al renderizador SDL
+ * @param dimensiones - Número de filas y columnas del tablero
+ */
 void dibujarTablero(SDL_Renderer *renderizador, int dimensiones)
 {
     SDL_SetRenderDrawColor(renderizador, 255, 255, 255, 255);
 
+    // Ciclo para dibujar todas las líneas verticales y horizontales del tablero
     for (int i = 0; i <= dimensiones; i++)
     {
         // Dibujar líneas verticales
@@ -14,17 +20,25 @@ void dibujarTablero(SDL_Renderer *renderizador, int dimensiones)
     }
 }
 
+/**
+ * Dibuja el contenido de cada celda del tablero (banderas, minas, números)
+ * @param renderizador - Puntero al renderizador SDL
+ * @param matriz - Matriz de celdas del tablero
+ * @param dimensiones - Dimensiones del tablero
+ * @param fuente - Fuente para renderizar texto
+ */
 void dibujarCeldas(SDL_Renderer* renderizador, sCelda** matriz, int dimensiones, TTF_Font* fuente)
 {
-
     sCelda** punteroFila = matriz;
     sCelda** punteroFilaFin = matriz + dimensiones;
 
+    // Ciclo principal para recorrer todas las filas de la matriz
     for (int r = 0; punteroFila < punteroFilaFin; punteroFila++, r++)
     {
         sCelda* punteroColumna = *punteroFila;
         sCelda* punteroColumnaFin = *punteroFila + dimensiones;
 
+        // Ciclo para recorrer todas las columnas de la fila actual
         for (int c = 0; punteroColumna < punteroColumnaFin; punteroColumna++, c++)
         {
             SDL_Rect rectCelda;
@@ -60,7 +74,6 @@ void dibujarCeldas(SDL_Renderer* renderizador, sCelda** matriz, int dimensiones,
             {
                 if (punteroColumna->tieneMina)
                 {
-
                     SDL_SetRenderDrawColor(renderizador, 0, 0, 0, 255);
                     SDL_RenderFillRect(renderizador, &rectCelda);
 
@@ -118,32 +131,26 @@ void dibujarCeldas(SDL_Renderer* renderizador, sCelda** matriz, int dimensiones,
                     }
                     SDL_RenderFillRect(renderizador, &rectCelda);
 
-
                     if (punteroColumna->minasAdyacentes > 0 && fuente != NULL)
                     {
                         char texto[12];
                         sprintf(texto,"%d", punteroColumna->minasAdyacentes);
                         SDL_Color colorTexto = {255, 255, 255};
 
-
                         SDL_Surface* superficieTexto = TTF_RenderText_Solid(fuente, texto, colorTexto);
                         if (superficieTexto == NULL) {
                             fprintf(stderr, "Error al crear superficie de texto: %s\n", TTF_GetError());
-
                         } else {
-
                             SDL_Texture* texturaTexto = SDL_CreateTextureFromSurface(renderizador, superficieTexto);
                             if (texturaTexto == NULL) {
                                 fprintf(stderr, "Error al crear textura de texto: %s\n", SDL_GetError());
                                 SDL_FreeSurface(superficieTexto); // Libera la superficie si la textura falla
-
                             } else {
                                 SDL_Rect destinoTexto;
                                 destinoTexto.w = superficieTexto->w;
                                 destinoTexto.h = superficieTexto->h;
                                 destinoTexto.x = rectCelda.x + (PIXEL_CELDA - destinoTexto.w) / 2; // Centra horizontalmente
                                 destinoTexto.y = rectCelda.y + (PIXEL_CELDA - destinoTexto.h) / 2; // Centra verticalmente
-
 
                                 SDL_RenderCopy(renderizador, texturaTexto, NULL, &destinoTexto);
 
@@ -158,6 +165,13 @@ void dibujarCeldas(SDL_Renderer* renderizador, sCelda** matriz, int dimensiones,
     }
 }
 
+/**
+ * Dibuja la sección superior de la ventana con título y contador de minas
+ * @param renderer - Puntero al renderizador SDL
+ * @param fuente - Fuente para renderizar texto
+ * @param minasRestantes - Número de minas sin marcar
+ * @param anchoVentana - Ancho de la ventana para centrar texto
+ */
 void dibujarHeader(SDL_Renderer *renderer, TTF_Font *fuente, int minasRestantes, int anchoVentana)
 {
     // Dibujar fondo del header (azul oscuro)
@@ -227,10 +241,15 @@ void dibujarHeader(SDL_Renderer *renderer, TTF_Font *fuente, int minasRestantes,
     }
 }
 
+/**
+ * Muestra el mensaje "GAME OVER" centrado en la pantalla
+ * @param renderizador - Puntero al renderizador SDL
+ * @param fuente - Fuente para renderizar el texto
+ * @param dimensiones - Dimensiones del tablero para centrar el mensaje
+ */
 void mostrarGameOver(SDL_Renderer* renderizador, TTF_Font* fuente, int dimensiones)
 {
     const char* texto = "GAME OVER";
-
 
     if (!fuente) {
         printf("No hay fuente disponible para mostrar GAME OVER.\n");
@@ -273,19 +292,35 @@ void mostrarGameOver(SDL_Renderer* renderizador, TTF_Font* fuente, int dimension
     SDL_DestroyTexture(textoTex);
 }
 
+/**
+ * Verifica si el jugador ha ganado el juego
+ * @param matriz - Matriz de celdas del tablero
+ * @param dimensiones - Dimensiones del tablero
+ * @param totalMinas - Número total de minas en el tablero
+ * @return 1 si ganó, 0 si no
+ */
 int verificarVictoria(sCelda** matriz, int dimensiones, int totalMinas)
 {
     int reveladas = 0;
+
+    // Ciclo para contar todas las celdas reveladas
     for (int r = 0; r < dimensiones; r++) {
         for (int c = 0; c < dimensiones; c++) {
             if ((*(matriz + r) + c)->esRevelada)
                 reveladas++;
         }
     }
+
     int totalCeldas = dimensiones * dimensiones;
     return (reveladas == totalCeldas - totalMinas);
 }
 
+/**
+ * Muestra el mensaje de victoria centrado en la pantalla
+ * @param renderizador - Puntero al renderizador SDL
+ * @param fuente - Fuente para renderizar el texto
+ * @param dimensiones - Dimensiones del tablero para centrar el mensaje
+ */
 void mostrarVictoria(SDL_Renderer* renderizador, TTF_Font* fuente, int dimensiones) {
     const char* linea1 = "!FELICIDADES!";
     const char* linea2 = "GANASTE";
@@ -336,7 +371,7 @@ void mostrarVictoria(SDL_Renderer* renderizador, TTF_Font* fuente, int dimension
     SDL_RenderCopy(renderizador, texTexto1, NULL, &r1);
     SDL_RenderCopy(renderizador, texTexto2, NULL, &r2);
 
-    // Liberar
+    // Liberar recursos
     SDL_FreeSurface(sombra1);
     SDL_FreeSurface(sombra2);
     SDL_FreeSurface(texto1);
@@ -346,6 +381,3 @@ void mostrarVictoria(SDL_Renderer* renderizador, TTF_Font* fuente, int dimension
     SDL_DestroyTexture(texTexto1);
     SDL_DestroyTexture(texTexto2);
 }
-
-
-

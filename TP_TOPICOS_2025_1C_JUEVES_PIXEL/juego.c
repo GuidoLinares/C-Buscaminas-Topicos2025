@@ -6,10 +6,20 @@
 #include "usuario.h"
 #include "menu.h"
 
+/**
+ * Función principal que ejecuta una partida completa del buscaminas
+ * @param ventana - Ventana SDL donde se dibuja el juego
+ * @param renderer - Renderizador SDL para dibujar gráficos
+ * @param fuente - Fuente pequeña para texto
+ * @param fuenteGrande - Fuente grande para títulos
+ * @param usuarios - Puntero al usuario actual
+ * @param configuracion - Configuración del juego (dimensiones, minas)
+ */
 void ejecutarPartida(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande, sUsuario* usuarios, sArchivo_conf configuracion)
 {
     sCelda **matriz;
     time_t tiempoInicio = time(NULL);
+    int primerClic = 1;  // AGREGAR ESTA LÍNEA - DECLARAR LA VARIABLE
 
     // === REDIMENSIONAR VENTANA PARA EL JUEGO ===
     int ventana_ancho = configuracion.dimensiones * PIXEL_CELDA;
@@ -37,17 +47,13 @@ void ejecutarPartida(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuen
 
     printf("Entrando al bucle principal...\n");
 
+    jugarConGuardado(ventana, renderer, fuente, fuenteGrande, matriz, configuracion, &minasRestantes, ventana_ancho, usuarios, tiempoInicio, &primerClic);
 
-    jugar(ventana, renderer, fuente, fuenteGrande, matriz, configuracion, &minasRestantes, ventana_ancho);
-
-
-    time_t tiempoFin = time(NULL);
+     time_t tiempoFin = time(NULL);
     int tiempoTranscurrido = (int)difftime(tiempoFin, tiempoInicio);
-
 
     int gano = verificarVictoria(matriz, configuracion.dimensiones, configuracion.cantMinas);
     actualizarEstadisticas(usuarios, gano, tiempoTranscurrido);
-
 
     destruirMatriz(matriz, configuracion.dimensiones);
     destruirLog();
@@ -55,6 +61,13 @@ void ejecutarPartida(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuen
     printf("Partida terminada\n");
 }
 
+/**
+ * Maneja la inmunidad del primer clic, reubicando la mina si el primer clic es en una mina
+ * @param matriz - Matriz de celdas del tablero
+ * @param fila - Fila donde se hizo el primer clic
+ * @param columna - Columna donde se hizo el primer clic
+ * @param dimensiones - Dimensiones del tablero
+ */
 void manejarInmunidadPrimerClic(sCelda **matriz, int fila, int columna, int dimensiones)
 {
     printf("*** PRIMER CLIC EN MINA - INMUNIDAD ACTIVADA ***\n");
@@ -65,6 +78,7 @@ void manejarInmunidadPrimerClic(sCelda **matriz, int fila, int columna, int dime
 
     // Buscar una posición vacía para reubicar la mina
     int nuevaMinaColocada = 0;
+    // Ciclo para buscar una posición libre donde reubicar la mina
     for (int r = 0; r < dimensiones && !nuevaMinaColocada; r++)
     {
         for (int c = 0; c < dimensiones && !nuevaMinaColocada; c++)
@@ -80,8 +94,14 @@ void manejarInmunidadPrimerClic(sCelda **matriz, int fila, int columna, int dime
     }
 }
 
+/**
+ * Recalcula el número de minas adyacentes para todas las celdas después de reubicar una mina
+ * @param matriz - Matriz de celdas del tablero
+ * @param dimensiones - Dimensiones del tablero
+ */
 void recalcularMinasAdyacentes(sCelda **matriz, int dimensiones)
 {
+    // Ciclo para recorrer todas las celdas del tablero
     for (int r = 0; r < dimensiones; r++)
     {
         for (int c = 0; c < dimensiones; c++)
@@ -89,7 +109,7 @@ void recalcularMinasAdyacentes(sCelda **matriz, int dimensiones)
             if (!(*(matriz+r)+c)->tieneMina)
             {
                 int minasAdyacentes = 0;
-                // Contar minas en las 8 direcciones
+                // Contar minas en las 8 direcciones alrededor de la celda actual
                 for (int dr = -1; dr <= 1; dr++)
                 {
                     for (int dc = -1; dc <= 1; dc++)
@@ -99,7 +119,6 @@ void recalcularMinasAdyacentes(sCelda **matriz, int dimensiones)
 
                         if (nr >= 0 && nr < dimensiones && nc >= 0 && nc < dimensiones && (*(matriz+nr)+nc)->tieneMina)
                             minasAdyacentes++;
-
                     }
                 }
                 (*(matriz+r)+c)->minasAdyacentes = minasAdyacentes;
@@ -108,6 +127,16 @@ void recalcularMinasAdyacentes(sCelda **matriz, int dimensiones)
     }
 }
 
+/**
+ * Procesa la victoria del jugador, mostrando mensaje y actualizando logs
+ * @param renderer - Renderizador SDL
+ * @param fuente - Fuente pequeña
+ * @param fuenteGrande - Fuente grande
+ * @param matriz - Matriz de celdas
+ * @param dimensiones - Dimensiones del tablero
+ * @param minasRestantes - Puntero al contador de minas restantes
+ * @param ventana_ancho - Ancho de la ventana
+ */
 void procesarVictoria(SDL_Renderer *renderer, TTF_Font *fuente, TTF_Font *fuenteGrande, sCelda **matriz, int dimensiones, int *minasRestantes, int ventana_ancho)
 {
     printf("¡Felicidades Ganaste!\n");
@@ -126,13 +155,25 @@ void procesarVictoria(SDL_Renderer *renderer, TTF_Font *fuente, TTF_Font *fuente
     SDL_Delay(4000);
 }
 
+/**
+ * Procesa el game over, revelando todas las celdas y mostrando mensaje
+ * @param renderer - Renderizador SDL
+ * @param fuente - Fuente pequeña
+ * @param fuenteGrande - Fuente grande
+ * @param matriz - Matriz de celdas
+ * @param dimensiones - Dimensiones del tablero
+ * @param minasRestantes - Puntero al contador de minas restantes
+ * @param ventana_ancho - Ancho de la ventana
+ * @param fila - Fila donde se encontró la mina
+ * @param columna - Columna donde se encontró la mina
+ */
 void procesarGameOver(SDL_Renderer *renderer, TTF_Font *fuente, TTF_Font *fuenteGrande,sCelda **matriz, int dimensiones, int *minasRestantes, int ventana_ancho,int fila, int columna)
 {
     printf("\n*** BOOM! HAS ENCONTRADO UNA MINA ***\n");
     printf("GAME OVER - Mina en posicion (%d, %d)\n", fila, columna);
     logFinPartida("DERROTA - MINA ENCONTRADA");
 
-
+    // Revelar todas las celdas del tablero
     for (int r = 0; r < dimensiones; r++)
     {
         for (int c = 0; c < dimensiones; c++)
@@ -153,6 +194,19 @@ void procesarGameOver(SDL_Renderer *renderer, TTF_Font *fuente, TTF_Font *fuente
     SDL_Delay(3000);
 }
 
+/**
+ * Maneja los clics izquierdos del mouse (revelar celdas)
+ * @param e - Evento SDL
+ * @param renderer - Renderizador SDL
+ * @param fuente - Fuente pequeña
+ * @param fuenteGrande - Fuente grande
+ * @param matriz - Matriz de celdas
+ * @param configuracion - Configuración del juego
+ * @param minasRestantes - Puntero al contador de minas restantes
+ * @param ventana_ancho - Ancho de la ventana
+ * @param primerClic - Puntero al flag del primer clic
+ * @return 1 para continuar juego, 0 para terminar
+ */
 int manejarClicIzquierdo(SDL_Event *e, SDL_Renderer *renderer, TTF_Font *fuente, TTF_Font *fuenteGrande,sCelda **matriz, sArchivo_conf configuracion, int *minasRestantes, int ventana_ancho, int *primerClic)
 {
     int mouse_x = e->button.x;
@@ -208,6 +262,13 @@ int manejarClicIzquierdo(SDL_Event *e, SDL_Renderer *renderer, TTF_Font *fuente,
     return 1; // Continuar juego
 }
 
+/**
+ * Maneja los clics derechos del mouse (colocar/quitar banderas)
+ * @param e - Evento SDL
+ * @param matriz - Matriz de celdas
+ * @param configuracion - Configuración del juego
+ * @param minasRestantes - Puntero al contador de minas restantes
+ */
 void manejarClicDerecho(SDL_Event *e, sCelda **matriz, sArchivo_conf configuracion, int *minasRestantes)
 {
     int mouse_x = e->button.x;
@@ -247,6 +308,15 @@ void manejarClicDerecho(SDL_Event *e, sCelda **matriz, sArchivo_conf configuraci
     }
 }
 
+/**
+ * Renderiza todos los elementos del juego en pantalla
+ * @param renderer - Renderizador SDL
+ * @param fuente - Fuente para texto
+ * @param matriz - Matriz de celdas
+ * @param dimensiones - Dimensiones del tablero
+ * @param minasRestantes - Puntero al contador de minas restantes
+ * @param ventana_ancho - Ancho de la ventana
+ */
 void renderizarJuego(SDL_Renderer *renderer, TTF_Font *fuente, sCelda **matriz, int dimensiones, int *minasRestantes, int ventana_ancho)
 {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Fondo negro
@@ -257,14 +327,27 @@ void renderizarJuego(SDL_Renderer *renderer, TTF_Font *fuente, sCelda **matriz, 
     SDL_RenderPresent(renderer);
 }
 
+/**
+ * Bucle principal del juego, maneja eventos y renderizado
+ * @param ventana - Ventana SDL
+ * @param renderer - Renderizador SDL
+ * @param fuente - Fuente pequeña
+ * @param fuenteGrande - Fuente grande
+ * @param matriz - Matriz de celdas
+ * @param configuracion - Configuración del juego
+ * @param minasRestantes - Puntero al contador de minas restantes
+ * @param ventana_ancho - Ancho de la ventana
+ */
 void jugar(SDL_Window *ventana, SDL_Renderer *renderer, TTF_Font *fuente, TTF_Font *fuenteGrande, sCelda **matriz, sArchivo_conf configuracion, int *minasRestantes, int ventana_ancho)
 {
     int corriendo = 1;
     int primerClic = 1;
     SDL_Event e;
 
+    // Bucle principal del juego - maneja eventos y renderizado
     while (corriendo)
     {
+        // Ciclo para procesar todos los eventos pendientes
         while (SDL_PollEvent(&e))
         {
             if (e.type == SDL_QUIT)
@@ -289,14 +372,22 @@ void jugar(SDL_Window *ventana, SDL_Renderer *renderer, TTF_Font *fuente, TTF_Fo
         // Renderizado
         renderizarJuego(renderer, fuente, matriz, configuracion.dimensiones, minasRestantes, ventana_ancho);
 
-        // Pequeña pausa
+        // Pequeña pausa para controlar FPS
         SDL_Delay(16);
     }
 }
 
+/**
+ * Limpia todos los recursos asignados al finalizar el juego
+ * @param ventana - Ventana SDL
+ * @param renderer - Renderizador SDL
+ * @param fuente - Fuente pequeña
+ * @param fuenteGrande - Fuente grande
+ * @param matriz - Matriz de celdas
+ * @param configuracion - Configuración del juego
+ */
 void limpiarTodosLosRecursos(SDL_Window *ventana, SDL_Renderer *renderer, TTF_Font *fuente,TTF_Font *fuenteGrande, sCelda **matriz, sArchivo_conf configuracion)
 {
-
     printf("Limpiando recursos...\n");
 
     if (fuenteGrande && fuenteGrande != fuente)
@@ -313,5 +404,306 @@ void limpiarTodosLosRecursos(SDL_Window *ventana, SDL_Renderer *renderer, TTF_Fo
 
     destruirMatriz(matriz, configuracion.dimensiones);
     destruirLog();
-
 }
+
+
+/**
+ * Muestra el menú de pausa con opciones de guardar y continuar
+ * @param ventana - Ventana SDL
+ * @param renderer - Renderizador SDL
+ * @param fuente - Fuente pequeña
+ * @param fuenteGrande - Fuente grande
+ * @param usuario - Usuario actual
+ * @param matriz - Matriz del juego
+ * @param configuracion - Configuración actual
+ * @param minasRestantes - Minas restantes
+ * @param tiempoTranscurrido - Tiempo transcurrido
+ * @param primerClic - Estado del primer clic
+ * @return 0 para continuar, 1 para guardar y salir, 2 para salir sin guardar
+ */
+int mostrarMenuPausaFijo(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande,
+                     sUsuario* usuario, sCelda** matriz, sArchivo_conf configuracion,
+                     int minasRestantes, int tiempoTranscurrido, int primerClic)
+{
+    SDL_Color blanco = {255, 255, 255, 255};
+    SDL_Color amarillo = {255, 255, 0, 255};
+    SDL_Color azulOscuro = {20, 30, 50, 200};
+    SDL_Color rojo = {255, 0, 0, 255};
+    // ELIMINAR: SDL_Color verde = {0, 255, 0, 255};
+    // ELIMINAR: SDL_Color negro = {0, 0, 0, 255};
+
+    int opcionSeleccionada = 0;
+    const int numOpciones = 4;
+    const char* opciones[] = {
+        "Continuar",
+        "Guardar y Salir",
+        "Salir sin Guardar",
+        "Cancelar"
+    };
+
+    char nombrePartida[100] = "";
+    int escribiendoNombre = 0;
+    int mostrarMensaje = 0;
+    char mensaje[150] = "";
+
+    // Bucle del menú de pausa
+    while (1) {
+        SDL_Event e;
+        // Ciclo para procesar eventos del menú de pausa
+        while (SDL_PollEvent(&e)) {
+            if (e.type == SDL_QUIT) {
+                if (escribiendoNombre) SDL_StopTextInput();
+                return 2; // Salir sin guardar
+            }
+
+            if (escribiendoNombre) {
+                if (e.type == SDL_TEXTINPUT && strlen(nombrePartida) < 95) {
+                    strcat(nombrePartida, e.text.text);
+                } else if (e.type == SDL_KEYDOWN) {
+                    if (e.key.keysym.sym == SDLK_BACKSPACE && strlen(nombrePartida) > 0) {
+                        nombrePartida[strlen(nombrePartida) - 1] = '\0';
+                    } else if (e.key.keysym.sym == SDLK_RETURN && strlen(nombrePartida) > 0) {
+                        // Guardar partida
+                        int slot = guardarPartidaCompleta(usuario, nombrePartida, matriz, configuracion,
+                                                        minasRestantes, tiempoTranscurrido, primerClic);
+                        if (slot >= 0) {
+                            guardarUsuario(usuario);
+                            SDL_StopTextInput();
+                            return 1; // Guardar y salir
+                        } else {
+                            strcpy(mensaje, "Error al guardar. Sin slots libres.");
+                            mostrarMensaje = 1;
+                            escribiendoNombre = 0;
+                            SDL_StopTextInput();
+                        }
+                    } else if (e.key.keysym.sym == SDLK_ESCAPE) {
+                        escribiendoNombre = 0;
+                        strcpy(nombrePartida, "");
+                        SDL_StopTextInput();
+                    }
+                }
+            } else {
+                if (e.type == SDL_KEYDOWN) {
+                    switch (e.key.keysym.sym) {
+                        case SDLK_UP:
+                            opcionSeleccionada = (opcionSeleccionada - 1 + numOpciones) % numOpciones;
+                            mostrarMensaje = 0;
+                            break;
+                        case SDLK_DOWN:
+                            opcionSeleccionada = (opcionSeleccionada + 1) % numOpciones;
+                            mostrarMensaje = 0;
+                            break;
+                        case SDLK_RETURN:
+                            switch (opcionSeleccionada) {
+                                case 0: // Continuar
+                                case 3: // Cancelar
+                                    return 0;
+                                case 1: // Guardar y salir
+                                    if (buscarSlotLibre(usuario) == -1) {
+                                        strcpy(mensaje, "No hay slots libres para guardar");
+                                        mostrarMensaje = 1;
+                                    } else {
+                                        escribiendoNombre = 1;
+                                        SDL_StartTextInput();
+                                        strcpy(nombrePartida, "");
+                                        mostrarMensaje = 0;
+                                    }
+                                    break;
+                                case 2: // Salir sin guardar
+                                    return 2;
+                            }
+                            break;
+                        case SDLK_ESCAPE:
+                            return 0; // Continuar
+                    }
+                }
+            }
+        }
+
+        // Renderizado del menú de pausa
+        // Dibujar un overlay semitransparente
+        SDL_SetRenderDrawColor(renderer, azulOscuro.r, azulOscuro.g, azulOscuro.b, azulOscuro.a);
+        SDL_Rect overlay = {0, 0, configuracion.dimensiones * PIXEL_CELDA,
+                           configuracion.dimensiones * PIXEL_CELDA + ALTURA_HEADER};
+        SDL_RenderFillRect(renderer, &overlay);
+
+        if (fuenteGrande) {
+            int cx = (configuracion.dimensiones * PIXEL_CELDA) / 2;
+            int cy = (configuracion.dimensiones * PIXEL_CELDA + ALTURA_HEADER) / 2;
+
+            // Título
+            SDL_Surface* superficie = TTF_RenderText_Solid(fuenteGrande, "JUEGO PAUSADO", blanco);
+            if (superficie) {
+                SDL_Texture* textura = SDL_CreateTextureFromSurface(renderer, superficie);
+                SDL_Rect rect = {cx - superficie->w/2, cy - 120, superficie->w, superficie->h};
+                SDL_RenderCopy(renderer, textura, NULL, &rect);
+                SDL_DestroyTexture(textura);
+                SDL_FreeSurface(superficie);
+            }
+
+            if (escribiendoNombre) {
+                // Modo escribir nombre
+                if (fuente) {
+                    superficie = TTF_RenderText_Solid(fuente, "Nombre de la partida:", blanco);
+                    if (superficie) {
+                        SDL_Texture* textura = SDL_CreateTextureFromSurface(renderer, superficie);
+                        SDL_Rect rect = {cx - superficie->w/2, cy - 60, superficie->w, superficie->h};
+                        SDL_RenderCopy(renderer, textura, NULL, &rect);
+                        SDL_DestroyTexture(textura);
+                        SDL_FreeSurface(superficie);
+                    }
+
+                    // Campo de texto con cursor
+                    char textoMostrar[110];
+                    sprintf(textoMostrar, "%s_", nombrePartida);
+                    superficie = TTF_RenderText_Solid(fuente, textoMostrar, amarillo);
+                    if (superficie) {
+                        SDL_Texture* textura = SDL_CreateTextureFromSurface(renderer, superficie);
+                        SDL_Rect rect = {cx - superficie->w/2, cy - 20, superficie->w, superficie->h};
+                        SDL_RenderCopy(renderer, textura, NULL, &rect);
+                        SDL_DestroyTexture(textura);
+                        SDL_FreeSurface(superficie);
+                    }
+
+                    superficie = TTF_RenderText_Solid(fuente, "ENTER para guardar, ESC para cancelar", blanco);
+                    if (superficie) {
+                        SDL_Texture* textura = SDL_CreateTextureFromSurface(renderer, superficie);
+                        SDL_Rect rect = {cx - superficie->w/2, cy + 20, superficie->w, superficie->h};
+                        SDL_RenderCopy(renderer, textura, NULL, &rect);
+                        SDL_DestroyTexture(textura);
+                        SDL_FreeSurface(superficie);
+                    }
+                }
+            } else {
+                // Mostrar opciones del menú - ciclo para dibujar todas las opciones
+                for (int i = 0; i < numOpciones; i++) {
+                    SDL_Color color = (i == opcionSeleccionada) ? amarillo : blanco;
+
+                    if (fuente) {
+                        superficie = TTF_RenderText_Solid(fuente, opciones[i], color);
+                        if (superficie) {
+                            SDL_Texture* textura = SDL_CreateTextureFromSurface(renderer, superficie);
+                            SDL_Rect rect = {cx - superficie->w/2, cy - 40 + i * 30, superficie->w, superficie->h};
+                            SDL_RenderCopy(renderer, textura, NULL, &rect);
+                            SDL_DestroyTexture(textura);
+                            SDL_FreeSurface(superficie);
+                        }
+                    }
+                }
+
+                if (fuente) {
+                    superficie = TTF_RenderText_Solid(fuente, "Usa las flechas y ENTER, ESC para continuar", blanco);
+                    if (superficie) {
+                        SDL_Texture* textura = SDL_CreateTextureFromSurface(renderer, superficie);
+                        SDL_Rect rect = {cx - superficie->w/2, cy + 100, superficie->w, superficie->h};
+                        SDL_RenderCopy(renderer, textura, NULL, &rect);
+                        SDL_DestroyTexture(textura);
+                        SDL_FreeSurface(superficie);
+                    }
+                }
+
+                // Mostrar mensaje de error si existe
+                if (mostrarMensaje && fuente) {
+                    superficie = TTF_RenderText_Solid(fuente, mensaje, rojo);
+                    if (superficie) {
+                        SDL_Texture* textura = SDL_CreateTextureFromSurface(renderer, superficie);
+                        SDL_Rect rect = {cx - superficie->w/2, cy + 130, superficie->w, superficie->h};
+                        SDL_RenderCopy(renderer, textura, NULL, &rect);
+                        SDL_DestroyTexture(textura);
+                        SDL_FreeSurface(superficie);
+                    }
+                }
+            }
+        }
+
+        SDL_RenderPresent(renderer);
+        SDL_Delay(16);
+    }
+}
+
+/**
+ * Bucle principal del juego modificado para incluir pausa y guardado
+ * @param ventana - Ventana SDL
+ * @param renderer - Renderizador SDL
+ * @param fuente - Fuente pequeña
+ * @param fuenteGrande - Fuente grande
+ * @param matriz - Matriz de celdas
+ * @param configuracion - Configuración del juego
+ * @param minasRestantes - Puntero al contador de minas restantes
+ * @param ventana_ancho - Ancho de la ventana
+ * @param usuario - Usuario actual (para guardar partidas)
+ * @param tiempoInicioPartida - Tiempo cuando comenzó la partida (para calcular tiempo transcurrido)
+ * @param primerClic - Puntero al estado del primer clic
+ */
+void jugarConGuardado(SDL_Window *ventana, SDL_Renderer *renderer, TTF_Font *fuente, TTF_Font *fuenteGrande,
+                     sCelda **matriz, sArchivo_conf configuracion, int *minasRestantes, int ventana_ancho,
+                     sUsuario* usuario, time_t tiempoInicioPartida, int* primerClic)
+{
+    int corriendo = 1;
+    SDL_Event e;
+
+    printf("Juego iniciado. Presiona ESC o P para pausar y guardar.\n");
+
+    // Bucle principal del juego - maneja eventos y renderizado
+    while (corriendo)
+    {
+        // Ciclo para procesar todos los eventos pendientes
+        while (SDL_PollEvent(&e))
+        {
+            if (e.type == SDL_QUIT)
+            {
+                corriendo = 0;
+                printf("Usuario cerró la ventana\n");
+            }
+
+            if (e.type == SDL_KEYDOWN)
+            {
+                if (e.key.keysym.sym == SDLK_ESCAPE || e.key.keysym.sym == SDLK_p)
+                {
+                    // Pausar juego y mostrar menú
+                    int tiempoTranscurrido = (int)difftime(time(NULL), tiempoInicioPartida);
+                    int resultadoPausa = mostrarMenuPausaFijo(ventana, renderer, fuente, fuenteGrande,
+                                                         usuario, matriz, configuracion,
+                                                         *minasRestantes, tiempoTranscurrido, *primerClic);
+
+                    switch (resultadoPausa) {
+                        case 0: // Continuar
+                            printf("Continuando juego...\n");
+                            break;
+                        case 1: // Guardar y salir
+                            printf("Partida guardada. Saliendo del juego.\n");
+                            corriendo = 0;
+                            break;
+                        case 2: // Salir sin guardar
+                            printf("Saliendo sin guardar.\n");
+                            corriendo = 0;
+                            break;
+                    }
+                }
+            }
+
+            if (e.type == SDL_MOUSEBUTTONDOWN && corriendo)
+            {
+                if (e.button.button == SDL_BUTTON_LEFT)
+                {
+                    corriendo = manejarClicIzquierdo(&e, renderer, fuente, fuenteGrande, matriz,
+                                                   configuracion, minasRestantes, ventana_ancho, primerClic);
+                }
+                else if (e.button.button == SDL_BUTTON_RIGHT)
+                {
+                    manejarClicDerecho(&e, matriz, configuracion, minasRestantes);
+                }
+            }
+        }
+
+        // Renderizado solo si el juego sigue corriendo
+        if (corriendo) {
+            renderizarJuego(renderer, fuente, matriz, configuracion.dimensiones, minasRestantes, ventana_ancho);
+        }
+
+        // Pequeña pausa para controlar FPS
+        SDL_Delay(16);
+    }
+}
+
+

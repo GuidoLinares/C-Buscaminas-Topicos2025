@@ -1,11 +1,9 @@
-
 #include "common.h"
 #include "tablero.h"
 #include "juego.h"
 #include "logs.h"
 #include "menu.h"
 #include "usuario.h"
-
 
 /*
 Apellido(s), nombre(s): Linares, Guido Hernan
@@ -22,11 +20,8 @@ Entrega: NO
 */
 
 
-
-
 int main(int argc, char *argv[])
 {
-
     // === CONFIGURACIÓN DESDE ARCHIVO===
     sArchivo_conf configuracion = leerArchivo();
 
@@ -71,7 +66,7 @@ int main(int argc, char *argv[])
 
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 
-    // Cargar fuentes (tu código original)
+    // Cargar fuentes - busca en múltiples ubicaciones posibles
     TTF_Font* fuente = NULL;
     TTF_Font* fuenteGrande = NULL;
     const char* fuentes[] = {
@@ -83,11 +78,13 @@ int main(int argc, char *argv[])
         NULL
     };
 
+    // Ciclo para intentar cargar fuente pequeña desde diferentes ubicaciones
     for (int i = 0; fuentes[i] != NULL; i++) {
         fuente = TTF_OpenFont(fuentes[i], 18);
         if (fuente) break;
     }
 
+    // Ciclo para intentar cargar fuente grande desde diferentes ubicaciones
     for (int i = 0; fuentes[i] != NULL; i++) {
         fuenteGrande = TTF_OpenFont(fuentes[i], 32);
         if (fuenteGrande) break;
@@ -120,6 +117,7 @@ int main(int argc, char *argv[])
 
     // === BUCLE DE MENÚ PRINCIPAL EN SDL ===
     int continuar = 1;
+    // Bucle principal del programa - mantiene el menú activo hasta que el usuario salga
     while (continuar) {
         int opcion = mostrarMenuSDL(ventana, renderer, fuente, fuenteGrande, &usuarioActual);
 
@@ -131,7 +129,9 @@ int main(int argc, char *argv[])
                 mostrarEstadisticasSDL(ventana, renderer, fuente, fuenteGrande, &usuarioActual);
                 break;
             case 3: // Cargar partida
+                 printf("=== MAIN: Llamando a cargarPartidaSDL ===\n");
                 cargarPartidaSDL(ventana, renderer, fuente, fuenteGrande, &usuarioActual, configuracion);
+                printf("=== MAIN: Regresó de cargarPartidaSDL ===\n");
                 break;
             case 4: // Recargar configuración
                 configuracion = leerArchivo();
@@ -147,7 +147,7 @@ int main(int argc, char *argv[])
     // Guardar datos del usuario al salir
     guardarUsuario(&usuarioActual);
 
-    // Limpieza final
+    // Limpieza final de todos los recursos
     if (fuenteGrande && fuenteGrande != fuente) TTF_CloseFont(fuenteGrande);
     if (fuente) TTF_CloseFont(fuente);
     TTF_Quit();

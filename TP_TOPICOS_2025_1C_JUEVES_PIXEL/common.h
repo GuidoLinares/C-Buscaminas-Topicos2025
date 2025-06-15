@@ -18,6 +18,7 @@
 #define TAM_PIXEL 8
 #define PIXEL_CELDA 32
 #define ALTURA_HEADER 64
+#define MAX_DIMENSION 50  // NUEVO: Dimensión máxima permitida para el tablero
 
 // Estructuras compartidas
 typedef struct

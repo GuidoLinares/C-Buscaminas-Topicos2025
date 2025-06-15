@@ -3,6 +3,10 @@
 
 static sSistemaLog* g_sistemaLog = NULL;
 
+/**
+ * Obtiene el timestamp actual en formato "YYYY-MM-DD HH:MM:SS"
+ * @return Puntero a string con el timestamp formateado
+ */
 char* obtenerTimestamp()
 {
     static char buffer[80];  // Buffer estático - persiste entre llamadas
@@ -16,6 +20,10 @@ char* obtenerTimestamp()
     return buffer;  // Seguro porque es estático
 }
 
+/**
+ * Escribe un evento al archivo de log con timestamp
+ * @param evento - Mensaje del evento a escribir
+ */
 void escribirEvento(const char* evento)
 {
     if (!g_sistemaLog || !g_sistemaLog->archivo)
@@ -26,9 +34,13 @@ void escribirEvento(const char* evento)
     fflush(g_sistemaLog->archivo); // Asegurar escritura inmediata
 }
 
+/**
+ * Inicializa el sistema de logging, creando/abriendo el archivo de log
+ * @param nombreArchivo - Nombre del archivo donde guardar los logs
+ * @return Puntero al sistema de log inicializado o NULL si hay error
+ */
 sSistemaLog* inicializarLog(const char* nombreArchivo)
 {
-
     g_sistemaLog = (sSistemaLog*)malloc(sizeof(sSistemaLog));
     if (!g_sistemaLog)
         return NULL;
@@ -61,9 +73,11 @@ sSistemaLog* inicializarLog(const char* nombreArchivo)
     return g_sistemaLog;
 }
 
+/**
+ * Destruye el sistema de logging y libera todos los recursos
+ */
 void destruirLog()
 {
-
     if (!g_sistemaLog)
         return;
 
@@ -81,6 +95,10 @@ void destruirLog()
     g_sistemaLog = NULL;
 }
 
+/**
+ * Registra el inicio de una nueva partida con la configuración
+ * @param configuracion - Configuración de la partida (dimensiones, minas)
+ */
 void logInicioPartida(sArchivo_conf configuracion)
 {
     if (!g_sistemaLog)
@@ -100,6 +118,14 @@ void logInicioPartida(sArchivo_conf configuracion)
     free(mensaje);
 }
 
+/**
+ * Registra un clic en una celda del tablero
+ * @param matriz - Matriz de celdas del tablero
+ * @param fila - Fila de la celda clickeada
+ * @param columna - Columna de la celda clickeada
+ * @param dimensiones - Dimensiones del tablero
+ * @param tipoClick - Tipo de clic ("IZQUIERDO" o "DERECHO")
+ */
 void logClickCelda(sCelda** matriz, int fila, int columna, int dimensiones, const char* tipoClick)
 {
     if (!g_sistemaLog || fila < 0 || fila >= dimensiones || columna < 0 || columna >= dimensiones)
@@ -122,6 +148,13 @@ void logClickCelda(sCelda** matriz, int fila, int columna, int dimensiones, cons
     free(mensaje);
 }
 
+/**
+ * Registra cuando una celda es revelada
+ * @param matriz - Matriz de celdas del tablero
+ * @param fila - Fila de la celda revelada
+ * @param columna - Columna de la celda revelada
+ * @param dimensiones - Dimensiones del tablero
+ */
 void logRevelarCelda(sCelda** matriz, int fila, int columna, int dimensiones)
 {
     if (!g_sistemaLog)
@@ -145,7 +178,14 @@ void logRevelarCelda(sCelda** matriz, int fila, int columna, int dimensiones)
     free(mensaje);
 }
 
-// Log para banderas
+/**
+ * Registra cuando se coloca o quita una bandera
+ * @param matriz - Matriz de celdas del tablero
+ * @param fila - Fila donde se modificó la bandera
+ * @param columna - Columna donde se modificó la bandera
+ * @param dimensiones - Dimensiones del tablero
+ * @param colocada - 1 si se colocó la bandera, 0 si se quitó
+ */
 void logBandera(sCelda** matriz, int fila, int columna, int dimensiones, int colocada)
 {
     if (!g_sistemaLog)
@@ -163,7 +203,10 @@ void logBandera(sCelda** matriz, int fila, int columna, int dimensiones, int col
     free(mensaje);
 }
 
-// Log de fin de partida
+/**
+ * Registra el final de una partida con el resultado
+ * @param resultado - String describiendo el resultado ("VICTORIA", "DERROTA", etc.)
+ */
 void logFinPartida(const char* resultado)
 {
     if (!g_sistemaLog)
@@ -185,7 +228,10 @@ void logFinPartida(const char* resultado)
     free(mensaje);
 }
 
-// Log de configuración leída
+/**
+ * Registra la configuración leída del archivo
+ * @param config - Estructura con la configuración cargada
+ */
 void logConfiguracion(sArchivo_conf config)
 {
     if (!g_sistemaLog)
@@ -202,7 +248,11 @@ void logConfiguracion(sArchivo_conf config)
     free(mensaje);
 }
 
-// Log de estado del tablero (para debugging)
+/**
+ * Registra el estado actual del tablero para debugging
+ * @param matriz - Matriz de celdas del tablero
+ * @param dimensiones - Dimensiones del tablero
+ */
 void logEstadoTablero(sCelda** matriz, int dimensiones)
 {
     if (!g_sistemaLog)
@@ -215,10 +265,12 @@ void logEstadoTablero(sCelda** matriz, int dimensiones)
     sCelda** punteroFila = matriz;
     sCelda** punteroFilaFin = matriz + dimensiones;
 
+    // Ciclo para recorrer todas las filas del tablero
     for (; punteroFila < punteroFilaFin; punteroFila++) {
         sCelda* punteroColumna = *punteroFila;
         sCelda* punteroColumnaFin = *punteroFila + dimensiones;
 
+        // Ciclo para recorrer todas las columnas de la fila actual
         for (; punteroColumna < punteroColumnaFin; punteroColumna++)
         {
             if (punteroColumna->esRevelada)
@@ -242,7 +294,3 @@ void logEstadoTablero(sCelda** matriz, int dimensiones)
     escribirEvento(mensaje);
     free(mensaje);
 }
-
-
-
-
