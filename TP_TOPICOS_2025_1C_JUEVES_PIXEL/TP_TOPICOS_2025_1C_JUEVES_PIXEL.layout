@@ -2,149 +2,74 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Release" />
-	<File name="logs.c" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="5" zoom_2="0">
+	<File name="main.c" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="4450" topLine="0" />
+			<Cursor1 position="3001" topLine="85" />
 		</Cursor>
-		<Folding>
-			<Collapse line="6" />
-			<Collapse line="19" />
-			<Collapse line="29" />
-			<Collapse line="64" />
-			<Collapse line="84" />
-			<Collapse line="103" />
-			<Collapse line="125" />
-			<Collapse line="149" />
-			<Collapse line="167" />
-			<Collapse line="189" />
-			<Collapse line="206" />
-		</Folding>
 	</File>
 	<File name="tablero.c" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="4480" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="4" />
-			<Collapse line="35" />
-			<Collapse line="61" />
-			<Collapse line="74" />
-			<Collapse line="92" />
-			<Collapse line="97" />
-			<Collapse line="121" />
-			<Collapse line="143" />
-			<Collapse line="159" />
-			<Collapse line="213" />
-		</Folding>
-	</File>
-	<File name="menu.h" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1129" topLine="0" />
+			<Cursor1 position="4524" topLine="130" />
 		</Cursor>
 	</File>
-	<File name="common.h" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+	<File name="tablero.h" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="4" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="538" topLine="0" />
+			<Cursor1 position="708" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="logs.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="logs.c" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="5" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="189" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="interfaz.c" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="602" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="4" />
-			<Collapse line="161" />
-			<Collapse line="230" />
-			<Collapse line="276" />
-			<Collapse line="289" />
-		</Folding>
-	</File>
-	<File name="usuario.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1851" topLine="24" />
-		</Cursor>
-		<Folding>
-			<Collapse line="31" />
-		</Folding>
-	</File>
-	<File name="juego.h" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1361" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="menu.c" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="21" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="7" />
-			<Collapse line="42" />
-			<Collapse line="181" />
-			<Collapse line="295" />
-			<Collapse line="383" />
-			<Collapse line="542" />
-			<Collapse line="577" />
-			<Collapse line="598" />
-			<Collapse line="619" />
-			<Collapse line="624" />
-			<Collapse line="649" />
-		</Folding>
-	</File>
-	<File name="interfaz.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="548" topLine="0" />
+			<Cursor1 position="778" topLine="2" />
 		</Cursor>
 	</File>
 	<File name="juego.c" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="9812" topLine="2" />
-		</Cursor>
-		<Folding>
-			<Collapse line="9" />
-			<Collapse line="58" />
-			<Collapse line="83" />
-			<Collapse line="111" />
-			<Collapse line="129" />
-			<Collapse line="156" />
-			<Collapse line="211" />
-			<Collapse line="250" />
-			<Collapse line="260" />
-			<Collapse line="297" />
-		</Folding>
-	</File>
-	<File name="usuario.c" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="45" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="5" />
-			<Collapse line="24" />
-			<Collapse line="63" />
-			<Collapse line="129" />
-			<Collapse line="152" />
-			<Collapse line="179" />
-			<Collapse line="187" />
-			<Collapse line="213" />
-			<Collapse line="234" />
-			<Collapse line="243" />
-			<Collapse line="257" />
-			<Collapse line="279" />
-			<Collapse line="291" />
-		</Folding>
-	</File>
-	<File name="tablero.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="628" topLine="0" />
+			<Cursor1 position="257" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="main.c" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+	<File name="logs.h" open="1" top="0" tabpos="14" split="0" active="1" splitpos="0" zoom_1="4" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="4417" topLine="114" />
+			<Cursor1 position="749" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="usuario.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="993" topLine="9" />
+		</Cursor>
+	</File>
+	<File name="menu.c" open="1" top="1" tabpos="7" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="84" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="usuario.c" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1453" topLine="30" />
+		</Cursor>
+	</File>
+	<File name="menu.h" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1319" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="interfaz.c" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="697" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="common.h" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="987" topLine="15" />
+		</Cursor>
+	</File>
+	<File name="interfaz.h" open="1" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="5" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="548" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="juego.h" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="6" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1363" topLine="0" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
