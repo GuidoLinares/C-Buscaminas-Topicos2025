@@ -2,7 +2,7 @@
 #include "usuario.h"
 
 
-void crearNuevoUsuario(const char* nombre, Usuario* usuario)
+void crearNuevoUsuario(const char* nombre, sUsuario* usuario)
 {
     if (!usuario || !nombre)
         return;
@@ -21,7 +21,7 @@ void crearNuevoUsuario(const char* nombre, Usuario* usuario)
     }
 }
 
-int cargarUsuario(const char* nombre, Usuario* usuario)
+int cargarUsuario(const char* nombre, sUsuario* usuario)
 {
     if (!usuario || !nombre)
         return -1;
@@ -31,13 +31,13 @@ int cargarUsuario(const char* nombre, Usuario* usuario)
     {
         // Si no existe el archivo, crear usuario nuevo
         crearNuevoUsuario(nombre, usuario);
-        return 0; // Usuario nuevo creado
+        return 0; // sUsuario nuevo creado
     }
 
-    Usuario temp;
+    sUsuario temp;
     int encontrado = 0;
 
-    while (fread(&temp, sizeof(Usuario), 1, archivo) == 1)
+    while (fread(&temp, sizeof(sUsuario), 1, archivo) == 1)
     {
         if (strcmp(temp.nombre, nombre) == 0)
         {
@@ -52,22 +52,22 @@ int cargarUsuario(const char* nombre, Usuario* usuario)
 
     if (!encontrado)
     {
-        // Usuario no encontrado, crear nuevo
+        // sUsuario no encontrado, crear nuevo
         crearNuevoUsuario(nombre, usuario);
         return 0;
     }
 
-    return 1; // Usuario existente cargado
+    return 1; // sUsuario existente cargado
 }
 
-int guardarUsuario(Usuario* usuario)
+int guardarUsuario(sUsuario* usuario)
 {
     if (!usuario)
         return -1;
 
     FILE* archivo = fopen(ARCHIVO_USUARIOS, "rb");
-    Usuario* usuarios = NULL;
-    int numUsuarios = 0;
+    sUsuario* usuarios = NULL;
+    int numsUsuarios = 0;
     int usuarioExistente = -1;
 
     // Leer todos los usuarios existentes
@@ -75,18 +75,18 @@ int guardarUsuario(Usuario* usuario)
     {
         fseek(archivo, 0, SEEK_END);
         long tam = ftell(archivo);
-        numUsuarios = tam / sizeof(Usuario);
+        numsUsuarios = tam / sizeof(sUsuario);
         fseek(archivo, 0, SEEK_SET);
 
-        if (numUsuarios > 0)
+        if (numsUsuarios > 0)
         {
-            usuarios = malloc(sizeof(Usuario) * numUsuarios);
+            usuarios = malloc(sizeof(sUsuario) * numsUsuarios);
             if (usuarios)
             {
-                fread(usuarios, sizeof(Usuario), numUsuarios, archivo);
+                fread(usuarios, sizeof(sUsuario), numsUsuarios, archivo);
 
                 // Buscar si el usuario ya existe
-                for (int i = 0; i < numUsuarios; i++)
+                for (int i = 0; i < numsUsuarios; i++)
                 {
                     if (strcmp(usuarios[i].nombre, usuario->nombre) == 0)
                     {
@@ -111,14 +111,14 @@ int guardarUsuario(Usuario* usuario)
     {
         // Actualizar usuario existente
         usuarios[usuarioExistente] = *usuario;
-        fwrite(usuarios, sizeof(Usuario), numUsuarios, archivo);
+        fwrite(usuarios, sizeof(sUsuario), numsUsuarios, archivo);
     }
     else
     {
         // Escribir usuarios existentes y agregar el nuevo
-        if (usuarios && numUsuarios > 0)
-            fwrite(usuarios, sizeof(Usuario), numUsuarios, archivo);
-        fwrite(usuario, sizeof(Usuario), 1, archivo);
+        if (usuarios && numsUsuarios > 0)
+            fwrite(usuarios, sizeof(sUsuario), numsUsuarios, archivo);
+        fwrite(usuario, sizeof(sUsuario), 1, archivo);
     }
 
     fclose(archivo);
@@ -135,8 +135,8 @@ int usuarioExiste(const char* nombre)
     if (!archivo)
         return 0;
 
-    Usuario temp;
-    while (fread(&temp, sizeof(Usuario), 1, archivo) == 1)
+    sUsuario temp;
+    while (fread(&temp, sizeof(sUsuario), 1, archivo) == 1)
     {
         if (strcmp(temp.nombre, nombre) == 0)
         {
@@ -149,7 +149,7 @@ int usuarioExiste(const char* nombre)
     return 0;
 }
 
-void actualizarEstadisticas(Usuario* usuario, int gano, int tiempoSegundos)
+void actualizarEstadisticas(sUsuario* usuario, int gano, int tiempoSegundos)
 {
     if (!usuario)
         return;
@@ -176,7 +176,7 @@ void actualizarEstadisticas(Usuario* usuario, int gano, int tiempoSegundos)
     }
 }
 
-double calcularPorcentajeVictorias(Usuario* usuario)
+double calcularPorcentajeVictorias(sUsuario* usuario)
 {
     if (!usuario || usuario->estadisticas.partidasJugadas == 0)
         return 0.0;
@@ -184,7 +184,7 @@ double calcularPorcentajeVictorias(Usuario* usuario)
     return ((double)usuario->estadisticas.partidasGanadas / usuario->estadisticas.partidasJugadas) * 100.0;
 }
 
-int guardarPartida(Usuario* usuario, const char* nombrePartida, sCelda** matriz, Archivo_conf config, int minasRestantes, int tiempoTranscurrido)
+int guardarPartida(sUsuario* usuario, const char* nombrePartida, sCelda** matriz, sArchivo_conf config, int minasRestantes, int tiempoTranscurrido)
 {
     if (!usuario || !nombrePartida)
         return -1;
@@ -193,7 +193,7 @@ int guardarPartida(Usuario* usuario, const char* nombrePartida, sCelda** matriz,
     if (slot == -1)
         return -1; // No hay slots disponibles
 
-    PartidaGuardada* partida = &usuario->partidas[slot];
+    sPartidaGuardada* partida = &usuario->partidas[slot];
 
     strncpy(partida->nombre, nombrePartida, sizeof(partida->nombre) - 1);
     partida->nombre[sizeof(partida->nombre) - 1] = '\0';
@@ -210,12 +210,12 @@ int guardarPartida(Usuario* usuario, const char* nombrePartida, sCelda** matriz,
     return slot;
 }
 
-int cargarPartida(Usuario* usuario, int indicePartida, sCelda*** matriz, Archivo_conf* config, int* minasRestantes, int* tiempoTranscurrido)
+int cargarPartida(sUsuario* usuario, int indicePartida, sCelda*** matriz, sArchivo_conf* config, int* minasRestantes, int* tiempoTranscurrido)
 {
     if (!usuario || indicePartida < 0 || indicePartida >= MAX_PARTIDAS_GUARDADAS)
         return -1;
 
-    PartidaGuardada* partida = &usuario->partidas[indicePartida];
+    sPartidaGuardada* partida = &usuario->partidas[indicePartida];
     if (!partida->esValida)
         return -1;
 
@@ -231,7 +231,7 @@ int cargarPartida(Usuario* usuario, int indicePartida, sCelda*** matriz, Archivo
     return 0;
 }
 
-void eliminarPartida(Usuario* usuario, int indicePartida)
+void eliminarPartida(sUsuario* usuario, int indicePartida)
 {
     if (!usuario || indicePartida < 0 || indicePartida >= MAX_PARTIDAS_GUARDADAS)
         return;
@@ -240,7 +240,7 @@ void eliminarPartida(Usuario* usuario, int indicePartida)
     strcpy(usuario->partidas[indicePartida].nombre, "");
 }
 
-int buscarSlotLibre(Usuario* usuario)
+int buscarSlotLibre(sUsuario* usuario)
 {
     if (!usuario)
         return -1;
@@ -254,7 +254,7 @@ int buscarSlotLibre(Usuario* usuario)
     return -1; // No hay slots libres
 }
 
-int validarNombreUsuario(const char* nombre)
+int validarNombresUsuario(const char* nombre)
 {
     if (!nombre)
         return 0;
@@ -288,7 +288,7 @@ void formatearTiempo(int segundos, char* buffer)
     sprintf(buffer, "%02d:%02d:%02d", horas, minutos, seg);
 }
 
-void inicializarEstadisticas(EstadisticasUsuario* stats)
+void inicializarEstadisticas(sEstadisticasUsuario* stats)
 {
     if (!stats)
         return;

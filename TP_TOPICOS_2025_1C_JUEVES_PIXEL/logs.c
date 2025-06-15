@@ -1,7 +1,7 @@
 #include "common.h"
 #include "logs.h"
 
-static SistemaLog* g_sistemaLog = NULL;
+static sSistemaLog* g_sistemaLog = NULL;
 
 char* obtenerTimestamp()
 {
@@ -26,10 +26,10 @@ void escribirEvento(const char* evento)
     fflush(g_sistemaLog->archivo); // Asegurar escritura inmediata
 }
 
-SistemaLog* inicializarLog(const char* nombreArchivo)
+sSistemaLog* inicializarLog(const char* nombreArchivo)
 {
 
-    g_sistemaLog = (SistemaLog*)malloc(sizeof(SistemaLog));
+    g_sistemaLog = (sSistemaLog*)malloc(sizeof(sSistemaLog));
     if (!g_sistemaLog)
         return NULL;
 
@@ -81,7 +81,7 @@ void destruirLog()
     g_sistemaLog = NULL;
 }
 
-void logInicioPartida(Archivo_conf configuracion)
+void logInicioPartida(sArchivo_conf configuracion)
 {
     if (!g_sistemaLog)
         return;
@@ -186,7 +186,7 @@ void logFinPartida(const char* resultado)
 }
 
 // Log de configuración leída
-void logConfiguracion(Archivo_conf config)
+void logConfiguracion(sArchivo_conf config)
 {
     if (!g_sistemaLog)
         return;

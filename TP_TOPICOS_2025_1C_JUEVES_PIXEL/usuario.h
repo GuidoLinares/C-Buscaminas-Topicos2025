@@ -15,7 +15,7 @@ typedef struct {
     int tiempoTotalJugado;
     int rachaActual;
     int mejorRacha;
-}EstadisticasUsuario;
+}sEstadisticasUsuario;
 
 // Estructura de partida guardada
 typedef struct {
@@ -26,39 +26,39 @@ typedef struct {
     int minasRestantes;
     int tiempoTranscurrido;
     int esValida;
-}PartidaGuardada;
+}sPartidaGuardada;
 
 // Estructura principal del usuario
 typedef struct {
     char nombre[MAX_NOMBRE_USUARIO];
     time_t fechaCreacion;
     time_t ultimoAcceso;
-    EstadisticasUsuario estadisticas;
-    PartidaGuardada partidas[MAX_PARTIDAS_GUARDADAS];
-}Usuario;
+    sEstadisticasUsuario estadisticas;
+    sPartidaGuardada partidas[MAX_PARTIDAS_GUARDADAS];
+}sUsuario;
 
 //USUARIOS
-void crearNuevoUsuario(const char* nombre, Usuario* usuario);
-int cargarUsuario(const char* nombre, Usuario* usuario);
-int guardarUsuario(Usuario* usuario);
+void crearNuevoUsuario(const char* nombre, sUsuario* usuario);
+int cargarUsuario(const char* nombre, sUsuario* usuario);
+int guardarUsuario(sUsuario* usuario);
 int usuarioExiste(const char* nombre);
 
 //ESTADISTICAS
-void actualizarEstadisticas(Usuario* usuario, int gano, int tiempoSegundos);
-double calcularPorcentajeVictorias(Usuario* usuario);
-int guardarPartida(Usuario* usuario, const char* nombrePartida, sCelda** matriz, Archivo_conf config, int minasRestantes, int tiempoTranscurrido);
-void ejecutarPartida(SDL_Window* ventana,SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande, Usuario* usuarioActual,Archivo_conf config);
+void actualizarEstadisticas(sUsuario* usuario, int gano, int tiempoSegundos);
+double calcularPorcentajeVictorias(sUsuario* usuario);
+int guardarPartida(sUsuario* usuario, const char* nombrePartida, sCelda** matriz, sArchivo_conf config, int minasRestantes, int tiempoTranscurrido);
+void ejecutarPartida(SDL_Window* ventana,SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande, sUsuario* usuarioActual,sArchivo_conf config);
 
 
 //PARTIDAS
-int cargarPartida(Usuario* usuario, int indicePartida, sCelda*** matriz, Archivo_conf* config,int* minasRestantes, int* tiempoTranscurrido);
-void eliminarPartida(Usuario* usuario, int indicePartida);
-int buscarSlotLibre(Usuario* usuario);
+int cargarPartida(sUsuario* usuario, int indicePartida, sCelda*** matriz, sArchivo_conf* config,int* minasRestantes, int* tiempoTranscurrido);
+void eliminarPartida(sUsuario* usuario, int indicePartida);
+int buscarSlotLibre(sUsuario* usuario);
 
 //AUX
 int validarNombreUsuario(const char* nombre);
 void formatearTiempo(int segundos, char* buffer);
-void inicializarEstadisticas(EstadisticasUsuario* stats);
+void inicializarEstadisticas(sEstadisticasUsuario* stats);
 
 
 #endif // USUARIO_H_INCLUDED

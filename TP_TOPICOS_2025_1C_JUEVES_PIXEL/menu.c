@@ -39,7 +39,28 @@ void renderizarTextoConSombra(SDL_Renderer* renderer, TTF_Font* fuente, const ch
     if (texturaTexto) SDL_DestroyTexture(texturaTexto);
 }
 
-int pantallaIngreso(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande, Usuario* usuario)
+int validarNombreUsuario(const char *nombre)
+{
+    if (nombre == NULL)
+        return 0;
+
+    size_t longitud = strlen(nombre);
+
+    if (longitud < 3)
+        return 0;
+
+    for (size_t i = 0; i < longitud; i++)
+    {
+        if (!isalnum(nombre[i]) && nombre[i] != '_')
+        {
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
+int pantallaIngreso(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande, sUsuario* usuario)
 {
     SDL_SetWindowSize(ventana, 600, 600);
     SDL_SetWindowPosition(ventana, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
@@ -178,7 +199,7 @@ int pantallaIngreso(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuent
     return -1;
 }
 
-int mostrarMenuSDL(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande, Usuario* usuario)
+int mostrarMenuSDL(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande, sUsuario* usuario)
 {
     SDL_SetWindowSize(ventana, 700, 700);
     SDL_SetWindowPosition(ventana, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
@@ -241,13 +262,13 @@ int mostrarMenuSDL(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente
         // Informacion del usuario
         if (fuente)
         {
-            char infoUsuario[100];
-            snprintf(infoUsuario, sizeof(infoUsuario), "Usuario: %s", usuario->nombre);
-            renderizarTextoCentrado(renderer, fuente, infoUsuario, 120, gris, negro);
+            char infosUsuario[100];
+            snprintf(infosUsuario, sizeof(infosUsuario), "sUsuario: %s", usuario->nombre);
+            renderizarTextoCentrado(renderer, fuente, infosUsuario, 120, gris, negro);
 
-            snprintf(infoUsuario, sizeof(infoUsuario), "Partidas: %d | Ganadas: %d",
+            snprintf(infosUsuario, sizeof(infosUsuario), "Partidas: %d | Ganadas: %d",
             usuario->estadisticas.partidasJugadas, usuario->estadisticas.partidasGanadas);
-            renderizarTextoCentrado(renderer, fuente, infoUsuario, 140, gris, negro);
+            renderizarTextoCentrado(renderer, fuente, infosUsuario, 140, gris, negro);
         }
 
         // Opciones del menu
@@ -292,7 +313,7 @@ int mostrarMenuSDL(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente
     }
 }
 
-void mostrarEstadisticasSDL(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande, Usuario* usuario)
+void mostrarEstadisticasSDL(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande, sUsuario* usuario)
 {
     SDL_Color blanco = {255, 255, 255, 255};
     SDL_Color negro = {0, 0, 0, 255};
@@ -323,7 +344,7 @@ void mostrarEstadisticasSDL(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Fon
             int espaciado = 30;
 
             // Nombre del usuario
-            snprintf(buffer, sizeof(buffer), "Usuario: %s", usuario->nombre);
+            snprintf(buffer, sizeof(buffer), "sUsuario: %s", usuario->nombre);
             renderizarTextoConSombra(renderer, fuente, buffer, 100, y, blanco, negro);
             y += espaciado;
 
@@ -380,7 +401,7 @@ void mostrarEstadisticasSDL(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Fon
     }
 }
 
-int cargarPartidaSDL(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande, Usuario* usuario, Archivo_conf configuracion)
+int cargarPartidaSDL(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande, sUsuario* usuario, sArchivo_conf configuracion)
 {
     SDL_Color blanco = {255, 255, 255, 255};
     SDL_Color negro = {0, 0, 0, 255};
@@ -497,7 +518,7 @@ int cargarPartidaSDL(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuen
             if (!usuario->partidas[i].esValida)
                 continue;
 
-            PartidaGuardada* partida = &usuario->partidas[i];
+            sPartidaGuardada* partida = &usuario->partidas[i];
 
             SDL_Color colorTexto = (i == opcionSeleccionada) ? amarillo : blanco;
 
@@ -539,15 +560,15 @@ int cargarPartidaSDL(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuen
     }
 }
 
-int cargarYEjecutarPartida(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande, Usuario* usuario, int indicePartida, Archivo_conf configuracion)
+int cargarYEjecutarPartida(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande, sUsuario* usuario, int indicePartida, sArchivo_conf configuracion)
 {
     if (indicePartida < 0 || indicePartida >= MAX_PARTIDAS_GUARDADAS || !usuario->partidas[indicePartida].esValida) {
         return -1;
     }
 
-    PartidaGuardada* partida = &usuario->partidas[indicePartida];
+    sPartidaGuardada* partida = &usuario->partidas[indicePartida];
 
-    Archivo_conf configPartida;
+    sArchivo_conf configPartida;
     configPartida.dimensiones = partida->dimensiones;
     configPartida.cantMinas = partida->cantMinas;
 
@@ -574,6 +595,7 @@ int cargarYEjecutarPartida(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font
 
     return 0;
 }
+
 void dibujarTextoCentrado(SDL_Renderer* renderer, TTF_Font* fuente, const char* texto, int x, int y, int ancho, SDL_Color color)
 {
     if (!fuente || !texto || !renderer)

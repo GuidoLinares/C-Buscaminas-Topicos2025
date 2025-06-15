@@ -5,13 +5,13 @@
 #include "usuario.h"
 
 
-int pantallaIngreso(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande, Usuario* usuario);
+int pantallaIngreso(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande, sUsuario* usuario);
 
-int mostrarMenuSDL(SDL_Window* ventana, SDL_Renderer* renderer,TTF_Font* fuente, TTF_Font* fuenteGrande, Usuario* usuario);
+int mostrarMenuSDL(SDL_Window* ventana, SDL_Renderer* renderer,TTF_Font* fuente, TTF_Font* fuenteGrande, sUsuario* usuario);
 
-void mostrarEstadisticasSDL(SDL_Window* ventana, SDL_Renderer* renderer,TTF_Font* fuente, TTF_Font* fuenteGrande, Usuario* usuario);
+void mostrarEstadisticasSDL(SDL_Window* ventana, SDL_Renderer* renderer,TTF_Font* fuente, TTF_Font* fuenteGrande, sUsuario* usuario);
 
-int cargarPartidaSDL(SDL_Window* ventana, SDL_Renderer* renderer,TTF_Font* fuente, TTF_Font* fuenteGrande, Usuario* usuario, Archivo_conf configuracion);
+int cargarPartidaSDL(SDL_Window* ventana, SDL_Renderer* renderer,TTF_Font* fuente, TTF_Font* fuenteGrande, sUsuario* usuario, sArchivo_conf configuracion);
 
 void dibujarTextoCentrado(SDL_Renderer* renderer, TTF_Font* fuente, const char* texto, int x, int y, int ancho, SDL_Color color);
 
@@ -23,7 +23,9 @@ int manejarEntradaTextoSDL(SDL_Event* evento, char* buffer, int maxLen);
 
 void renderizarTextoCentrado(SDL_Renderer* , TTF_Font* , const char* , int , SDL_Color , SDL_Color );
 
-int cargarYEjecutarPartida(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande, Usuario* usuario, int indicePartida, Archivo_conf configuracion);
+int cargarYEjecutarPartida(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande, sUsuario* usuario, int indicePartida, sArchivo_conf configuracion);
+
+int validarNombreUsuario(const char *nombre);
 
 
 #endif // MENU_H_INCLUDED

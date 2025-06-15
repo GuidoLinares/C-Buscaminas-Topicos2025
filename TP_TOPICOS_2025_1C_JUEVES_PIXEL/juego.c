@@ -6,7 +6,7 @@
 #include "usuario.h"
 #include "menu.h"
 
-void ejecutarPartida(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande, Usuario* usuarios, Archivo_conf configuracion)
+void ejecutarPartida(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande, sUsuario* usuarios, sArchivo_conf configuracion)
 {
     sCelda **matriz;
     time_t tiempoInicio = time(NULL);
@@ -153,7 +153,7 @@ void procesarGameOver(SDL_Renderer *renderer, TTF_Font *fuente, TTF_Font *fuente
     SDL_Delay(3000);
 }
 
-int manejarClicIzquierdo(SDL_Event *e, SDL_Renderer *renderer, TTF_Font *fuente, TTF_Font *fuenteGrande,sCelda **matriz, Archivo_conf configuracion, int *minasRestantes, int ventana_ancho, int *primerClic)
+int manejarClicIzquierdo(SDL_Event *e, SDL_Renderer *renderer, TTF_Font *fuente, TTF_Font *fuenteGrande,sCelda **matriz, sArchivo_conf configuracion, int *minasRestantes, int ventana_ancho, int *primerClic)
 {
     int mouse_x = e->button.x;
     int mouse_y = e->button.y;
@@ -208,7 +208,7 @@ int manejarClicIzquierdo(SDL_Event *e, SDL_Renderer *renderer, TTF_Font *fuente,
     return 1; // Continuar juego
 }
 
-void manejarClicDerecho(SDL_Event *e, sCelda **matriz, Archivo_conf configuracion, int *minasRestantes)
+void manejarClicDerecho(SDL_Event *e, sCelda **matriz, sArchivo_conf configuracion, int *minasRestantes)
 {
     int mouse_x = e->button.x;
     int mouse_y = e->button.y;
@@ -257,7 +257,7 @@ void renderizarJuego(SDL_Renderer *renderer, TTF_Font *fuente, sCelda **matriz, 
     SDL_RenderPresent(renderer);
 }
 
-void jugar(SDL_Window *ventana, SDL_Renderer *renderer, TTF_Font *fuente, TTF_Font *fuenteGrande, sCelda **matriz, Archivo_conf configuracion, int *minasRestantes, int ventana_ancho)
+void jugar(SDL_Window *ventana, SDL_Renderer *renderer, TTF_Font *fuente, TTF_Font *fuenteGrande, sCelda **matriz, sArchivo_conf configuracion, int *minasRestantes, int ventana_ancho)
 {
     int corriendo = 1;
     int primerClic = 1;
@@ -294,7 +294,7 @@ void jugar(SDL_Window *ventana, SDL_Renderer *renderer, TTF_Font *fuente, TTF_Fo
     }
 }
 
-void limpiarTodosLosRecursos(SDL_Window *ventana, SDL_Renderer *renderer, TTF_Font *fuente,TTF_Font *fuenteGrande, sCelda **matriz, Archivo_conf configuracion)
+void limpiarTodosLosRecursos(SDL_Window *ventana, SDL_Renderer *renderer, TTF_Font *fuente,TTF_Font *fuenteGrande, sCelda **matriz, sArchivo_conf configuracion)
 {
 
     printf("Limpiando recursos...\n");

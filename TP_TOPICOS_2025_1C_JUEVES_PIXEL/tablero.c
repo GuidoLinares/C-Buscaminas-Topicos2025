@@ -94,7 +94,7 @@ int generarAleatorio(int minimo, int maximo)
     return rand() % (maximo - minimo + 1) + minimo;
 }
 
-void llenarMatriz(sCelda** matriz, Archivo_conf configuracion)
+void llenarMatriz(sCelda** matriz, sArchivo_conf configuracion)
 {
     srand(time(NULL));
 
@@ -157,10 +157,10 @@ void trim(char* cadena)
 }
 
 
-Archivo_conf leerArchivo()
+sArchivo_conf leerArchivo()
 {
 
-    Archivo_conf configuracion;
+    sArchivo_conf configuracion;
     char linea[MAX_LINEA];
     char minasCadena[20];
     int dimensionesLeidas;

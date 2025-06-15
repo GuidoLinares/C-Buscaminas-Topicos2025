@@ -123,7 +123,7 @@ void dibujarCeldas(SDL_Renderer* renderizador, sCelda** matriz, int dimensiones,
                     {
                         char texto[12];
                         sprintf(texto,"%d", punteroColumna->minasAdyacentes);
-                        SDL_Color colorTexto = {255, 255, 255}; )
+                        SDL_Color colorTexto = {255, 255, 255};
 
 
                         SDL_Surface* superficieTexto = TTF_RenderText_Solid(fuente, texto, colorTexto);

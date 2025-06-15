@@ -24,7 +24,7 @@ typedef struct
 {
     int cantMinas;
     int dimensiones;
-} Archivo_conf;
+}sArchivo_conf;
 
 typedef struct
 {
@@ -32,19 +32,19 @@ typedef struct
     int tieneMina;
     int tieneBandera;
     int minasAdyacentes;
-} sCelda;
+}sCelda;
 
 typedef struct {
     FILE* archivo;
     char* nombreArchivo;
     time_t tiempoInicio;
-}SistemaLog;
+}sSistemaLog;
 
 typedef struct {
     SDL_Window* ventana;
     SDL_Renderer* renderer;
     TTF_Font* fuente;
     TTF_Font* fuenteGrande;
-}RecursosSDL;
+}sRecursosSDL;
 
 #endif // COMMON_H_INCLUDED
