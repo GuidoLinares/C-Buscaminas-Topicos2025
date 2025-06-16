@@ -676,6 +676,7 @@ int cargarPartidaSDL(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuen
         SDL_Delay(16);
     }
 }
+
 /**
  * Carga y ejecuta una partida específica del usuario
  * @param ventana - Ventana SDL
@@ -869,7 +870,6 @@ void renderizarTextoCentrado(SDL_Renderer* renderer, TTF_Font* fuente, const cha
     SDL_DestroyTexture(texturaTexto);
 }
 
-
 /**
  * Carga y ejecuta una partida específica del usuario (versión completa)
  * @param ventana - Ventana SDL
@@ -881,9 +881,7 @@ void renderizarTextoCentrado(SDL_Renderer* renderer, TTF_Font* fuente, const cha
  * @param configuracion - Configuración base del juego (no se usa, se carga de la partida)
  * @return 0 si es exitoso, -1 si hay error
  */
-int cargarYEjecutarPartidaCompleta(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente,
-                                  TTF_Font* fuenteGrande, sUsuario* usuario, int indicePartida,
-                                  sArchivo_conf configuracion)
+int cargarYEjecutarPartidaCompleta(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente,TTF_Font* fuenteGrande, sUsuario* usuario, int indicePartida,sArchivo_conf configuracion)
 {
     if (indicePartida < 0 || indicePartida >= MAX_PARTIDAS_GUARDADAS || !usuario->partidas[indicePartida].esValida) {
         return -1;

@@ -19,16 +19,14 @@ void ejecutarPartida(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuen
 {
     sCelda **matriz;
     time_t tiempoInicio = time(NULL);
-    int primerClic = 1;  // AGREGAR ESTA LÍNEA - DECLARAR LA VARIABLE
+    int primerClic = 1;
 
-    // === REDIMENSIONAR VENTANA PARA EL JUEGO ===
     int ventana_ancho = configuracion.dimensiones * PIXEL_CELDA;
     int ventana_alto = configuracion.dimensiones * PIXEL_CELDA + ALTURA_HEADER;
 
     SDL_SetWindowSize(ventana, ventana_ancho, ventana_alto);
     SDL_SetWindowPosition(ventana, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 
-    // === CÓDIGO ORIGINAL DE JUEGO ===
     inicializarLog("Session_Buscaminas.log");
     logConfiguracion(configuracion);
     logInicioPartida(configuracion);
@@ -421,16 +419,12 @@ void limpiarTodosLosRecursos(SDL_Window *ventana, SDL_Renderer *renderer, TTF_Fo
  * @param primerClic - Estado del primer clic
  * @return 0 para continuar, 1 para guardar y salir, 2 para salir sin guardar
  */
-int mostrarMenuPausaFijo(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande,
-                     sUsuario* usuario, sCelda** matriz, sArchivo_conf configuracion,
-                     int minasRestantes, int tiempoTranscurrido, int primerClic)
+int mostrarMenuPausaFijo(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande,sUsuario* usuario, sCelda** matriz, sArchivo_conf configuracion,int minasRestantes, int tiempoTranscurrido, int primerClic)
 {
     SDL_Color blanco = {255, 255, 255, 255};
     SDL_Color amarillo = {255, 255, 0, 255};
     SDL_Color azulOscuro = {20, 30, 50, 200};
     SDL_Color rojo = {255, 0, 0, 255};
-    // ELIMINAR: SDL_Color verde = {0, 255, 0, 255};
-    // ELIMINAR: SDL_Color negro = {0, 0, 0, 255};
 
     int opcionSeleccionada = 0;
     const int numOpciones = 4;
@@ -450,33 +444,46 @@ int mostrarMenuPausaFijo(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* 
     while (1) {
         SDL_Event e;
         // Ciclo para procesar eventos del menú de pausa
-        while (SDL_PollEvent(&e)) {
-            if (e.type == SDL_QUIT) {
-                if (escribiendoNombre) SDL_StopTextInput();
+        while (SDL_PollEvent(&e))
+        {
+            if (e.type == SDL_QUIT)
+            {
+                if (escribiendoNombre)
+                    SDL_StopTextInput();
                 return 2; // Salir sin guardar
             }
 
-            if (escribiendoNombre) {
-                if (e.type == SDL_TEXTINPUT && strlen(nombrePartida) < 95) {
+            if (escribiendoNombre)
+            {
+                if (e.type == SDL_TEXTINPUT && strlen(nombrePartida) < 95)
+                {
                     strcat(nombrePartida, e.text.text);
-                } else if (e.type == SDL_KEYDOWN) {
-                    if (e.key.keysym.sym == SDLK_BACKSPACE && strlen(nombrePartida) > 0) {
+                }
+                else if (e.type == SDL_KEYDOWN)
+                {
+                    if (e.key.keysym.sym == SDLK_BACKSPACE && strlen(nombrePartida) > 0)
+                    {
                         nombrePartida[strlen(nombrePartida) - 1] = '\0';
-                    } else if (e.key.keysym.sym == SDLK_RETURN && strlen(nombrePartida) > 0) {
+                    }
+                    else if (e.key.keysym.sym == SDLK_RETURN && strlen(nombrePartida) > 0)
+                    {
                         // Guardar partida
-                        int slot = guardarPartidaCompleta(usuario, nombrePartida, matriz, configuracion,
-                                                        minasRestantes, tiempoTranscurrido, primerClic);
-                        if (slot >= 0) {
+                        int slot = guardarPartidaCompleta(usuario, nombrePartida, matriz, configuracion,minasRestantes, tiempoTranscurrido, primerClic);
+                        if (slot >= 0)
+                        {
                             guardarUsuario(usuario);
                             SDL_StopTextInput();
                             return 1; // Guardar y salir
-                        } else {
+                        }
+                        else
+                        {
                             strcpy(mensaje, "Error al guardar. Sin slots libres.");
                             mostrarMensaje = 1;
                             escribiendoNombre = 0;
                             SDL_StopTextInput();
                         }
-                    } else if (e.key.keysym.sym == SDLK_ESCAPE) {
+                    } else if (e.key.keysym.sym == SDLK_ESCAPE)
+                    {
                         escribiendoNombre = 0;
                         strcpy(nombrePartida, "");
                         SDL_StopTextInput();
@@ -494,12 +501,14 @@ int mostrarMenuPausaFijo(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* 
                             mostrarMensaje = 0;
                             break;
                         case SDLK_RETURN:
-                            switch (opcionSeleccionada) {
+                            switch (opcionSeleccionada)
+                            {
                                 case 0: // Continuar
                                 case 3: // Cancelar
                                     return 0;
                                 case 1: // Guardar y salir
-                                    if (buscarSlotLibre(usuario) == -1) {
+                                    if (buscarSlotLibre(usuario) == -1)
+                                    {
                                         strcpy(mensaje, "No hay slots libres para guardar");
                                         mostrarMensaje = 1;
                                     } else {
@@ -521,19 +530,20 @@ int mostrarMenuPausaFijo(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* 
         }
 
         // Renderizado del menú de pausa
-        // Dibujar un overlay semitransparente
         SDL_SetRenderDrawColor(renderer, azulOscuro.r, azulOscuro.g, azulOscuro.b, azulOscuro.a);
         SDL_Rect overlay = {0, 0, configuracion.dimensiones * PIXEL_CELDA,
                            configuracion.dimensiones * PIXEL_CELDA + ALTURA_HEADER};
         SDL_RenderFillRect(renderer, &overlay);
 
-        if (fuenteGrande) {
+        if (fuenteGrande)
+        {
             int cx = (configuracion.dimensiones * PIXEL_CELDA) / 2;
             int cy = (configuracion.dimensiones * PIXEL_CELDA + ALTURA_HEADER) / 2;
 
             // Título
             SDL_Surface* superficie = TTF_RenderText_Solid(fuenteGrande, "JUEGO PAUSADO", blanco);
-            if (superficie) {
+            if (superficie)
+            {
                 SDL_Texture* textura = SDL_CreateTextureFromSurface(renderer, superficie);
                 SDL_Rect rect = {cx - superficie->w/2, cy - 120, superficie->w, superficie->h};
                 SDL_RenderCopy(renderer, textura, NULL, &rect);
@@ -541,11 +551,14 @@ int mostrarMenuPausaFijo(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* 
                 SDL_FreeSurface(superficie);
             }
 
-            if (escribiendoNombre) {
+            if (escribiendoNombre)
+            {
                 // Modo escribir nombre
-                if (fuente) {
+                if (fuente)
+                {
                     superficie = TTF_RenderText_Solid(fuente, "Nombre de la partida:", blanco);
-                    if (superficie) {
+                    if (superficie)
+                    {
                         SDL_Texture* textura = SDL_CreateTextureFromSurface(renderer, superficie);
                         SDL_Rect rect = {cx - superficie->w/2, cy - 60, superficie->w, superficie->h};
                         SDL_RenderCopy(renderer, textura, NULL, &rect);
@@ -557,7 +570,8 @@ int mostrarMenuPausaFijo(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* 
                     char textoMostrar[110];
                     sprintf(textoMostrar, "%s_", nombrePartida);
                     superficie = TTF_RenderText_Solid(fuente, textoMostrar, amarillo);
-                    if (superficie) {
+                    if (superficie)
+                    {
                         SDL_Texture* textura = SDL_CreateTextureFromSurface(renderer, superficie);
                         SDL_Rect rect = {cx - superficie->w/2, cy - 20, superficie->w, superficie->h};
                         SDL_RenderCopy(renderer, textura, NULL, &rect);
@@ -566,7 +580,8 @@ int mostrarMenuPausaFijo(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* 
                     }
 
                     superficie = TTF_RenderText_Solid(fuente, "ENTER para guardar, ESC para cancelar", blanco);
-                    if (superficie) {
+                    if (superficie)
+                    {
                         SDL_Texture* textura = SDL_CreateTextureFromSurface(renderer, superficie);
                         SDL_Rect rect = {cx - superficie->w/2, cy + 20, superficie->w, superficie->h};
                         SDL_RenderCopy(renderer, textura, NULL, &rect);
@@ -576,12 +591,15 @@ int mostrarMenuPausaFijo(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* 
                 }
             } else {
                 // Mostrar opciones del menú - ciclo para dibujar todas las opciones
-                for (int i = 0; i < numOpciones; i++) {
+                for (int i = 0; i < numOpciones; i++)
+                {
                     SDL_Color color = (i == opcionSeleccionada) ? amarillo : blanco;
 
-                    if (fuente) {
+                    if (fuente)
+                    {
                         superficie = TTF_RenderText_Solid(fuente, opciones[i], color);
-                        if (superficie) {
+                        if (superficie)
+                        {
                             SDL_Texture* textura = SDL_CreateTextureFromSurface(renderer, superficie);
                             SDL_Rect rect = {cx - superficie->w/2, cy - 40 + i * 30, superficie->w, superficie->h};
                             SDL_RenderCopy(renderer, textura, NULL, &rect);
@@ -591,9 +609,11 @@ int mostrarMenuPausaFijo(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* 
                     }
                 }
 
-                if (fuente) {
+                if (fuente)
+                {
                     superficie = TTF_RenderText_Solid(fuente, "Usa las flechas y ENTER, ESC para continuar", blanco);
-                    if (superficie) {
+                    if (superficie)
+                    {
                         SDL_Texture* textura = SDL_CreateTextureFromSurface(renderer, superficie);
                         SDL_Rect rect = {cx - superficie->w/2, cy + 100, superficie->w, superficie->h};
                         SDL_RenderCopy(renderer, textura, NULL, &rect);
@@ -603,9 +623,11 @@ int mostrarMenuPausaFijo(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* 
                 }
 
                 // Mostrar mensaje de error si existe
-                if (mostrarMensaje && fuente) {
+                if (mostrarMensaje && fuente)
+                {
                     superficie = TTF_RenderText_Solid(fuente, mensaje, rojo);
-                    if (superficie) {
+                    if (superficie)
+                    {
                         SDL_Texture* textura = SDL_CreateTextureFromSurface(renderer, superficie);
                         SDL_Rect rect = {cx - superficie->w/2, cy + 130, superficie->w, superficie->h};
                         SDL_RenderCopy(renderer, textura, NULL, &rect);
@@ -635,9 +657,7 @@ int mostrarMenuPausaFijo(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* 
  * @param tiempoInicioPartida - Tiempo cuando comenzó la partida (para calcular tiempo transcurrido)
  * @param primerClic - Puntero al estado del primer clic
  */
-void jugarConGuardado(SDL_Window *ventana, SDL_Renderer *renderer, TTF_Font *fuente, TTF_Font *fuenteGrande,
-                     sCelda **matriz, sArchivo_conf configuracion, int *minasRestantes, int ventana_ancho,
-                     sUsuario* usuario, time_t tiempoInicioPartida, int* primerClic)
+void jugarConGuardado(SDL_Window *ventana, SDL_Renderer *renderer, TTF_Font *fuente, TTF_Font *fuenteGrande,sCelda **matriz, sArchivo_conf configuracion, int *minasRestantes, int ventana_ancho,sUsuario* usuario, time_t tiempoInicioPartida, int* primerClic)
 {
     int corriendo = 1;
     SDL_Event e;
@@ -662,11 +682,10 @@ void jugarConGuardado(SDL_Window *ventana, SDL_Renderer *renderer, TTF_Font *fue
                 {
                     // Pausar juego y mostrar menú
                     int tiempoTranscurrido = (int)difftime(time(NULL), tiempoInicioPartida);
-                    int resultadoPausa = mostrarMenuPausaFijo(ventana, renderer, fuente, fuenteGrande,
-                                                         usuario, matriz, configuracion,
-                                                         *minasRestantes, tiempoTranscurrido, *primerClic);
+                    int resultadoPausa = mostrarMenuPausaFijo(ventana, renderer, fuente, fuenteGrande,usuario, matriz, configuracion,*minasRestantes, tiempoTranscurrido, *primerClic);
 
-                    switch (resultadoPausa) {
+                    switch (resultadoPausa)
+                    {
                         case 0: // Continuar
                             printf("Continuando juego...\n");
                             break;
@@ -686,8 +705,7 @@ void jugarConGuardado(SDL_Window *ventana, SDL_Renderer *renderer, TTF_Font *fue
             {
                 if (e.button.button == SDL_BUTTON_LEFT)
                 {
-                    corriendo = manejarClicIzquierdo(&e, renderer, fuente, fuenteGrande, matriz,
-                                                   configuracion, minasRestantes, ventana_ancho, primerClic);
+                    corriendo = manejarClicIzquierdo(&e, renderer, fuente, fuenteGrande, matriz,configuracion, minasRestantes, ventana_ancho, primerClic);
                 }
                 else if (e.button.button == SDL_BUTTON_RIGHT)
                 {
@@ -697,9 +715,9 @@ void jugarConGuardado(SDL_Window *ventana, SDL_Renderer *renderer, TTF_Font *fue
         }
 
         // Renderizado solo si el juego sigue corriendo
-        if (corriendo) {
+        if (corriendo)
             renderizarJuego(renderer, fuente, matriz, configuracion.dimensiones, minasRestantes, ventana_ancho);
-        }
+
 
         // Pequeña pausa para controlar FPS
         SDL_Delay(16);

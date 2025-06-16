@@ -18,13 +18,13 @@ typedef struct {
 
 // Estructura de partida guardada MODIFICADA
 typedef struct {
-    char nombre[100];                    // AUMENTADO: más espacio para el nombre
+    char nombre[100];
     time_t fechaGuardado;
     int dimensiones;
     int cantMinas;
     int minasRestantes;
     int tiempoTranscurrido;
-    int primerClic;                      // NUEVO: 1 si NO se hizo primer clic, 0 si ya se hizo
+    int primerClic;
     int esValida;
     sCelda estadoTablero[MAX_DIMENSION * MAX_DIMENSION];
 }sPartidaGuardada;
@@ -47,25 +47,17 @@ int usuarioExiste(const char* nombre);
 //ESTADISTICAS
 void actualizarEstadisticas(sUsuario* usuario, int gano, int tiempoSegundos);
 double calcularPorcentajeVictorias(sUsuario* usuario);
-
-int guardarPartidaCompleta(sUsuario* usuario, const char* nombrePartida, sCelda** matriz,
-                          sArchivo_conf config, int minasRestantes, int tiempoTranscurrido, int primerClic);
-
 void ejecutarPartida(SDL_Window* ventana,SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande, sUsuario* usuarioActual,sArchivo_conf config);
 
 
-//PARTIDAS (funciones antiguas mantenidas para compatibilidad)
+//PARTIDAS
 int cargarPartida(sUsuario* usuario, int indicePartida, sCelda*** matriz, sArchivo_conf* config,int* minasRestantes, int* tiempoTranscurrido);
 void eliminarPartida(sUsuario* usuario, int indicePartida);
 int buscarSlotLibre(sUsuario* usuario);
 void debugMostrarPartidasGuardadas(sUsuario* usuario);
-int guardarPartidaCompleta(sUsuario* usuario, const char* nombrePartida, sCelda** matriz,
-                          sArchivo_conf config, int minasRestantes, int tiempoTranscurrido, int primerClic);
-int cargarPartidaCompleta(sUsuario* usuario, int indicePartida, sCelda*** matriz,
-                         sArchivo_conf* config, int* minasRestantes, int* tiempoTranscurrido, int* primerClic);
-void ejecutarPartidaCargada(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande,
-                           sUsuario* usuario, sCelda** matriz, sArchivo_conf config, int minasRestantes,
-                           int tiempoTranscurrido, int primerClic);
+int guardarPartidaCompleta(sUsuario* usuario, const char* nombrePartida, sCelda** matriz,sArchivo_conf config, int minasRestantes, int tiempoTranscurrido, int primerClic);
+int cargarPartidaCompleta(sUsuario* usuario, int indicePartida, sCelda*** matriz,sArchivo_conf* config, int* minasRestantes, int* tiempoTranscurrido, int* primerClic);
+void ejecutarPartidaCargada(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande,sUsuario* usuario, sCelda** matriz, sArchivo_conf config, int minasRestantes,int tiempoTranscurrido, int primerClic);
 void debugMostrarPartidasGuardadas(sUsuario* usuario);
 
 //AUX

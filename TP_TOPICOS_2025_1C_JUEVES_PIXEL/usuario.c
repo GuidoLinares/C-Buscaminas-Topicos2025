@@ -382,8 +382,7 @@ void inicializarEstadisticas(sEstadisticasUsuario* stats)
  * @param primerClic - Puntero donde restaurar el estado del primer clic
  * @return 0 si es exitoso, -1 si hay error
  */
-int cargarPartidaCompleta(sUsuario* usuario, int indicePartida, sCelda*** matriz,
-                         sArchivo_conf* config, int* minasRestantes, int* tiempoTranscurrido, int* primerClic)
+int cargarPartidaCompleta(sUsuario* usuario, int indicePartida, sCelda*** matriz,sArchivo_conf* config, int* minasRestantes, int* tiempoTranscurrido, int* primerClic)
 {
     printf("\n=== CARGANDO PARTIDA ===\n");
 
@@ -453,6 +452,7 @@ int cargarPartidaCompleta(sUsuario* usuario, int indicePartida, sCelda*** matriz
 
     return 0;
 }
+
 /**
  * Ejecuta una partida cargada desde un estado guardado
  * @param ventana - Ventana SDL
@@ -466,9 +466,7 @@ int cargarPartidaCompleta(sUsuario* usuario, int indicePartida, sCelda*** matriz
  * @param tiempoTranscurrido - Tiempo ya transcurrido
  * @param primerClic - Estado del primer clic
  */
-void ejecutarPartidaCargada(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande,
-                           sUsuario* usuario, sCelda** matriz, sArchivo_conf config, int minasRestantes,
-                           int tiempoTranscurrido, int primerClic)
+void ejecutarPartidaCargada(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande,sUsuario* usuario, sCelda** matriz, sArchivo_conf config, int minasRestantes,int tiempoTranscurrido, int primerClic)
 {
     // Ajustar tiempo de inicio para que el tiempo transcurrido sea correcto
     time_t tiempoInicioAjustado = time(NULL) - tiempoTranscurrido;
@@ -532,8 +530,7 @@ void debugMostrarPartidasGuardadas(sUsuario* usuario) {
  * @param primerClic - Estado del primer clic (1 si no se hizo, 0 si ya se hizo)
  * @return Índice del slot donde se guardó, o -1 si no hay espacio
  */
-int guardarPartidaCompleta(sUsuario* usuario, const char* nombrePartida, sCelda** matriz,
-                          sArchivo_conf config, int minasRestantes, int tiempoTranscurrido, int primerClic)
+int guardarPartidaCompleta(sUsuario* usuario, const char* nombrePartida, sCelda** matriz,sArchivo_conf config, int minasRestantes, int tiempoTranscurrido, int primerClic)
 {
     printf("\n=== GUARDANDO PARTIDA ===\n");
     printf("Nombre: %s\n", nombrePartida);

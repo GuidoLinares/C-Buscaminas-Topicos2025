@@ -5190,3 +5190,28 @@
 [2025-06-15 19:52:50] CLICK IZQUIERDO en (1,7) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:1
 [2025-06-15 19:52:50] Celda revelada (1,7) - 1 minas adyacentes
 [2025-06-15 19:52:55] === FIN DE SESION ===
+[2025-06-15 23:38:25] === BUSCAMINAS - NUEVA SESION ===
+[2025-06-15 23:38:25] CONFIGURACION CARGADA - Archivo: buscaminas.conf, Dim: 10, Minas: 10
+[2025-06-15 23:38:25] INICIO PARTIDA - Dimensiones: 10x10, Minas: 10, Total celdas: 100
+[2025-06-15 23:38:28] CLICK IZQUIERDO en (0,0) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[2025-06-15 23:38:28] Celda revelada (0,0) - 0 minas adyacentes
+[2025-06-15 23:38:29] CLICK IZQUIERDO en (0,9) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:1
+[2025-06-15 23:38:29] Celda revelada (0,9) - 1 minas adyacentes
+[2025-06-15 23:38:30] CLICK IZQUIERDO en (0,7) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[2025-06-15 23:38:30] Celda revelada (0,7) - 0 minas adyacentes
+[2025-06-15 23:38:31] CLICK IZQUIERDO en (9,9) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:0
+[2025-06-15 23:38:31] Celda revelada (9,9) - 0 minas adyacentes
+[2025-06-15 23:38:39] === FIN DE SESION ===
+[2025-06-15 23:39:33] === BUSCAMINAS - NUEVA SESION ===
+[2025-06-15 23:39:33] CONFIGURACION CARGADA - Archivo: buscaminas.conf, Dim: 15, Minas: 112
+[2025-06-15 23:39:33] INICIO PARTIDA - Dimensiones: 15x15, Minas: 112, Total celdas: 225
+[2025-06-15 23:39:35] CLICK IZQUIERDO en (2,12) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:3
+[2025-06-15 23:39:35] Celda revelada (2,12) - 3 minas adyacentes
+[2025-06-15 23:39:36] CLICK IZQUIERDO en (1,12) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:4
+[2025-06-15 23:39:36] Celda revelada (1,12) - 4 minas adyacentes
+[2025-06-15 23:39:39] CLICK IZQUIERDO en (14,14) - Mina:NO, Revelada:NO, Bandera:NO, Adyacentes:1
+[2025-06-15 23:39:39] Celda revelada (14,14) - 1 minas adyacentes
+[2025-06-15 23:39:40] CLICK IZQUIERDO en (12,9) - Mina:SI, Revelada:NO, Bandera:NO, Adyacentes:0
+[2025-06-15 23:39:40] BOOM! Mina detonada en (12,9)
+[2025-06-15 23:39:40] FIN PARTIDA - Resultado: DERROTA - MINA ENCONTRADA, Tiempo: 7 segundos
+[2025-06-15 23:39:43] === FIN DE SESION ===
