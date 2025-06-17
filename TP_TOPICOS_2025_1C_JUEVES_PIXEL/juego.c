@@ -408,6 +408,7 @@ int mostrarMenuPausaFijo(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* 
     SDL_Color amarillo = {255, 255, 0, 255};
     SDL_Color azulOscuro = {20, 30, 50, 200};
     SDL_Color rojo = {255, 0, 0, 255};
+    SDL_Color gris = {100, 100, 100, 255}; // Para sombras
 
     int opcionSeleccionada = 0;
     const int numOpciones = 4;
@@ -512,111 +513,92 @@ int mostrarMenuPausaFijo(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* 
             }
         }
 
+        // Obtener dimensiones de la ventana
+        int anchoVentana, altoVentana;
+        SDL_GetWindowSize(ventana, &anchoVentana, &altoVentana);
+
         // Renderizado del menu de pausa
         SDL_SetRenderDrawColor(renderer, azulOscuro.r, azulOscuro.g, azulOscuro.b, azulOscuro.a);
-        SDL_Rect overlay = {0, 0, configuracion.dimensiones * PIXEL_CELDA,
-                           configuracion.dimensiones * PIXEL_CELDA + ALTURA_HEADER};
+        SDL_Rect overlay = {0, 0, anchoVentana, altoVentana};
         SDL_RenderFillRect(renderer, &overlay);
 
-        if (fuenteGrande)
+        if (fuente)
         {
-            int cx = (configuracion.dimensiones * PIXEL_CELDA) / 2;
-            int cy = (configuracion.dimensiones * PIXEL_CELDA + ALTURA_HEADER) / 2;
+            // Espaciado adaptativo según altura de ventana
+            int espaciadoLinea;
+            int espaciadoOpciones; // espaciado específico para opciones del menú
+            int margenSuperior;
 
-            // Titulo
-            SDL_Surface* superficie = TTF_RenderText_Solid(fuenteGrande, "JUEGO PAUSADO", blanco);
-            if (superficie)
-            {
-                SDL_Texture* textura = SDL_CreateTextureFromSurface(renderer, superficie);
-                SDL_Rect rect = {cx - superficie->w/2, cy - 120, superficie->w, superficie->h};
-                SDL_RenderCopy(renderer, textura, NULL, &rect);
-                SDL_DestroyTexture(textura);
-                SDL_FreeSurface(superficie);
+            if (altoVentana < 250) {
+                espaciadoLinea = 15;
+                espaciadoOpciones = 25;
+                margenSuperior = 10;
+            } else if (altoVentana < 350) {
+                espaciadoLinea = 20;
+                espaciadoOpciones = 30;
+                margenSuperior = 20;
+            } else {
+                espaciadoLinea = 25;
+                espaciadoOpciones = 35;
+                margenSuperior = 30;
             }
+
+            int posicionY = margenSuperior;
+
+            // Título - usar fuente pequeña si no hay espacio
+            TTF_Font* fuenteTitulo = (altoVentana > 300 && fuenteGrande) ? fuenteGrande : fuente;
+            renderizarTexto(renderer, fuenteTitulo, "JUEGO PAUSADO", 0, posicionY, blanco, gris, 1, 1);
+            posicionY += (fuenteTitulo == fuenteGrande) ? 40 : 25;
 
             if (escribiendoNombre)
             {
                 // Modo escribir nombre
-                if (fuente)
-                {
-                    superficie = TTF_RenderText_Solid(fuente, "Nombre de la partida:", blanco);
-                    if (superficie)
-                    {
-                        SDL_Texture* textura = SDL_CreateTextureFromSurface(renderer, superficie);
-                        SDL_Rect rect = {cx - superficie->w/2, cy - 60, superficie->w, superficie->h};
-                        SDL_RenderCopy(renderer, textura, NULL, &rect);
-                        SDL_DestroyTexture(textura);
-                        SDL_FreeSurface(superficie);
-                    }
+                renderizarTexto(renderer, fuente, "Nombre de la partida:", 0, posicionY, blanco, gris, 1, 1);
+                posicionY += espaciadoLinea;
 
-                    // Campo de texto con cursor
-                    char textoMostrar[110];
-                    sprintf(textoMostrar, "%s_", nombrePartida);
-                    superficie = TTF_RenderText_Solid(fuente, textoMostrar, amarillo);
-                    if (superficie)
-                    {
-                        SDL_Texture* textura = SDL_CreateTextureFromSurface(renderer, superficie);
-                        SDL_Rect rect = {cx - superficie->w/2, cy - 20, superficie->w, superficie->h};
-                        SDL_RenderCopy(renderer, textura, NULL, &rect);
-                        SDL_DestroyTexture(textura);
-                        SDL_FreeSurface(superficie);
-                    }
+                // Campo de texto con cursor
+                char textoMostrar[110];
+                sprintf(textoMostrar, "%s_", nombrePartida);
+                renderizarTexto(renderer, fuente, textoMostrar, 0, posicionY, amarillo, gris, 1, 1);
+                posicionY += espaciadoLinea;
 
-                    superficie = TTF_RenderText_Solid(fuente, "ENTER para guardar, ESC para cancelar", blanco);
-                    if (superficie)
-                    {
-                        SDL_Texture* textura = SDL_CreateTextureFromSurface(renderer, superficie);
-                        SDL_Rect rect = {cx - superficie->w/2, cy + 20, superficie->w, superficie->h};
-                        SDL_RenderCopy(renderer, textura, NULL, &rect);
-                        SDL_DestroyTexture(textura);
-                        SDL_FreeSurface(superficie);
-                    }
-                }
-            } else {
-                // Mostrar opciones del menu - ciclo para dibujar todas las opciones
+                renderizarTexto(renderer, fuente, "ENTER para guardar, ", 0, posicionY, blanco, gris, 1, 1);
+                posicionY += espaciadoLinea;
+                renderizarTexto(renderer, fuente,"ESC para cancelar",0,posicionY, blanco, gris, 1, 1);
+
+            }
+            else
+            {
+                // Mostrar opciones del menu
                 for (int i = 0; i < numOpciones; i++)
                 {
-                    SDL_Color color = (i == opcionSeleccionada) ? amarillo : blanco;
+                    SDL_Color colorOpcion = (i == opcionSeleccionada) ? amarillo : blanco;
 
-                    if (fuente)
-                    {
-                        superficie = TTF_RenderText_Solid(fuente, opciones[i], color);
-                        if (superficie)
-                        {
-                            SDL_Texture* textura = SDL_CreateTextureFromSurface(renderer, superficie);
-                            SDL_Rect rect = {cx - superficie->w/2, cy - 40 + i * 30, superficie->w, superficie->h};
-                            SDL_RenderCopy(renderer, textura, NULL, &rect);
-                            SDL_DestroyTexture(textura);
-                            SDL_FreeSurface(superficie);
-                        }
+                    // Renderizar texto centrado
+                    renderizarTexto(renderer, fuente, opciones[i], 0, posicionY, colorOpcion, gris, 1, 1);
+
+                    // Indicador de selección (flecha)
+                    if (i == opcionSeleccionada) {
+                        int anchoTexto = 0;
+                        TTF_SizeText(fuente, opciones[i], &anchoTexto, NULL);
+                        int xFlecha = (anchoVentana - anchoTexto) / 2 - 25;
+                        if (xFlecha < 5) xFlecha = 5; // no salirse del borde
+
+                        renderizarTexto(renderer, fuente, ">>", xFlecha, posicionY, amarillo, gris, 0, 1);
                     }
+
+                    posicionY += espaciadoOpciones; // usar el espaciado específico para opciones
                 }
 
-                if (fuente)
-                {
-                    superficie = TTF_RenderText_Solid(fuente, "Usa las flechas y ENTER, ESC para continuar", blanco);
-                    if (superficie)
-                    {
-                        SDL_Texture* textura = SDL_CreateTextureFromSurface(renderer, superficie);
-                        SDL_Rect rect = {cx - superficie->w/2, cy + 100, superficie->w, superficie->h};
-                        SDL_RenderCopy(renderer, textura, NULL, &rect);
-                        SDL_DestroyTexture(textura);
-                        SDL_FreeSurface(superficie);
-                    }
-                }
+                renderizarTexto(renderer, fuente, "Usa las flechas y ENTER", 0, posicionY, blanco, gris, 1, 1);
+                posicionY += espaciadoLinea;
+                renderizarTexto(renderer, fuente, "ESC para continuar", 0, posicionY, blanco, gris, 1, 1);
+                posicionY += espaciadoLinea;
 
                 // Mostrar mensaje de error si existe
-                if (mostrarMensaje && fuente)
+                if (mostrarMensaje)
                 {
-                    superficie = TTF_RenderText_Solid(fuente, mensaje, rojo);
-                    if (superficie)
-                    {
-                        SDL_Texture* textura = SDL_CreateTextureFromSurface(renderer, superficie);
-                        SDL_Rect rect = {cx - superficie->w/2, cy + 130, superficie->w, superficie->h};
-                        SDL_RenderCopy(renderer, textura, NULL, &rect);
-                        SDL_DestroyTexture(textura);
-                        SDL_FreeSurface(superficie);
-                    }
+                    renderizarTexto(renderer, fuente, mensaje, 0, posicionY, rojo, gris, 1, 1);
                 }
             }
         }

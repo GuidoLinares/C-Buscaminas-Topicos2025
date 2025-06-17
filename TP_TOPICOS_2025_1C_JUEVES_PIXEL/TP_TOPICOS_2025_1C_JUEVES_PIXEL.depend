@@ -822,7 +822,7 @@
 	"common.h"
 	"logs.h"
 
-1750132011 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\juego.c
+1750169116 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\juego.c
 	"common.h"
 	"juego.h"
 	"logs.h"
@@ -831,7 +831,7 @@
 	"usuario.h"
 	"menu.h"
 
-1750127509 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\common.h
+1750167731 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\common.h
 	<SDL2/SDL.h>
 	<SDL2/SDL_ttf.h>
 	<stdio.h>
@@ -860,7 +860,7 @@
 1750130203 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\usuario.h
 	"common.h"
 
-1750131442 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\menu.c
+1750167731 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\menu.c
 	"common.h"
 	"menu.h"
 	"usuario.h"

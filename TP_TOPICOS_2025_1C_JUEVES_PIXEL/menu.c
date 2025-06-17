@@ -16,9 +16,7 @@
  * @param centrado - 1 para centrar horizontalmente, 0 para usar coordenada X
  * @param conSombra - 1 para incluir sombra, 0 para no incluir
  */
-void renderizarTexto(SDL_Renderer* renderer, TTF_Font* fuente, const char* texto,
-                    int x, int y, SDL_Color colorTexto, SDL_Color colorSombra,
-                    int centrado, int conSombra)
+void renderizarTexto(SDL_Renderer* renderer, TTF_Font* fuente, const char* texto,int x, int y, SDL_Color colorTexto, SDL_Color colorSombra,int centrado, int conSombra)
 {
     if (!fuente || !texto || !renderer) return;
 
