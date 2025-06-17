@@ -17,8 +17,9 @@
 #define ARCH_CONFIG "buscaminas.conf"
 #define TAM_PIXEL 8
 #define PIXEL_CELDA 32
-#define ALTURA_HEADER 64
-#define MAX_DIMENSION 50
+#define ALTURA_HEADER 90
+#define MAX_DIMENSION 32
+#define DURACION_XRAY 2000
 
 // Estructuras compartidas
 typedef struct
@@ -47,5 +48,11 @@ typedef struct {
     TTF_Font* fuente;
     TTF_Font* fuenteGrande;
 }sRecursosSDL;
+
+typedef struct {
+    int xrayActivo;
+    int xrayUsado;
+    Uint32 tiempoInicioXray;
+} sEstadoCheat;
 
 #endif // COMMON_H_INCLUDED

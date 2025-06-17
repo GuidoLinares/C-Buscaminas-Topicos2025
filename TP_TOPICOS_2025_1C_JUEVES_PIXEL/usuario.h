@@ -25,6 +25,7 @@ typedef struct {
     int minasRestantes;
     int tiempoTranscurrido;
     int primerClic;
+    int cheatXrayUsado;    // ← AGREGAR ESTA LÍNEA
     int esValida;
     sCelda estadoTablero[MAX_DIMENSION * MAX_DIMENSION];
 }sPartidaGuardada;
@@ -47,18 +48,15 @@ int usuarioExiste(const char* nombre);
 //ESTADISTICAS
 void actualizarEstadisticas(sUsuario* usuario, int gano, int tiempoSegundos);
 double calcularPorcentajeVictorias(sUsuario* usuario);
-void ejecutarPartida(SDL_Window* ventana,SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande, sUsuario* usuarioActual,sArchivo_conf config);
 
 
 //PARTIDAS
-int cargarPartida(sUsuario* usuario, int indicePartida, sCelda*** matriz, sArchivo_conf* config,int* minasRestantes, int* tiempoTranscurrido);
 void eliminarPartida(sUsuario* usuario, int indicePartida);
 int buscarSlotLibre(sUsuario* usuario);
 void debugMostrarPartidasGuardadas(sUsuario* usuario);
-int guardarPartidaCompleta(sUsuario* usuario, const char* nombrePartida, sCelda** matriz,sArchivo_conf config, int minasRestantes, int tiempoTranscurrido, int primerClic);
+int guardarPartidaCompleta(sUsuario* usuario, const char* nombrePartida, sCelda** matriz, sArchivo_conf config, int minasRestantes, int tiempoTranscurrido, int primerClic, int cheatUsado);
 int cargarPartidaCompleta(sUsuario* usuario, int indicePartida, sCelda*** matriz,sArchivo_conf* config, int* minasRestantes, int* tiempoTranscurrido, int* primerClic);
 void ejecutarPartidaCargada(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuente, TTF_Font* fuenteGrande,sUsuario* usuario, sCelda** matriz, sArchivo_conf config, int minasRestantes,int tiempoTranscurrido, int primerClic);
-void debugMostrarPartidasGuardadas(sUsuario* usuario);
 
 //AUX
 int validarNombreUsuario(const char* nombre);

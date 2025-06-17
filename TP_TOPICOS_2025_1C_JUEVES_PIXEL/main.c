@@ -8,11 +8,11 @@
 /*
 Apellido(s), nombre(s): Linares, Guido Hernan
 DNI: 43170056
-Entrega: Sí
+Entrega: Si
 
 Apellido(s), nombre(s): Goldring, Facundo
 DNI: 44595085
-Entrega: Sí
+Entrega: Si
 
 Apellido(s), nombre(s): Calvet, Lucas
 DNI: N/A
@@ -22,10 +22,10 @@ Entrega: NO
 
 int main(int argc, char *argv[])
 {
-    // === CONFIGURACIÓN DESDE ARCHIVO===
+    // === CONFIGURACION DESDE ARCHIVO===
     sArchivo_conf configuracion = leerArchivo();
 
-    // === INICIALIZACIÓN SDL ===
+    // === INICIALIZACION SDL ===
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
         printf("Error al inicializar SDL: %s\n", SDL_GetError());
@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    // Tamaño inicial para menús, se ajustará dinámicamente para el juego
+    // Tamano inicial para menus, se ajustara dinamicamente para el juego
     int ventana_ancho = 900;
     int ventana_alto = 800;
 
@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 
-    // Cargar fuentes - busca en múltiples ubicaciones posibles
+    // Cargar fuentes - busca en multiples ubicaciones posibles
     TTF_Font* fuente = NULL;
     TTF_Font* fuenteGrande = NULL;
     const char* fuentes[] = {
@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
         NULL
     };
 
-    // Ciclo para intentar cargar fuente pequeña desde diferentes ubicaciones
+    // Ciclo para intentar cargar fuente pequena desde diferentes ubicaciones
     for (int i = 0; fuentes[i] != NULL; i++) {
         fuente = TTF_OpenFont(fuentes[i], 18);
         if (fuente) break;
@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
         fuenteGrande = fuente;
     }
 
-    // === GESTIÓN DE USUARIO EN SDL ===
+    // === GESTION DE USUARIO EN SDL ===
     sUsuario usuarioActual = {0};
     if (pantallaIngreso(ventana, renderer, fuente, fuenteGrande, &usuarioActual) != 0) {
         printf("Error en el sistema de usuarios\n");
@@ -115,9 +115,9 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    // === BUCLE DE MENÚ PRINCIPAL EN SDL ===
+    // === BUCLE DE MENU PRINCIPAL EN SDL ===
     int continuar = 1;
-    // Bucle principal del programa - mantiene el menú activo hasta que el usuario salga
+    // Bucle principal del programa - mantiene el menu activo hasta que el usuario salga
     while (continuar) {
         int opcion = mostrarMenuSDL(ventana, renderer, fuente, fuenteGrande, &usuarioActual);
 
@@ -125,20 +125,42 @@ int main(int argc, char *argv[])
             case 1: // Nueva partida
                 ejecutarPartida(ventana, renderer, fuente, fuenteGrande, &usuarioActual, configuracion);
                 break;
-            case 2: // Estadísticas
+            case 2: // Estadisticas
                 mostrarEstadisticasSDL(ventana, renderer, fuente, fuenteGrande, &usuarioActual);
                 break;
             case 3: // Cargar partida
-                 printf("=== MAIN: Llamando a cargarPartidaSDL ===\n");
                 cargarPartidaSDL(ventana, renderer, fuente, fuenteGrande, &usuarioActual, configuracion);
-                printf("=== MAIN: Regresó de cargarPartidaSDL ===\n");
                 break;
-            case 4: // Recargar configuración
-                configuracion = leerArchivo();
-                printf("Configuracion recargada: Dimensiones=%d, Minas=%d\n",
-                       configuracion.dimensiones, configuracion.cantMinas);
+            case 4: // Configurar juego
+                {
+                    int resultado = mostrarMenuConfiguracion(ventana, renderer, fuente, fuenteGrande, &configuracion);
+                    if (resultado == 1) {
+                        // Configuracion guardada exitosamente
+                        printf("Configuracion actualizada: Dimensiones=%dx%d, Minas=%d\n",
+                               configuracion.dimensiones, configuracion.dimensiones, configuracion.cantMinas);
+
+                        // Mostrar mensaje de confirmacion por 2 segundos
+                        SDL_SetRenderDrawColor(renderer, 30, 42, 75, 255);
+                        SDL_RenderClear(renderer);
+
+                        if (fuenteGrande)
+                        renderizarTexto(renderer, fuenteGrande, "CONFIGURACION GUARDADA", 0, 250, (SDL_Color){0, 255, 0, 255}, (SDL_Color){0, 0, 0, 255}, 1, 1);
+
+                        char detalles[150];
+                        sprintf(detalles, "Nuevo tablero: %dx%d con %d minas",
+                               configuracion.dimensiones, configuracion.dimensiones, configuracion.cantMinas);
+                        if (fuente)
+                        renderizarTexto(renderer, fuente, detalles, 0, 300, (SDL_Color){255, 255, 255, 255}, (SDL_Color){0, 0, 0, 255}, 1, 1);
+
+                        SDL_RenderPresent(renderer);
+                        SDL_Delay(2000);
+                    }
+                }
                 break;
-            case 5: // Salir
+            case 5: // Instrucciones
+                mostrarInstruccionesSDL(ventana, renderer, fuente, fuenteGrande);
+                break;
+            case 6: // Salir
                 continuar = 0;
                 break;
         }

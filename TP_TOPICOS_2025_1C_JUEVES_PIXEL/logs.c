@@ -9,7 +9,7 @@ static sSistemaLog* g_sistemaLog = NULL;
  */
 char* obtenerTimestamp()
 {
-    static char buffer[80];  // Buffer estático - persiste entre llamadas
+    static char buffer[80];  // Buffer estatico - persiste entre llamadas
     time_t tiempoActual;
     struct tm* infoTiempo;
 
@@ -17,7 +17,7 @@ char* obtenerTimestamp()
     infoTiempo = localtime(&tiempoActual);
     strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", infoTiempo);
 
-    return buffer;  // Seguro porque es estático
+    return buffer;  // Seguro porque es estatico
 }
 
 /**
@@ -96,8 +96,8 @@ void destruirLog()
 }
 
 /**
- * Registra el inicio de una nueva partida con la configuración
- * @param configuracion - Configuración de la partida (dimensiones, minas)
+ * Registra el inicio de una nueva partida con la configuracion
+ * @param configuracion - Configuracion de la partida (dimensiones, minas)
  */
 void logInicioPartida(sArchivo_conf configuracion)
 {
@@ -181,10 +181,10 @@ void logRevelarCelda(sCelda** matriz, int fila, int columna, int dimensiones)
 /**
  * Registra cuando se coloca o quita una bandera
  * @param matriz - Matriz de celdas del tablero
- * @param fila - Fila donde se modificó la bandera
- * @param columna - Columna donde se modificó la bandera
+ * @param fila - Fila donde se modifico la bandera
+ * @param columna - Columna donde se modifico la bandera
  * @param dimensiones - Dimensiones del tablero
- * @param colocada - 1 si se colocó la bandera, 0 si se quitó
+ * @param colocada - 1 si se coloco la bandera, 0 si se quito
  */
 void logBandera(sCelda** matriz, int fila, int columna, int dimensiones, int colocada)
 {
@@ -229,8 +229,8 @@ void logFinPartida(const char* resultado)
 }
 
 /**
- * Registra la configuración leída del archivo
- * @param config - Estructura con la configuración cargada
+ * Registra la configuracion leida del archivo
+ * @param config - Estructura con la configuracion cargada
  */
 void logConfiguracion(sArchivo_conf config)
 {

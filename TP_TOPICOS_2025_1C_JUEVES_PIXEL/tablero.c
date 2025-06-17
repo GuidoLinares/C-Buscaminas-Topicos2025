@@ -2,7 +2,7 @@
 #include "tablero.h"
 
 /**
- * Cuenta el número de minas adyacentes a una celda específica
+ * Cuenta el numero de minas adyacentes a una celda especifica
  * @param matriz - Matriz de celdas del tablero
  * @param dimension - Dimensiones del tablero (NxN)
  * @param fila - Fila de la celda a analizar
@@ -74,7 +74,7 @@ sCelda** crearMatriz (int dimension)
 /**
  * Libera toda la memoria ocupada por la matriz del tablero
  * @param matriz - Matriz a destruir
- * @param tamano - Número de filas de la matriz
+ * @param tamano - Numero de filas de la matriz
  */
 void destruirMatriz(sCelda** matriz, int tamano)
 {
@@ -116,10 +116,10 @@ void inicializarMatriz(sCelda** matriz, int dimension)
 }
 
 /**
- * Genera un número aleatorio dentro de un rango específico
- * @param minimo - Valor mínimo del rango (inclusivo)
- * @param maximo - Valor máximo del rango (inclusivo)
- * @return Número aleatorio dentro del rango especificado
+ * Genera un numero aleatorio dentro de un rango especifico
+ * @param minimo - Valor minimo del rango (inclusivo)
+ * @param maximo - Valor maximo del rango (inclusivo)
+ * @return Numero aleatorio dentro del rango especificado
  */
 int generarAleatorio(int minimo, int maximo)
 {
@@ -129,7 +129,7 @@ int generarAleatorio(int minimo, int maximo)
 /**
  * Llena la matriz con minas en posiciones aleatorias y calcula las minas adyacentes
  * @param matriz - Matriz de celdas del tablero
- * @param configuracion - Configuración con dimensiones y cantidad de minas
+ * @param configuracion - Configuracion con dimensiones y cantidad de minas
  */
 void llenarMatriz(sCelda** matriz, sArchivo_conf configuracion)
 {
@@ -211,72 +211,126 @@ void trim(char* cadena)
 }
 
 /**
- * Lee la configuración del juego desde un archivo de texto
- * @return Estructura con la configuración leída (dimensiones y cantidad de minas)
+ * Lee la configuracion del juego desde un archivo de texto
+ * Formato segun especificaciones del TP:
+ * - dimensiones=16 (minimo 8, maximo 32)
+ * - cantidad_minas=10 o cantidad_minas=15%
+ * @return Estructura con la configuracion leida
  */
 sArchivo_conf leerArchivo()
 {
     sArchivo_conf configuracion;
-    char linea[MAX_LINEA];
-    char minasCadena[20];
-    int dimensionesLeidas;
-
     FILE* archivo;
+    char linea[MAX_LINEA];
+    int dimensionesLeidas = 0;
+    int minasLeidas = 0;
+
+    // Valores por defecto segun especificaciones del TP
+    configuracion.dimensiones = 16;  // Por defecto 16x16
+    configuracion.cantMinas = 40;    // Por defecto 40 minas
+
     archivo = fopen(ARCH_CONFIG, "r");
-    if(!archivo) {
-        fprintf(stderr, "ERROR: NO SE PUDO ABRIR EL ARCHIVO DE CONFIGURACION: %s\n", ARCH_CONFIG);
-        exit(-1);
+    if (!archivo) {
+        fprintf(stderr, "AVISO: No se pudo abrir %s, usando configuracion por defecto\n", ARCH_CONFIG);
+        fprintf(stderr, "Creando archivo de configuracion por defecto...\n");
+
+        // Crear archivo por defecto
+        archivo = fopen(ARCH_CONFIG, "w");
+        if (archivo) {
+            fprintf(archivo, "dimensiones=16\n");
+            fprintf(archivo, "cantidad_minas=40\n");
+            fclose(archivo);
+            printf("Archivo %s creado con configuracion por defecto\n", ARCH_CONFIG);
+        }
+        return configuracion;
     }
 
-    if (!fgets(linea, MAX_LINEA, archivo)) {
-        fprintf(stderr, "ERROR: No se pudo leer la línea del archivo de configuracion.\n");
-        fclose(archivo);
-        exit(-2);
+    // Leer linea por linea
+    while (fgets(linea, MAX_LINEA, archivo)) {
+        trim(linea);
+
+        // Ignorar lineas vacias y comentarios
+        if (strlen(linea) == 0 || linea[0] == '#') {
+            continue;
+        }
+
+        // Buscar dimensiones
+        if (strncmp(linea, "dimensiones=", 12) == 0) {
+            int dim = atoi(linea + 12);
+            if (dim >= 8 && dim <= MAX_DIMENSION) {
+                configuracion.dimensiones = dim;
+                dimensionesLeidas = 1;
+            } else {
+                fprintf(stderr, "ERROR: Dimensiones %d fuera del rango valido (8-%d)\n", dim, MAX_DIMENSION);
+                exit(-1);
+            }
+        }
+        // Buscar cantidad de minas
+        else if (strncmp(linea, "cantidad_minas=", 15) == 0) {
+            char* valorMinas = linea + 15;
+            trim(valorMinas);
+
+            int longitud = strlen(valorMinas);
+            if (longitud > 0 && valorMinas[longitud - 1] == '%') {
+                // Formato porcentaje: cantidad_minas=15%
+                valorMinas[longitud - 1] = '\0';
+                int porcentaje = atoi(valorMinas);
+
+                if (porcentaje < 1 || porcentaje > 90) {
+                    fprintf(stderr, "ERROR: Porcentaje de minas debe estar entre 1%% y 90%%\n");
+                    exit(-2);
+                }
+
+                int totalCasillas = configuracion.dimensiones * configuracion.dimensiones;
+                configuracion.cantMinas = (porcentaje * totalCasillas) / 100;
+
+                // Asegurar al menos 1 mina
+                if (configuracion.cantMinas < 1) {
+                    configuracion.cantMinas = 1;
+                }
+
+                printf("Minas calculadas por porcentaje: %d%% de %d = %d minas\n",
+                       porcentaje, totalCasillas, configuracion.cantMinas);
+            } else {
+                // Formato numero: cantidad_minas=40
+                configuracion.cantMinas = atoi(valorMinas);
+            }
+            minasLeidas = 1;
+        }
     }
 
     fclose(archivo);
 
-    if (sscanf(linea, FORMATO, minasCadena, &dimensionesLeidas) != 2) {
-        fprintf(stderr, "ERROR: Formato incorrecto en el archivo de configuración.\n");
+    // Validar que se leyeron ambos valores
+    if (!dimensionesLeidas) {
+        fprintf(stderr, "AVISO: No se encontro 'dimensiones=' en %s, usando %d por defecto\n",
+                ARCH_CONFIG, configuracion.dimensiones);
+    }
+
+    if (!minasLeidas) {
+        fprintf(stderr, "AVISO: No se encontro 'cantidad_minas=' en %s, usando %d por defecto\n",
+                ARCH_CONFIG, configuracion.cantMinas);
+    }
+
+    // Validacion final
+    int maxMinasPosibles = (configuracion.dimensiones * configuracion.dimensiones) - 1;
+    if (configuracion.cantMinas < 1 || configuracion.cantMinas > maxMinasPosibles) {
+        fprintf(stderr, "ERROR: Cantidad de minas %d fuera del rango valido (1-%d) para tablero %dx%d\n",
+                configuracion.cantMinas, maxMinasPosibles, configuracion.dimensiones, configuracion.dimensiones);
         exit(-3);
     }
 
-    trim(minasCadena);
-    configuracion.dimensiones = dimensionesLeidas;
+    printf("Configuracion cargada exitosamente:\n");
+    printf("- Dimensiones: %dx%d\n", configuracion.dimensiones, configuracion.dimensiones);
+    printf("- Minas: %d\n", configuracion.cantMinas);
+    printf("- Porcentaje de minas: %.1f%%\n",
+           ((double)configuracion.cantMinas / (configuracion.dimensiones * configuracion.dimensiones)) * 100.0);
 
-    int longitud = strlen(minasCadena);
-    if (longitud > 0 && minasCadena[longitud - 1] == '%') {
-        minasCadena[longitud - 1] = '\0';
-        trim(minasCadena);
-        int porcentaje = atoi(minasCadena);
-        if (porcentaje < 0 || porcentaje > 100) {
-            fprintf(stderr, "ERROR: Porcentaje de minas inválido: %d%%\n", porcentaje);
-            exit(-4);
-        }
-        int totalCasillas = configuracion.dimensiones * configuracion.dimensiones;
-        configuracion.cantMinas = (porcentaje * totalCasillas) / 100;
-    } else {
-        configuracion.cantMinas = atoi(minasCadena);
-    }
-
-    if (configuracion.cantMinas < 0 || configuracion.cantMinas > configuracion.dimensiones * configuracion.dimensiones) {
-        fprintf(stderr, "ERROR: Cantidad de minas inválida: %d (Fuera de rango para %dx%d).\n", configuracion.cantMinas, configuracion.dimensiones, configuracion.dimensiones);
-        exit(-5);
-    }
-
-     if (configuracion.dimensiones > MAX_DIMENSION) {
-        fprintf(stderr, "ERROR: Dimensiones del tablero (%d) exceden el máximo permitido (%d).\n",
-                configuracion.dimensiones, MAX_DIMENSION);
-        exit(-6);
-    }
-
-
-    printf("Configuracion leida: Dimensiones=%d, Minas=%d\n", configuracion.dimensiones, configuracion.cantMinas);
     return configuracion;
 }
 
 /**
- * Revela espacios vacíos adyacentes recursivamente cuando se hace clic en una celda vacía
+ * Revela espacios vacios adyacentes recursivamente cuando se hace clic en una celda vacia
  * @param matriz - Matriz de celdas del tablero
  * @param dimensiones - Dimensiones del tablero
  * @param fila - Fila de la celda inicial
@@ -284,11 +338,11 @@ sArchivo_conf leerArchivo()
  */
 void revelarEspaciosVacios(sCelda **matriz, int dimensiones, int fila, int col)
 {
-    // Verificar límites
+    // Verificar limites
     if (fila < 0 || fila >= dimensiones || col < 0 || col >= dimensiones)
         return;
 
-    // Si ya está revelada, no hacer nada
+    // Si ya esta revelada, no hacer nada
     if ((*(matriz + fila) + col)->esRevelada)
         return;
 
@@ -303,11 +357,11 @@ void revelarEspaciosVacios(sCelda **matriz, int dimensiones, int fila, int col)
     // Revelar la celda actual
     (*(matriz + fila) + col)->esRevelada = 1;
 
-    // Si la celda tiene número de minas adyacentes > 0, no expandir más
+    // Si la celda tiene numero de minas adyacentes > 0, no expandir mas
     if ((*(matriz + fila) + col)->minasAdyacentes > 0)
         return;
 
-    // Si es espacio vacío (minasAdyacentes == 0), revelar celdas adyacentes
+    // Si es espacio vacio (minasAdyacentes == 0), revelar celdas adyacentes
     if ((*(matriz + fila) + col)->minasAdyacentes == 0)
     {
         // Revelar las 8 celdas adyacentes recursivamente

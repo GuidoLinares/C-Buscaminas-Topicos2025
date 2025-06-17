@@ -2,32 +2,237 @@
 #include "interfaz.h"
 
 /**
- * Dibuja las líneas del tablero (cuadrícula) en el renderizador SDL
+ * Dibuja las lineas del tablero (cuadricula) en el renderizador SDL
  * @param renderizador - Puntero al renderizador SDL
- * @param dimensiones - Número de filas y columnas del tablero
+ * @param dimensiones - Numero de filas y columnas del tablero
  */
 void dibujarTablero(SDL_Renderer *renderizador, int dimensiones)
 {
     SDL_SetRenderDrawColor(renderizador, 255, 255, 255, 255);
 
-    // Ciclo para dibujar todas las líneas verticales y horizontales del tablero
+    // Ciclo para dibujar todas las lineas verticales y horizontales del tablero
     for (int i = 0; i <= dimensiones; i++)
     {
-        // Dibujar líneas verticales
+        // Dibujar lineas verticales
         SDL_RenderDrawLine(renderizador, i * PIXEL_CELDA, ALTURA_HEADER, i * PIXEL_CELDA, dimensiones * PIXEL_CELDA + ALTURA_HEADER);
-        // Dibujar líneas horizontales
+        // Dibujar lineas horizontales
         SDL_RenderDrawLine(renderizador, 0, i * PIXEL_CELDA + ALTURA_HEADER, dimensiones * PIXEL_CELDA, i * PIXEL_CELDA + ALTURA_HEADER);
     }
 }
 
 /**
- * Dibuja el contenido de cada celda del tablero (banderas, minas, números)
+ * Renderiza una celda individual con sus contenidos (bandera, mina, numero)
+ * @param renderizador - Puntero al renderizador SDL
+ * @param rectCelda - Rectangulo donde dibujar la celda
+ * @param celda - Datos de la celda a renderizar
+ * @param fuente - Fuente para renderizar texto
+ * @param aplicarXray - 1 si aplicar efecto X-Ray, 0 para renderizado normal
+ */
+void renderizarCeldaIndividual(SDL_Renderer* renderizador, SDL_Rect rectCelda, sCelda* celda, TTF_Font* fuente, int aplicarXray)
+{
+    if (!celda->esRevelada) // Celda no revelada
+    {
+        // Aplicar efecto X-Ray si est� activo
+        if (aplicarXray) {
+            if (celda->tieneMina) {
+                // Fondo rojo semi-transparente para minas
+                SDL_SetRenderDrawColor(renderizador, 255, 100, 100, 255);
+                SDL_RenderFillRect(renderizador, &rectCelda);
+
+                // Bomba con efecto fantasma
+                int cx = rectCelda.x + PIXEL_CELDA / 2;
+                int cy = rectCelda.y + PIXEL_CELDA / 2;
+
+                SDL_SetRenderDrawColor(renderizador, 100, 0, 0, 255);
+                int radio = 4;
+                for (int y = -radio; y <= radio; y++) {
+                    for (int x = -radio; x <= radio; x++) {
+                        if (x*x + y*y <= radio*radio) {
+                            SDL_RenderDrawPoint(renderizador, cx + x, cy + y);
+                        }
+                    }
+                }
+
+                // Texto "M" para mina
+                SDL_SetRenderDrawColor(renderizador, 255, 255, 255, 255);
+                SDL_RenderDrawPoint(renderizador, cx - 2, cy - 2);
+                SDL_RenderDrawPoint(renderizador, cx + 2, cy - 2);
+                SDL_RenderDrawPoint(renderizador, cx, cy);
+
+            } else {
+                // Fondo verde semi-transparente para celdas seguras
+                SDL_SetRenderDrawColor(renderizador, 100, 255, 100, 255);
+                SDL_RenderFillRect(renderizador, &rectCelda);
+
+                // Mostrar numero de minas adyacentes si existe
+                if (celda->minasAdyacentes > 0 && fuente) {
+                    char numero[2];
+                    sprintf(numero, "%d", celda->minasAdyacentes);
+
+                    SDL_Color colorNum = {50, 50, 50, 255};
+                    SDL_Surface* superficie = TTF_RenderText_Solid(fuente, numero, colorNum);
+                    if (superficie) {
+                        SDL_Texture* textura = SDL_CreateTextureFromSurface(renderizador, superficie);
+                        if (textura) {
+                            int x = rectCelda.x + (PIXEL_CELDA - superficie->w) / 2;
+                            int y = rectCelda.y + (PIXEL_CELDA - superficie->h) / 2;
+                            SDL_Rect destRect = {x, y, superficie->w, superficie->h};
+                            SDL_RenderCopy(renderizador, textura, NULL, &destRect);
+                            SDL_DestroyTexture(textura);
+                        }
+                        SDL_FreeSurface(superficie);
+                    }
+                }
+            }
+
+            // Borde brillante para indicar efecto X-Ray
+            SDL_SetRenderDrawColor(renderizador, 255, 255, 0, 255);
+            SDL_RenderDrawRect(renderizador, &rectCelda);
+        }
+        else {
+            // Renderizado normal de celda no revelada
+            SDL_SetRenderDrawColor(renderizador, 30, 42, 75, 255);
+            SDL_RenderFillRect(renderizador, &rectCelda);
+
+            if (celda->tieneBandera)
+            {
+                int cx = rectCelda.x + PIXEL_CELDA / 2;
+                int cy = rectCelda.y + PIXEL_CELDA / 2;
+
+                //DIBUJAR BANDERA
+                SDL_SetRenderDrawColor(renderizador, 139, 69, 19, 255);
+                SDL_RenderDrawLine(renderizador, cx, cy - 6, cx, cy + 6);
+                SDL_Rect banderaRect;
+                banderaRect.x = cx - 7;
+                banderaRect.y = cy - 6;
+                banderaRect.w = 6;
+                banderaRect.h = 6;
+                SDL_SetRenderDrawColor(renderizador, 255, 0, 0, 255);
+                SDL_RenderFillRect(renderizador, &banderaRect);
+            }
+        }
+    }
+    else // Celda revelada
+    {
+        if (celda->tieneMina)
+        {
+            // Fondo rojo brillante
+            SDL_SetRenderDrawColor(renderizador, 220, 20, 20, 255);
+            SDL_RenderFillRect(renderizador, &rectCelda);
+
+            int cx = rectCelda.x + PIXEL_CELDA / 2;
+            int cy = rectCelda.y + PIXEL_CELDA / 2;
+
+            // Cuerpo principal (negro)
+            SDL_SetRenderDrawColor(renderizador, 20, 20, 20, 255);
+            int radio = 6;
+            for (int y = -radio; y <= radio; y++) {
+                for (int x = -radio; x <= radio; x++) {
+                    if (x*x + y*y <= radio*radio) {
+                        SDL_RenderDrawPoint(renderizador, cx + x, cy + y);
+                    }
+                }
+            }
+
+            // Brillo cartoon
+            SDL_SetRenderDrawColor(renderizador, 200, 200, 200, 255);
+            SDL_RenderDrawPoint(renderizador, cx - 3, cy - 3);
+            SDL_RenderDrawPoint(renderizador, cx - 2, cy - 3);
+            SDL_RenderDrawPoint(renderizador, cx - 3, cy - 2);
+
+            // Mecha gruesa
+            SDL_SetRenderDrawColor(renderizador, 101, 67, 33, 255); // Marron
+            SDL_RenderDrawLine(renderizador, cx - 1, cy - 6, cx - 2, cy - 10);
+            SDL_RenderDrawLine(renderizador, cx, cy - 6, cx - 1, cy - 10);
+
+            // Explosion en la punta
+            SDL_SetRenderDrawColor(renderizador, 255, 0, 0, 255);
+            SDL_RenderDrawPoint(renderizador, cx - 2, cy - 11);
+            SDL_RenderDrawPoint(renderizador, cx - 1, cy - 12);
+            SDL_RenderDrawPoint(renderizador, cx - 3, cy - 10);
+            SDL_SetRenderDrawColor(renderizador, 255, 255, 0, 255);
+            SDL_RenderDrawPoint(renderizador, cx - 1, cy - 11);
+            SDL_RenderDrawPoint(renderizador, cx - 2, cy - 10);
+        }
+        else // Celda revelada y sin mina
+        {
+            // Fondo de color segun la cantidad de minas adyacentes
+            switch (celda->minasAdyacentes)
+            {
+                case 0:
+                    SDL_SetRenderDrawColor(renderizador, 190, 225, 245, 255);
+                    break;
+                case 1:
+                    SDL_SetRenderDrawColor(renderizador, 150, 195, 220, 255);
+                    break;
+                case 2:
+                    SDL_SetRenderDrawColor(renderizador, 115, 165, 195, 255);
+                    break;
+                case 3:
+                    SDL_SetRenderDrawColor(renderizador, 85, 135, 170, 255);
+                    break;
+                case 4:
+                    SDL_SetRenderDrawColor(renderizador, 60, 105, 140, 255);
+                    break;
+                case 5:
+                    SDL_SetRenderDrawColor(renderizador, 40, 75, 110, 255);
+                    break;
+                case 6:
+                    SDL_SetRenderDrawColor(renderizador, 25, 50, 80, 255);
+                    break;
+                case 7:
+                    SDL_SetRenderDrawColor(renderizador, 15, 30, 55, 255);
+                    break;
+                case 8:
+                    SDL_SetRenderDrawColor(renderizador, 8, 15, 35, 255);
+                    break;
+                default:
+                    SDL_SetRenderDrawColor(renderizador, 115, 165, 195, 255);
+                    break;
+            }
+            SDL_RenderFillRect(renderizador, &rectCelda);
+
+            if (celda->minasAdyacentes > 0 && fuente != NULL)
+            {
+                char texto[12];
+                sprintf(texto,"%d", celda->minasAdyacentes);
+                SDL_Color colorTexto = {255, 255, 255};
+
+                SDL_Surface* superficieTexto = TTF_RenderText_Solid(fuente, texto, colorTexto);
+                if (superficieTexto == NULL) {
+                    fprintf(stderr, "Error al crear superficie de texto: %s\n", TTF_GetError());
+                } else {
+                    SDL_Texture* texturaTexto = SDL_CreateTextureFromSurface(renderizador, superficieTexto);
+                    if (texturaTexto == NULL) {
+                        fprintf(stderr, "Error al crear textura de texto: %s\n", SDL_GetError());
+                        SDL_FreeSurface(superficieTexto);
+                    } else {
+                        SDL_Rect destinoTexto;
+                        destinoTexto.w = superficieTexto->w;
+                        destinoTexto.h = superficieTexto->h;
+                        destinoTexto.x = rectCelda.x + (PIXEL_CELDA - destinoTexto.w) / 2;
+                        destinoTexto.y = rectCelda.y + (PIXEL_CELDA - destinoTexto.h) / 2;
+
+                        SDL_RenderCopy(renderizador, texturaTexto, NULL, &destinoTexto);
+
+                        SDL_FreeSurface(superficieTexto);
+                        SDL_DestroyTexture(texturaTexto);
+                    }
+                }
+            }
+        }
+    }
+}
+
+/**
+ * Dibuja el contenido de cada celda del tablero (FUNCI�N UNIFICADA)
  * @param renderizador - Puntero al renderizador SDL
  * @param matriz - Matriz de celdas del tablero
  * @param dimensiones - Dimensiones del tablero
  * @param fuente - Fuente para renderizar texto
+ * @param estadoCheat - Estado actual del cheat X-Ray (NULL para renderizado normal)
  */
-void dibujarCeldas(SDL_Renderer* renderizador, sCelda** matriz, int dimensiones, TTF_Font* fuente)
+void dibujarCeldas(SDL_Renderer* renderizador, sCelda** matriz, int dimensiones, TTF_Font* fuente, sEstadoCheat* estadoCheat)
 {
     sCelda** punteroFila = matriz;
     sCelda** punteroFilaFin = matriz + dimensiones;
@@ -43,138 +248,30 @@ void dibujarCeldas(SDL_Renderer* renderizador, sCelda** matriz, int dimensiones,
         {
             SDL_Rect rectCelda;
             rectCelda.x = c * PIXEL_CELDA;
-            rectCelda.y = r * PIXEL_CELDA + ALTURA_HEADER; // ← AGREGAR ALTURA_HEADER
+            rectCelda.y = r * PIXEL_CELDA + ALTURA_HEADER;
             rectCelda.w = PIXEL_CELDA;
             rectCelda.h = PIXEL_CELDA;
 
-            if (!(punteroColumna->esRevelada)) // Celda no revelada
-            {
-                // Fondo gris para celda no revelada
-                SDL_SetRenderDrawColor(renderizador, 30, 42, 75, 255);
-                SDL_RenderFillRect(renderizador, &rectCelda);
+            // Determinar si aplicar X-Ray
+            int aplicarXray = (estadoCheat && estadoCheat->xrayActivo);
 
-                if (punteroColumna->tieneBandera)
-                {
-                    int cx = rectCelda.x + PIXEL_CELDA / 2;
-                    int cy = rectCelda.y + PIXEL_CELDA / 2;
-
-                    //DIBUJAR BANDERA
-                    SDL_SetRenderDrawColor(renderizador, 139, 69, 19, 255);
-                    SDL_RenderDrawLine(renderizador, cx, cy - 6, cx, cy + 6);
-                    SDL_Rect banderaRect;
-                    banderaRect.x = cx - 7;
-                    banderaRect.y = cy - 6;
-                    banderaRect.w = 6;
-                    banderaRect.h = 6;
-                    SDL_SetRenderDrawColor(renderizador, 255, 0, 0, 255);
-                    SDL_RenderFillRect(renderizador, &banderaRect);
-                }
-            }
-            else // Celda revelada
-            {
-                if (punteroColumna->tieneMina)
-                {
-                    SDL_SetRenderDrawColor(renderizador, 0, 0, 0, 255);
-                    SDL_RenderFillRect(renderizador, &rectCelda);
-
-                    //DIBUJAR MINA
-                    int cx = rectCelda.x + PIXEL_CELDA / 2;
-                    int cy = rectCelda.y + PIXEL_CELDA / 2;
-                    int brazo = 5;
-                    SDL_SetRenderDrawColor(renderizador, 255, 0, 0, 255);
-                    SDL_RenderDrawLine(renderizador, cx, cy - brazo, cx, cy + brazo);
-                    SDL_RenderDrawLine(renderizador, cx - brazo, cy, cx + brazo, cy);
-                    SDL_RenderDrawLine(renderizador, cx - brazo, cy - brazo, cx + brazo, cy + brazo);
-                    SDL_RenderDrawLine(renderizador, cx - brazo, cy + brazo, cx + brazo, cy - brazo);
-                    SDL_SetRenderDrawColor(renderizador, 255, 255, 255, 255);
-                    SDL_RenderDrawLine(renderizador, cx, cy - brazo - 1, cx, cy - brazo - 6);
-                    SDL_SetRenderDrawColor(renderizador, 255, 255, 0, 255);
-                    SDL_RenderDrawPoint(renderizador, cx, cy - brazo - 7);
-                    SDL_RenderDrawPoint(renderizador, cx - 1, cy - brazo - 6);
-                    SDL_RenderDrawPoint(renderizador, cx + 1, cy - brazo - 6);
-                }
-                else // Celda revelada y sin mina
-                {
-                    // Fondo de color según la cantidad de minas adyacentes
-                    switch (punteroColumna->minasAdyacentes)
-                    {
-                        case 0:
-                            SDL_SetRenderDrawColor(renderizador, 190, 225, 245, 255);
-                            break;
-                        case 1:
-                            SDL_SetRenderDrawColor(renderizador, 150, 195, 220, 255);
-                            break;
-                        case 2:
-                            SDL_SetRenderDrawColor(renderizador, 115, 165, 195, 255);
-                            break;
-                        case 3:
-                            SDL_SetRenderDrawColor(renderizador, 85, 135, 170, 255);
-                            break;
-                        case 4:
-                            SDL_SetRenderDrawColor(renderizador, 60, 105, 140, 255);
-                            break;
-                        case 5:
-                            SDL_SetRenderDrawColor(renderizador, 40, 75, 110, 255);
-                            break;
-                        case 6:
-                            SDL_SetRenderDrawColor(renderizador, 25, 50, 80, 255);
-                            break;
-                        case 7:
-                            SDL_SetRenderDrawColor(renderizador, 15, 30, 55, 255);
-                            break;
-                        case 8:
-                            SDL_SetRenderDrawColor(renderizador, 8, 15, 35, 255);
-                            break;
-                        default:
-                            SDL_SetRenderDrawColor(renderizador, 115, 165, 195, 255);
-                            break;
-                    }
-                    SDL_RenderFillRect(renderizador, &rectCelda);
-
-                    if (punteroColumna->minasAdyacentes > 0 && fuente != NULL)
-                    {
-                        char texto[12];
-                        sprintf(texto,"%d", punteroColumna->minasAdyacentes);
-                        SDL_Color colorTexto = {255, 255, 255};
-
-                        SDL_Surface* superficieTexto = TTF_RenderText_Solid(fuente, texto, colorTexto);
-                        if (superficieTexto == NULL) {
-                            fprintf(stderr, "Error al crear superficie de texto: %s\n", TTF_GetError());
-                        } else {
-                            SDL_Texture* texturaTexto = SDL_CreateTextureFromSurface(renderizador, superficieTexto);
-                            if (texturaTexto == NULL) {
-                                fprintf(stderr, "Error al crear textura de texto: %s\n", SDL_GetError());
-                                SDL_FreeSurface(superficieTexto); // Libera la superficie si la textura falla
-                            } else {
-                                SDL_Rect destinoTexto;
-                                destinoTexto.w = superficieTexto->w;
-                                destinoTexto.h = superficieTexto->h;
-                                destinoTexto.x = rectCelda.x + (PIXEL_CELDA - destinoTexto.w) / 2; // Centra horizontalmente
-                                destinoTexto.y = rectCelda.y + (PIXEL_CELDA - destinoTexto.h) / 2; // Centra verticalmente
-
-                                SDL_RenderCopy(renderizador, texturaTexto, NULL, &destinoTexto);
-
-                                SDL_FreeSurface(superficieTexto);
-                                SDL_DestroyTexture(texturaTexto);
-                            }
-                        }
-                    }
-                }
-            }
+            // Renderizar la celda usando la funci�n unificada
+            renderizarCeldaIndividual(renderizador, rectCelda, punteroColumna, fuente, aplicarXray);
         }
     }
 }
 
 /**
- * Dibuja la sección superior de la ventana con título y contador de minas
+ * Dibuja la seccion superior de la ventana con titulo, contador de minas y estado del cheat
  * @param renderer - Puntero al renderizador SDL
  * @param fuente - Fuente para renderizar texto
- * @param minasRestantes - Número de minas sin marcar
+ * @param minasRestantes - Numero de minas sin marcar
  * @param anchoVentana - Ancho de la ventana para centrar texto
+ * @param estadoCheat - Estado actual del cheat X-Ray
  */
-void dibujarHeader(SDL_Renderer *renderer, TTF_Font *fuente, int minasRestantes, int anchoVentana)
+void dibujarHeader(SDL_Renderer *renderer, TTF_Font *fuente, int minasRestantes, int anchoVentana, sEstadoCheat* estadoCheat)
 {
-    // Dibujar fondo del header (azul oscuro)
+    // Dibujar fondo del header (azul oscuro) - UN POCO MAS ALTO
     SDL_SetRenderDrawColor(renderer, 30, 42, 75, 255);
     SDL_Rect rectHeader = {0, 0, anchoVentana, ALTURA_HEADER};
     SDL_RenderFillRect(renderer, &rectHeader);
@@ -183,27 +280,23 @@ void dibujarHeader(SDL_Renderer *renderer, TTF_Font *fuente, int minasRestantes,
     {
         SDL_Color sombra = {0, 0, 0, 255};                // Negro
         SDL_Color colorTexto = {173, 216, 230, 255};      // Celeste claro
+        SDL_Color amarillo = {255, 255, 0, 255};          // Amarillo para X-RAY
 
-        // ========== DIBUJAR TÍTULO "BUSCAMINAS PIXEL" CON SOMBRA ==========
+        // ========== DIBUJAR TITULO "BUSCAMINAS PIXEL" CON SOMBRA ==========
         SDL_Surface *superficieSombraTitulo = TTF_RenderText_Solid(fuente, "BUSCAMINAS PIXEL", sombra);
         SDL_Surface *superficieTitulo = TTF_RenderText_Solid(fuente, "BUSCAMINAS PIXEL", colorTexto);
-
         if (superficieTitulo != NULL && superficieSombraTitulo != NULL)
         {
             SDL_Texture *texturaTitulo = SDL_CreateTextureFromSurface(renderer, superficieTitulo);
             SDL_Texture *texturaSombraTitulo = SDL_CreateTextureFromSurface(renderer, superficieSombraTitulo);
-
             int anchoTitulo = superficieTitulo->w;
             int altoTitulo = superficieTitulo->h;
             int xTitulo = (anchoVentana - anchoTitulo) / 2;
-            int yTitulo = 10;
-
+            int yTitulo = 30;
             SDL_Rect rectTitulo = {xTitulo, yTitulo, anchoTitulo, altoTitulo};
             SDL_Rect rectSombra = {xTitulo + 1, yTitulo + 1, anchoTitulo, altoTitulo};
-
             SDL_RenderCopy(renderer, texturaSombraTitulo, NULL, &rectSombra);
             SDL_RenderCopy(renderer, texturaTitulo, NULL, &rectTitulo);
-
             SDL_DestroyTexture(texturaTitulo);
             SDL_DestroyTexture(texturaSombraTitulo);
             SDL_FreeSurface(superficieTitulo);
@@ -213,30 +306,52 @@ void dibujarHeader(SDL_Renderer *renderer, TTF_Font *fuente, int minasRestantes,
         // ========== DIBUJAR CONTADOR DE MINAS CON SOMBRA ==========
         char texto[50];
         snprintf(texto, sizeof(texto), "Minas restantes: %d", minasRestantes);
-
         SDL_Surface *superficieSombraTexto = TTF_RenderText_Solid(fuente, texto, sombra);
         SDL_Surface *superficieTexto = TTF_RenderText_Solid(fuente, texto, colorTexto);
-
         if (superficieTexto != NULL && superficieSombraTexto != NULL)
         {
             SDL_Texture *texturaTexto = SDL_CreateTextureFromSurface(renderer, superficieTexto);
             SDL_Texture *texturaSombraTexto = SDL_CreateTextureFromSurface(renderer, superficieSombraTexto);
-
             int anchoTexto = superficieTexto->w;
             int altoTexto = superficieTexto->h;
             int xTexto = (anchoVentana - anchoTexto) / 2;
             int yTexto = ALTURA_HEADER - altoTexto - 10;
-
             SDL_Rect rectTexto = {xTexto, yTexto, anchoTexto, altoTexto};
             SDL_Rect rectSombraTexto = {xTexto + 1, yTexto + 1, anchoTexto, altoTexto};
-
             SDL_RenderCopy(renderer, texturaSombraTexto, NULL, &rectSombraTexto);
             SDL_RenderCopy(renderer, texturaTexto, NULL, &rectTexto);
-
             SDL_DestroyTexture(texturaTexto);
             SDL_DestroyTexture(texturaSombraTexto);
             SDL_FreeSurface(superficieTexto);
             SDL_FreeSurface(superficieSombraTexto);
+        }
+
+        // ========== DIBUJAR MENSAJE X-RAY CON SOMBRA (ESQUINA SUPERIOR DERECHA) ==========
+        if (estadoCheat && estadoCheat->xrayActivo)
+        {
+            Uint32 tiempoTranscurrido = SDL_GetTicks() - estadoCheat->tiempoInicioXray;
+            if ((tiempoTranscurrido / 200) % 2 == 0) // Parpadea cada 200ms
+            {
+                SDL_Surface *superficieSombraXray = TTF_RenderText_Solid(fuente, "X-RAY ACTIVO", sombra);
+                SDL_Surface *superficieXray = TTF_RenderText_Solid(fuente, "X-RAY ACTIVO", amarillo);
+                if (superficieXray != NULL && superficieSombraXray != NULL)
+                {
+                    SDL_Texture *texturaXray = SDL_CreateTextureFromSurface(renderer, superficieXray);
+                    SDL_Texture *texturaSombraXray = SDL_CreateTextureFromSurface(renderer, superficieSombraXray);
+                    int anchoXray = superficieXray->w;
+                    int altoXray = superficieXray->h;
+                    int xXray = anchoVentana - anchoXray - 10;  // 10px del borde derecho
+                    int yXray = 10;                             // Misma altura que el titulo
+                    SDL_Rect rectXray = {xXray, yXray, anchoXray, altoXray};
+                    SDL_Rect rectSombraXray = {xXray + 1, yXray + 1, anchoXray, altoXray};
+                    SDL_RenderCopy(renderer, texturaSombraXray, NULL, &rectSombraXray);
+                    SDL_RenderCopy(renderer, texturaXray, NULL, &rectXray);
+                    SDL_DestroyTexture(texturaXray);
+                    SDL_DestroyTexture(texturaSombraXray);
+                    SDL_FreeSurface(superficieXray);
+                    SDL_FreeSurface(superficieSombraXray);
+                }
+            }
         }
     }
 }
@@ -296,8 +411,8 @@ void mostrarGameOver(SDL_Renderer* renderizador, TTF_Font* fuente, int dimension
  * Verifica si el jugador ha ganado el juego
  * @param matriz - Matriz de celdas del tablero
  * @param dimensiones - Dimensiones del tablero
- * @param totalMinas - Número total de minas en el tablero
- * @return 1 si ganó, 0 si no
+ * @param totalMinas - Numero total de minas en el tablero
+ * @return 1 si gano, 0 si no
  */
 int verificarVictoria(sCelda** matriz, int dimensiones, int totalMinas)
 {
@@ -358,8 +473,8 @@ void mostrarVictoria(SDL_Renderer* renderizador, TTF_Font* fuente, int dimension
     int cx = (dimensiones * PIXEL_CELDA) / 2;
     int cy = (dimensiones * PIXEL_CELDA + ALTURA_HEADER) / 2;
 
-    SDL_Rect r1 = {cx - w1 / 2, cy - h1 - 5, w1, h1};       // primera línea
-    SDL_Rect r2 = {cx - w2 / 2, cy + 5, w2, h2};            // segunda línea
+    SDL_Rect r1 = {cx - w1 / 2, cy - h1 - 5, w1, h1};
+    SDL_Rect r2 = {cx - w2 / 2, cy + 5, w2, h2};
     SDL_Rect s1 = r1; s1.x += 2; s1.y += 2;
     SDL_Rect s2 = r2; s2.x += 2; s2.y += 2;
 

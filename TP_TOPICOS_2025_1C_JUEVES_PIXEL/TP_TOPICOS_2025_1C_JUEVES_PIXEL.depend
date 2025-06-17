@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1750028249 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\interfaz.c
+1750132092 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\interfaz.c
 	"common.h"
 	"interfaz.h"
 
@@ -390,7 +390,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1750028249 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\main.c
+1750131670 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\main.c
 	"common.h"
 	"tablero.h"
 	"juego.h"
@@ -398,7 +398,7 @@
 	"menu.h"
 	"usuario.h"
 
-1750028249 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\tablero.c
+1750129160 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\tablero.c
 	"common.h"
 	"tablero.h"
 
@@ -818,11 +818,11 @@
 
 1749304559 source:c:\users\facua\onedrive\documents\github\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\logs.c
 
-1750028249 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\logs.c
+1750106662 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\logs.c
 	"common.h"
 	"logs.h"
 
-1750028249 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\juego.c
+1750132011 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\juego.c
 	"common.h"
 	"juego.h"
 	"logs.h"
@@ -831,7 +831,7 @@
 	"usuario.h"
 	"menu.h"
 
-1750028249 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\common.h
+1750127509 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\common.h
 	<SDL2/SDL.h>
 	<SDL2/SDL_ttf.h>
 	<stdio.h>
@@ -840,10 +840,10 @@
 	<time.h>
 	<string.h>
 
-1749331304 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\interfaz.h
+1750131958 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\interfaz.h
 	"common.h"
 
-1750028249 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\juego.h
+1750130203 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\juego.h
 	"common.h"
 	"usuario.h"
 
@@ -853,21 +853,21 @@
 1750028249 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\tablero.h
 	"common.h"
 
-1750028249 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\menu.h
+1750131532 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\menu.h
 	"common.h"
 	"usuario.h"
 
-1750048153 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\usuario.h
+1750130203 s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\usuario.h
 	"common.h"
 
-1750028249 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\menu.c
+1750131442 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\menu.c
 	"common.h"
 	"menu.h"
 	"usuario.h"
-	"juego.h"
 	"tablero.h"
+	"juego.h"
 
-1750028249 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\usuario.c
+1750129828 source:s:\desktop\topicos\tp\c-buscaminas-topicos2025\tp_topicos_2025_1c_jueves_pixel\usuario.c
 	"common.h"
 	"usuario.h"
 	"tablero.h"
