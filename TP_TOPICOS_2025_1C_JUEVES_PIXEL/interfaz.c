@@ -66,7 +66,7 @@ void renderizarCeldaIndividual(SDL_Renderer* renderizador, SDL_Rect rectCelda, s
 
                 // Mostrar numero de minas adyacentes si existe
                 if (celda->minasAdyacentes > 0 && fuente) {
-                    char numero[2];
+                    char numero[12];
                     sprintf(numero, "%d", celda->minasAdyacentes);
 
                     SDL_Color colorNum = {50, 50, 50, 255};
