@@ -690,7 +690,7 @@ int cargarPartidaSDL(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuen
         // Instrucciones en la parte inferior
         if (fuente) {
             int yInstrucciones = altoVentana - 50;
-            renderizarTexto(renderer, fuente, "↑↓ Navegar | ENTER Cargar | DELETE Eliminar | ESC Volver",0, yInstrucciones, amarillo, negro, 1, 1);
+            renderizarTexto(renderer, fuente, "v^ Navegar | ENTER Cargar | DELETE Eliminar | ESC Volver",0, yInstrucciones, amarillo, negro, 1, 1);
         }
 
         SDL_RenderPresent(renderer);

@@ -15,14 +15,14 @@
 					<Add option="-g" />
 					<Add directory="SDL2-2.0.22/x86_64-w64-mingw32/include" />
 					<Add directory="SDL2-2.0.22/x86_64-w64-mingw32/include/SDL2" />
-					<Add directory="SDL2_ttf-2.24.0/x86_64-w64-mingw32/include" />
+					<Add directory="lib/SDL2_ttf-2.24.0/x86_64-w64-mingw32/include" />
 				</Compiler>
 				<Linker>
-					<Add option="-lSDL2 -lSDL2main  -lSDL2_ttf" />
+					<Add library="SDL2main" />
+					<Add library="SDL2_ttf" />
 					<Add library="SDL2" />
-					<Add library="rpcrt4" />
 					<Add directory="SDL2-2.0.22/x86_64-w64-mingw32/lib" />
-					<Add directory="SDL2_ttf-2.24.0/x86_64-w64-mingw32/lib" />
+					<Add directory="lib/SDL2_ttf-2.24.0/x86_64-w64-mingw32/lib" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -34,14 +34,14 @@
 					<Add option="-O2" />
 					<Add directory="SDL2-2.0.22/x86_64-w64-mingw32/include" />
 					<Add directory="SDL2-2.0.22/x86_64-w64-mingw32/include/SDL2" />
-					<Add directory="SDL2_ttf-2.24.0/x86_64-w64-mingw32/include" />
+					<Add directory="lib/SDL2_ttf-2.24.0/x86_64-w64-mingw32/include" />
 				</Compiler>
 				<Linker>
-					<Add option="-lSDL2 -lSDL2main  -lSDL2_ttf" />
+					<Add library="SDL2main" />
+					<Add library="SDL2_ttf" />
 					<Add library="SDL2" />
-					<Add library="rpcrt4" />
 					<Add directory="SDL2-2.0.22/x86_64-w64-mingw32/lib" />
-					<Add directory="SDL2_ttf-2.24.0/x86_64-w64-mingw32/lib" />
+					<Add directory="lib/SDL2_ttf-2.24.0/x86_64-w64-mingw32/lib" />
 				</Linker>
 			</Target>
 		</Build>
@@ -50,15 +50,14 @@
 			<Add option="-fexceptions" />
 			<Add directory="SDL2-2.0.22/x86_64-w64-mingw32/include" />
 			<Add directory="SDL2-2.0.22/x86_64-w64-mingw32/include/SDL2" />
-			<Add directory="SDL2_ttf-2.24.0/x86_64-w64-mingw32/include" />
+			<Add directory="lib/SDL2_ttf-2.24.0/x86_64-w64-mingw32/include" />
 		</Compiler>
 		<Linker>
-			<Add option="-lSDL2 -lSDL2main  -lSDL2_ttf" />
+			<Add library="SDL2main" />
+			<Add library="SDL2_ttf" />
 			<Add library="SDL2" />
-			<Add library="SDL2_ttf-2.24.0/x86_64-w64-mingw32/lib/libSDL2_ttf.a" />
-			<Add library="rpcrt4" />
 			<Add directory="SDL2-2.0.22/x86_64-w64-mingw32/lib" />
-			<Add directory="SDL2_ttf-2.24.0/x86_64-w64-mingw32/lib" />
+			<Add directory="lib/SDL2_ttf-2.24.0/x86_64-w64-mingw32/lib" />
 		</Linker>
 		<Unit filename="common.h" />
 		<Unit filename="interfaz.c">
