@@ -34,7 +34,8 @@ void renderizarCeldaIndividual(SDL_Renderer* renderizador, SDL_Rect rectCelda, s
     {
         // Aplicar efecto X-Ray si está activo
         if (aplicarXray) {
-            if (celda->tieneMina) {
+            if (celda->tieneMina)
+            {
                 // Fondo rojo semi-transparente para minas
                 SDL_SetRenderDrawColor(renderizador, 255, 100, 100, 255);
                 SDL_RenderFillRect(renderizador, &rectCelda);
@@ -61,7 +62,9 @@ void renderizarCeldaIndividual(SDL_Renderer* renderizador, SDL_Rect rectCelda, s
                 SDL_RenderDrawPoint(renderizador, cx + 2, cy - 2);
                 SDL_RenderDrawPoint(renderizador, cx, cy);
 
-            } else {
+            }
+            else
+            {
                 // Fondo verde semi-transparente para celdas seguras
                 SDL_SetRenderDrawColor(renderizador, 100, 255, 100, 255);
                 SDL_RenderFillRect(renderizador, &rectCelda);
@@ -94,7 +97,8 @@ void renderizarCeldaIndividual(SDL_Renderer* renderizador, SDL_Rect rectCelda, s
             SDL_SetRenderDrawColor(renderizador, 255, 255, 0, 255);
             SDL_RenderDrawRect(renderizador, &rectCelda);
         }
-        else {
+        else
+        {
             // Renderizado normal de celda no revelada
             SDL_SetRenderDrawColor(renderizador, 30, 42, 75, 255);
             SDL_RenderFillRect(renderizador, &rectCelda);
@@ -137,7 +141,6 @@ void renderizarCeldaIndividual(SDL_Renderer* renderizador, SDL_Rect rectCelda, s
                 {
                     if (x*x + y*y <= radio*radio)
                         SDL_RenderDrawPoint(renderizador, cx + x, cy + y);
-
                 }
             }
 
@@ -377,7 +380,8 @@ void mostrarGameOver(SDL_Renderer* renderizador, TTF_Font* fuente, int dimension
 {
     const char* texto = "GAME OVER";
 
-    if (!fuente) {
+    if (!fuente)
+    {
         printf("No hay fuente disponible para mostrar GAME OVER.\n");
         return;
     }
@@ -388,7 +392,8 @@ void mostrarGameOver(SDL_Renderer* renderizador, TTF_Font* fuente, int dimension
     SDL_Surface* sombraSurf = TTF_RenderText_Solid(fuente, texto, sombra);
     SDL_Surface* textoSurf = TTF_RenderText_Solid(fuente, texto, blanco);
 
-    if (!sombraSurf || !textoSurf) {
+    if (!sombraSurf || !textoSurf)
+    {
         printf("Error renderizando texto: %s\n", TTF_GetError());
         return;
     }
@@ -399,7 +404,8 @@ void mostrarGameOver(SDL_Renderer* renderizador, TTF_Font* fuente, int dimension
     int w = textoSurf->w;
     int h = textoSurf->h;
 
-    SDL_Rect rectTexto = {
+    SDL_Rect rectTexto =
+    {
         (dimensiones * PIXEL_CELDA - w) / 2,
         (dimensiones * PIXEL_CELDA + ALTURA_HEADER - h) / 2,
         w, h
@@ -454,7 +460,8 @@ void mostrarVictoria(SDL_Renderer* renderizador, TTF_Font* fuente, int dimension
     const char* linea1 = "!FELICIDADES!";
     const char* linea2 = "GANASTE";
 
-    if (!fuente) {
+    if (!fuente)
+    {
         printf("No hay fuente disponible para mostrar VICTORIA.\n");
         return;
     }
@@ -470,7 +477,8 @@ void mostrarVictoria(SDL_Renderer* renderizador, TTF_Font* fuente, int dimension
     SDL_Surface* texto1 = TTF_RenderText_Solid(fuente, linea1, blanco);
     SDL_Surface* texto2 = TTF_RenderText_Solid(fuente, linea2, blanco);
 
-    if (!sombra1 || !sombra2 || !texto1 || !texto2) {
+    if (!sombra1 || !sombra2 || !texto1 || !texto2)
+    {
         printf("Error al renderizar texto VICTORIA: %s\n", TTF_GetError());
         return;
     }

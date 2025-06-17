@@ -28,7 +28,7 @@ typedef struct
     int minasRestantes;
     int tiempoTranscurrido;
     int primerClic;
-    int cheatXrayUsado;    // ← AGREGAR ESTA LÍNEA
+    int cheatXrayUsado;
     int esValida;
     sCelda estadoTablero[MAX_DIMENSION * MAX_DIMENSION];
 }sPartidaGuardada;

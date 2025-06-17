@@ -3,14 +3,14 @@
 
 #include "common.h"
 
-// Funciones de manejo de matriz
+// FUNCIONES DE MANEJO DE MATRIZ
 sCelda** crearMatriz(int dimension);
 void destruirMatriz(sCelda** matriz, int tamano);
 void inicializarMatriz(sCelda** matriz, int dimension);
 void llenarMatriz(sCelda** matriz, sArchivo_conf configuracion);
 void mostrarMatriz(sCelda** matriz, int dimension);
 
-// Funciones auxiliares
+// FUNCIONES AUXILIARES
 int generarAleatorio(int minimo, int maximo);
 void trim(char* cadena);
 sArchivo_conf leerArchivo();

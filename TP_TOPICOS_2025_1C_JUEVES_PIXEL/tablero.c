@@ -47,9 +47,8 @@ void contarMinasAdyacentes(sCelda** matriz, int dimension, int fila, int columna
 sCelda** crearMatriz (int dimension)
 {
     sCelda** matriz = (sCelda**)malloc(sizeof(sCelda*) * dimension);
-    if (!matriz) {
+    if (!matriz)
         return NULL;
-    }
 
     sCelda** punteroFilaActual = matriz;
     sCelda** punteroFilaFin = matriz + dimension;
@@ -62,8 +61,9 @@ sCelda** crearMatriz (int dimension)
         {
             // Si falla, liberar toda la memoria ya asignada
             for (sCelda** punteroLimpieza = matriz ; punteroLimpieza < punteroFilaActual; punteroLimpieza++)
+            {
                 free(*punteroLimpieza);
-
+            }
             free(matriz);
             return NULL;
         }
@@ -84,7 +84,8 @@ void destruirMatriz(sCelda** matriz, int tamano)
     sCelda** punteroFilaFin = matriz + tamano;
 
     // Ciclo para liberar cada fila de la matriz
-    for( ; punteroFilaActual < punteroFilaFin ; punteroFilaActual++) {
+    for( ; punteroFilaActual < punteroFilaFin ; punteroFilaActual++)
+    {
         free(*punteroFilaActual);
     }
     free(matriz);
@@ -101,12 +102,14 @@ void inicializarMatriz(sCelda** matriz, int dimension)
     sCelda** punteroFilaFin = matriz + dimension;
 
     // Ciclo para recorrer todas las filas
-    for ( ; punteroFila < punteroFilaFin; punteroFila++) {
+    for ( ; punteroFila < punteroFilaFin; punteroFila++)
+    {
         sCelda* punteroColumna = *punteroFila;
         sCelda* punteroColumnaFin = *punteroFila + dimension;
 
         // Ciclo para recorrer todas las columnas de la fila actual
-        for ( ; punteroColumna < punteroColumnaFin; punteroColumna++) {
+        for ( ; punteroColumna < punteroColumnaFin; punteroColumna++)
+        {
             punteroColumna->esRevelada = 0;
             punteroColumna->tieneMina = 0;
             punteroColumna->tieneBandera = 0;
@@ -183,11 +186,11 @@ void mostrarMatriz(sCelda** matriz, int dimension)
         for( ; punteroColumna < punteroColumnaFin ; punteroColumna++ )
         {
             if (punteroColumna->tieneMina)
-            {
                 printf("[M]");
-            } else {
+
+            else
                 printf("[%d]", punteroColumna->minasAdyacentes);
-            }
+
         }
         printf("\n");
     }
@@ -236,13 +239,15 @@ sArchivo_conf leerArchivo()
     configuracion.cantMinas = 40;    // Por defecto 40 minas
 
     archivo = fopen(ARCH_CONFIG, "r");
-    if (!archivo) {
+    if (!archivo)
+    {
         fprintf(stderr, "AVISO: No se pudo abrir %s, usando configuracion por defecto\n", ARCH_CONFIG);
         fprintf(stderr, "Creando archivo de configuracion por defecto...\n");
 
         // Crear archivo por defecto
         archivo = fopen(ARCH_CONFIG, "w");
-        if (archivo) {
+        if (archivo)
+        {
             fprintf(archivo, "dimensiones=16\n");
             fprintf(archivo, "cantidad_minas=40\n");
             fclose(archivo);
@@ -269,7 +274,9 @@ sArchivo_conf leerArchivo()
             {
                 configuracion.dimensiones = dim;
                 dimensionesLeidas = 1;
-            } else {
+            }
+            else
+            {
                 fprintf(stderr, "ERROR: Dimensiones %d fuera del rango valido (8-%d)\n", dim, MAX_DIMENSION);
                 exit(-1);
             }
@@ -303,28 +310,25 @@ sArchivo_conf leerArchivo()
 
                 printf("Minas calculadas por porcentaje: %d%% de %d = %d minas\n",
                        porcentaje, totalCasillas, configuracion.cantMinas);
-            } else {
+            }
+            else
+            {
                 // Formato numero: cantidad_minas=40
                 configuracion.cantMinas = atoi(valorMinas);
             }
             minasLeidas = 1;
         }
     }
-
     fclose(archivo);
 
     // Validar que se leyeron ambos valores
     if (!dimensionesLeidas)
-    {
         fprintf(stderr, "AVISO: No se encontro 'dimensiones=' en %s, usando %d por defecto\n",
                 ARCH_CONFIG, configuracion.dimensiones);
-    }
 
     if (!minasLeidas)
-    {
         fprintf(stderr, "AVISO: No se encontro 'cantidad_minas=' en %s, usando %d por defecto\n",
                 ARCH_CONFIG, configuracion.cantMinas);
-    }
 
     // Validacion final
     int maxMinasPosibles = (configuracion.dimensiones * configuracion.dimensiones) - 1;

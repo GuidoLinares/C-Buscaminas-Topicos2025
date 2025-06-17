@@ -22,7 +22,7 @@ Entrega: NO
 
 int main(int argc, char *argv[])
 {
-    // === CONFIGURACION DESDE ARCHIVO===
+    // === CONFIGURACION DESDE ARCHIVO ===
     sArchivo_conf configuracion = leerArchivo();
 
     // === INICIALIZACION SDL ===
@@ -69,7 +69,8 @@ int main(int argc, char *argv[])
     // Cargar fuentes - busca en multiples ubicaciones posibles
     TTF_Font* fuente = NULL;
     TTF_Font* fuenteGrande = NULL;
-    const char* fuentes[] = {
+    const char* fuentes[] =
+    {
         "ARIAL.ttf",
         "C:/Windows/Fonts/arial.ttf",
         "C:/Windows/Fonts/calibri.ttf",
@@ -79,27 +80,31 @@ int main(int argc, char *argv[])
     };
 
     // Ciclo para intentar cargar fuente pequena desde diferentes ubicaciones
-    for (int i = 0; fuentes[i] != NULL; i++) {
+    for (int i = 0; fuentes[i] != NULL; i++)
+    {
         fuente = TTF_OpenFont(fuentes[i], 18);
-        if (fuente) break;
+        if (fuente)
+            break;
     }
 
     // Ciclo para intentar cargar fuente grande desde diferentes ubicaciones
-    for (int i = 0; fuentes[i] != NULL; i++) {
+    for (int i = 0; fuentes[i] != NULL; i++)
+    {
         fuenteGrande = TTF_OpenFont(fuentes[i], 32);
-        if (fuenteGrande) break;
+        if (fuenteGrande)
+            break;
     }
 
-    if (!fuente) {
+    if (!fuente)
         printf("Advertencia: No se pudo cargar fuente\n");
-    }
-    if (!fuenteGrande) {
+
+    if (!fuenteGrande)
         fuenteGrande = fuente;
-    }
 
     // === GESTION DE USUARIO EN SDL ===
     sUsuario usuarioActual = {0};
-    if (pantallaIngreso(ventana, renderer, fuente, fuenteGrande, &usuarioActual) != 0) {
+    if (pantallaIngreso(ventana, renderer, fuente, fuenteGrande, &usuarioActual) != 0)
+    {
         printf("Error en el sistema de usuarios\n");
 
         if (fuenteGrande && fuenteGrande != fuente)
@@ -118,10 +123,12 @@ int main(int argc, char *argv[])
     // === BUCLE DE MENU PRINCIPAL EN SDL ===
     int continuar = 1;
     // Bucle principal del programa - mantiene el menu activo hasta que el usuario salga
-    while (continuar) {
+    while (continuar)
+    {
         int opcion = mostrarMenuSDL(ventana, renderer, fuente, fuenteGrande, &usuarioActual);
 
-        switch (opcion) {
+        switch (opcion)
+        {
             case 1: // Nueva partida
                 ejecutarPartida(ventana, renderer, fuente, fuenteGrande, &usuarioActual, configuracion);
                 break;
@@ -134,7 +141,8 @@ int main(int argc, char *argv[])
             case 4: // Configurar juego
                 {
                     int resultado = mostrarMenuConfiguracion(ventana, renderer, fuente, fuenteGrande, &configuracion);
-                    if (resultado == 1) {
+                    if (resultado == 1)
+                    {
                         // Configuracion guardada exitosamente
                         printf("Configuracion actualizada: Dimensiones=%dx%d, Minas=%d\n",configuracion.dimensiones, configuracion.dimensiones, configuracion.cantMinas);
 
@@ -168,9 +176,11 @@ int main(int argc, char *argv[])
     guardarUsuario(&usuarioActual);
 
     // Limpieza final de todos los recursos
-    if (fuenteGrande && fuenteGrande != fuente) TTF_CloseFont(fuenteGrande);
+    if (fuenteGrande && fuenteGrande != fuente)
+        TTF_CloseFont(fuenteGrande);
     if (fuente) TTF_CloseFont(fuente);
-    TTF_Quit();
+        TTF_Quit();
+
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(ventana);
     SDL_Quit();

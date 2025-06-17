@@ -10,7 +10,7 @@
 #include <time.h>
 #include <string.h>
 
-// Variables globales
+// VARIABLES GLOBALES
 #define MAX_LINEA 100
 #define FORMATO "CANTIDAD DE MINAS = %[^|]| DIMENSION DEL TABLERO = %d"
 #define SIN_MEM "NO SE PUDO ASIGNAR MEMORIA"
@@ -21,7 +21,7 @@
 #define MAX_DIMENSION 32
 #define DURACION_XRAY 2000
 
-// Estructuras compartidas
+// ESTRUCTURAS COMPARTIDAS
 typedef struct
 {
     int cantMinas;

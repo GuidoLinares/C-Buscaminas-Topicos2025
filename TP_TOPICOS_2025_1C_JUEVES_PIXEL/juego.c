@@ -13,7 +13,8 @@
  */
 int activarCheatXray(sEstadoCheat* estadoCheat)
 {
-    if (estadoCheat->xrayUsado) {
+    if (estadoCheat->xrayUsado)
+    {
         printf("CHEAT X-RAY: Ya fue usado en esta partida\n");
         return 0;
     }
@@ -87,7 +88,8 @@ void ejecutarPartida(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* fuen
     int minasRestantes = configuracion.cantMinas;
 
     matriz = crearMatriz(configuracion.dimensiones);
-    if(!matriz) {
+    if(!matriz)
+    {
         printf("%s\n",SIN_MEM);
         return;
     }
@@ -130,6 +132,7 @@ void manejarInmunidadPrimerClic(sCelda **matriz, int fila, int columna, int dime
 
     // Buscar una posicion vacia para reubicar la mina
     int nuevaMinaColocada = 0;
+
     // Ciclo para buscar una posicion libre donde reubicar la mina
     for (int r = 0; r < dimensiones && !nuevaMinaColocada; r++)
     {
@@ -437,15 +440,12 @@ int mostrarMenuPausaFijo(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* 
             if (escribiendoNombre)
             {
                 if (e.type == SDL_TEXTINPUT && strlen(nombrePartida) < 95)
-                {
                     strcat(nombrePartida, e.text.text);
-                }
                 else if (e.type == SDL_KEYDOWN)
                 {
                     if (e.key.keysym.sym == SDLK_BACKSPACE && strlen(nombrePartida) > 0)
-                    {
                         nombrePartida[strlen(nombrePartida) - 1] = '\0';
-                    }
+
                     else if (e.key.keysym.sym == SDLK_RETURN && strlen(nombrePartida) > 0)
                     {
                         // Guardar partida incluyendo estado del cheat
@@ -463,16 +463,21 @@ int mostrarMenuPausaFijo(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* 
                             escribiendoNombre = 0;
                             SDL_StopTextInput();
                         }
-                    } else if (e.key.keysym.sym == SDLK_ESCAPE)
+                    }
+                    else if (e.key.keysym.sym == SDLK_ESCAPE)
                     {
                         escribiendoNombre = 0;
                         strcpy(nombrePartida, "");
                         SDL_StopTextInput();
                     }
                 }
-            } else {
-                if (e.type == SDL_KEYDOWN) {
-                    switch (e.key.keysym.sym) {
+            }
+            else
+            {
+                if (e.type == SDL_KEYDOWN)
+                {
+                    switch (e.key.keysym.sym)
+                    {
                         case SDLK_UP:
                             opcionSeleccionada = (opcionSeleccionada - 1 + numOpciones) % numOpciones;
                             mostrarMensaje = 0;
@@ -492,7 +497,9 @@ int mostrarMenuPausaFijo(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* 
                                     {
                                         strcpy(mensaje, "No hay slots libres para guardar");
                                         mostrarMensaje = 1;
-                                    } else {
+                                    }
+                                    else
+                                    {
                                         escribiendoNombre = 1;
                                         SDL_StartTextInput();
                                         strcpy(nombrePartida, "");
@@ -531,11 +538,15 @@ int mostrarMenuPausaFijo(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* 
                 espaciadoLinea = 15;
                 espaciadoOpciones = 25;
                 margenSuperior = 10;
-            } else if (altoVentana < 350) {
+            }
+            else if (altoVentana < 350)
+            {
                 espaciadoLinea = 20;
                 espaciadoOpciones = 30;
                 margenSuperior = 20;
-            } else {
+            }
+            else
+            {
                 espaciadoLinea = 25;
                 espaciadoOpciones = 35;
                 margenSuperior = 30;
@@ -563,7 +574,6 @@ int mostrarMenuPausaFijo(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* 
                 renderizarTexto(renderer, fuente, "ENTER para guardar, ", 0, posicionY, blanco, gris, 1, 1);
                 posicionY += espaciadoLinea;
                 renderizarTexto(renderer, fuente,"ESC para cancelar",0,posicionY, blanco, gris, 1, 1);
-
             }
             else
             {
@@ -576,7 +586,8 @@ int mostrarMenuPausaFijo(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* 
                     renderizarTexto(renderer, fuente, opciones[i], 0, posicionY, colorOpcion, gris, 1, 1);
 
                     // Indicador de selección (flecha)
-                    if (i == opcionSeleccionada) {
+                    if (i == opcionSeleccionada)
+                    {
                         int anchoTexto = 0;
                         TTF_SizeText(fuente, opciones[i], &anchoTexto, NULL);
                         int xFlecha = (anchoVentana - anchoTexto) / 2 - 25;
@@ -584,7 +595,6 @@ int mostrarMenuPausaFijo(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* 
 
                         renderizarTexto(renderer, fuente, ">>", xFlecha, posicionY, amarillo, gris, 0, 1);
                     }
-
                     posicionY += espaciadoOpciones; // usar el espaciado específico para opciones
                 }
 
@@ -595,9 +605,7 @@ int mostrarMenuPausaFijo(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* 
 
                 // Mostrar mensaje de error si existe
                 if (mostrarMensaje)
-                {
                     renderizarTexto(renderer, fuente, mensaje, 0, posicionY, rojo, gris, 1, 1);
-                }
             }
         }
 
@@ -645,9 +653,7 @@ void jugarConGuardado(SDL_Window *ventana, SDL_Renderer *renderer, TTF_Font *fue
             {
                 // Cheat X-Ray
                 if (e.key.keysym.sym == SDLK_h && (SDL_GetModState() & KMOD_CTRL))
-                {
                     activarCheatXray(estadoCheat);
-                }
 
                 if (e.key.keysym.sym == SDLK_ESCAPE || e.key.keysym.sym == SDLK_p)
                 {
@@ -675,13 +681,10 @@ void jugarConGuardado(SDL_Window *ventana, SDL_Renderer *renderer, TTF_Font *fue
             if (e.type == SDL_MOUSEBUTTONDOWN && corriendo)
             {
                 if (e.button.button == SDL_BUTTON_LEFT)
-                {
                     corriendo = manejarClicIzquierdo(&e, renderer, fuente, fuenteGrande, matriz, configuracion, minasRestantes, ventana_ancho, primerClic);
-                }
+
                 else if (e.button.button == SDL_BUTTON_RIGHT)
-                {
                     manejarClicDerecho(&e, matriz, configuracion, minasRestantes);
-                }
             }
         }
 
@@ -701,14 +704,3 @@ void jugarConGuardado(SDL_Window *ventana, SDL_Renderer *renderer, TTF_Font *fue
         SDL_Delay(16);
     }
 }
-
-
-
-
-
-
-
-
-
-
-

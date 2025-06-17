@@ -138,6 +138,7 @@ int guardarUsuario(sUsuario* usuario)
         // Escribir usuarios existentes y agregar el nuevo
         if (usuarios && numsUsuarios > 0)
             fwrite(usuarios, sizeof(sUsuario), numsUsuarios, archivo);
+
         fwrite(usuario, sizeof(sUsuario), 1, archivo);
     }
 
@@ -251,7 +252,6 @@ int buscarSlotLibre(sUsuario* usuario)
         if (!usuario->partidas[i].esValida)
             return i;
     }
-
     return -1; // No hay slots libres
 }
 
@@ -305,13 +305,15 @@ int cargarPartidaCompleta(sUsuario* usuario, int indicePartida, sCelda*** matriz
 {
     printf("\n=== CARGANDO PARTIDA ===\n");
 
-    if (!usuario || indicePartida < 0 || indicePartida >= MAX_PARTIDAS_GUARDADAS) {
+    if (!usuario || indicePartida < 0 || indicePartida >= MAX_PARTIDAS_GUARDADAS)
+    {
         printf("ERROR: Parametros invalidos\n");
         return -1;
     }
 
     sPartidaGuardada* partida = &usuario->partidas[indicePartida];
-    if (!partida->esValida) {
+    if (!partida->esValida)
+    {
         printf("ERROR: Partida en slot %d no es valida\n", indicePartida);
         return -1;
     }
@@ -330,7 +332,8 @@ int cargarPartidaCompleta(sUsuario* usuario, int indicePartida, sCelda*** matriz
     *primerClic = partida->primerClic;
 
     // Destruir matriz anterior si existe
-    if (*matriz) {
+    if (*matriz)
+    {
         printf("Destruyendo matriz anterior...\n");
         destruirMatriz(*matriz, config->dimensiones);
     }
@@ -338,7 +341,8 @@ int cargarPartidaCompleta(sUsuario* usuario, int indicePartida, sCelda*** matriz
     // Crear nueva matriz con las dimensiones correctas
     printf("Creando nueva matriz %dx%d...\n", config->dimensiones, config->dimensiones);
     *matriz = crearMatriz(config->dimensiones);
-    if (!*matriz) {
+    if (!*matriz)
+    {
         printf("ERROR: No se pudo crear la matriz\n");
         return -1;
     }
@@ -349,15 +353,20 @@ int cargarPartidaCompleta(sUsuario* usuario, int indicePartida, sCelda*** matriz
     int celdasReveladas = 0;
     int banderasRestauradas = 0;
 
-    for (int r = 0; r < config->dimensiones; r++) {
-        for (int c = 0; c < config->dimensiones; c++) {
+    for (int r = 0; r < config->dimensiones; r++)
+    {
+        for (int c = 0; c < config->dimensiones; c++)
+        {
             sCelda* celdaDestino = *(*matriz + r) + c;
             *celdaDestino = partida->estadoTablero[indice];
 
             // Contar para verificacion
-            if (celdaDestino->tieneMina) minasRestauradas++;
-            if (celdaDestino->esRevelada) celdasReveladas++;
-            if (celdaDestino->tieneBandera) banderasRestauradas++;
+            if (celdaDestino->tieneMina)
+                minasRestauradas++;
+            if (celdaDestino->esRevelada)
+                celdasReveladas++;
+            if (celdaDestino->tieneBandera)
+                banderasRestauradas++;
 
             indice++;
         }
@@ -394,20 +403,23 @@ int guardarPartidaCompleta(sUsuario* usuario, const char* nombrePartida, sCelda*
     printf("Tiempo: %d seg\n", tiempoTranscurrido);
     printf("Cheat X-Ray usado: %s\n", cheatUsado ? "SI" : "NO");
 
-    if (!usuario || !nombrePartida || !matriz) {
+    if (!usuario || !nombrePartida || !matriz)
+    {
         printf("ERROR: Parametros nulos\n");
         return -1;
     }
 
     // Verificar que las dimensiones no excedan el maximo
-    if (config.dimensiones > MAX_DIMENSION) {
+    if (config.dimensiones > MAX_DIMENSION)
+    {
         printf("ERROR: Dimensiones (%d) exceden maximo (%d)\n",
                config.dimensiones, MAX_DIMENSION);
         return -1;
     }
 
     int slot = buscarSlotLibre(usuario);
-    if (slot == -1) {
+    if (slot == -1)
+    {
         printf("ERROR: No hay slots libres\n");
         return -1;
     }
@@ -429,7 +441,8 @@ int guardarPartidaCompleta(sUsuario* usuario, const char* nombrePartida, sCelda*
     partida->esValida = 1;
 
     // Limpiar el array de estado antes de llenar
-    for (int i = 0; i < MAX_DIMENSION * MAX_DIMENSION; i++) {
+    for (int i = 0; i < MAX_DIMENSION * MAX_DIMENSION; i++)
+    {
         partida->estadoTablero[i].esRevelada = 0;
         partida->estadoTablero[i].tieneMina = 0;
         partida->estadoTablero[i].tieneBandera = 0;
@@ -442,8 +455,10 @@ int guardarPartidaCompleta(sUsuario* usuario, const char* nombrePartida, sCelda*
     int celdasReveladas = 0;
     int banderasGuardadas = 0;
 
-    for (int r = 0; r < config.dimensiones; r++) {
-        for (int c = 0; c < config.dimensiones; c++) {
+    for (int r = 0; r < config.dimensiones; r++)
+    {
+        for (int c = 0; c < config.dimensiones; c++)
+        {
             sCelda* celdaOriginal = *(matriz + r) + c;
             partida->estadoTablero[indice] = *celdaOriginal;
 
@@ -484,8 +499,10 @@ void ejecutarPartidaCargada(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Fon
     sEstadoCheat estadoCheat = {0, 0, 0};
 
     // Buscar la partida para obtener el estado del cheat
-    for (int i = 0; i < MAX_PARTIDAS_GUARDADAS; i++) {
-        if (usuario->partidas[i].esValida && usuario->partidas[i].cheatXrayUsado) {
+    for (int i = 0; i < MAX_PARTIDAS_GUARDADAS; i++)
+    {
+        if (usuario->partidas[i].esValida && usuario->partidas[i].cheatXrayUsado)
+        {
             estadoCheat.xrayUsado = 1;
             break;
         }

@@ -41,6 +41,7 @@ void escribirEvento(const char* evento)
  */
 sSistemaLog* inicializarLog(const char* nombreArchivo)
 {
+    // Asignar memoria para el archivo
     g_sistemaLog = (sSistemaLog*)malloc(sizeof(sSistemaLog));
     if (!g_sistemaLog)
         return NULL;
@@ -55,7 +56,7 @@ sSistemaLog* inicializarLog(const char* nombreArchivo)
     }
     strcpy(g_sistemaLog->nombreArchivo, nombreArchivo);
 
-    // Abrir archivo en modo append
+    // Abrir archivo en modo append (agregar sobre el final)
     g_sistemaLog->archivo = fopen(nombreArchivo, "a");
     if (!g_sistemaLog->archivo)
     {
@@ -83,13 +84,11 @@ void destruirLog()
 
     escribirEvento("=== FIN DE SESION ===");
 
-    if (g_sistemaLog->archivo) {
+    if (g_sistemaLog->archivo)
         fclose(g_sistemaLog->archivo);
-    }
 
-    if (g_sistemaLog->nombreArchivo) {
+    if (g_sistemaLog->nombreArchivo)
         free(g_sistemaLog->nombreArchivo);
-    }
 
     free(g_sistemaLog);
     g_sistemaLog = NULL;
@@ -167,12 +166,11 @@ void logRevelarCelda(sCelda** matriz, int fila, int columna, int dimensiones)
         return;
 
     if (celda->tieneMina)
-    {
         snprintf(mensaje, 150, "BOOM! Mina detonada en (%d,%d)", fila, columna);
-    } else {
+
+    else
         snprintf(mensaje, 150, "Celda revelada (%d,%d) - %d minas adyacentes",
                 fila, columna, celda->minasAdyacentes);
-    }
 
     escribirEvento(mensaje);
     free(mensaje);
@@ -266,7 +264,8 @@ void logEstadoTablero(sCelda** matriz, int dimensiones)
     sCelda** punteroFilaFin = matriz + dimensiones;
 
     // Ciclo para recorrer todas las filas del tablero
-    for (; punteroFila < punteroFilaFin; punteroFila++) {
+    for (; punteroFila < punteroFilaFin; punteroFila++)
+    {
         sCelda* punteroColumna = *punteroFila;
         sCelda* punteroColumnaFin = *punteroFila + dimensiones;
 
