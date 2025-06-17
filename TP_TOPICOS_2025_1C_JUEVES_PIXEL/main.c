@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
     TTF_Font* fuente = NULL;
     TTF_Font* fuenteGrande = NULL;
     const char* fuentes[] = {
-        "arial.ttf",
+        "ARIAL.ttf",
         "C:/Windows/Fonts/arial.ttf",
         "C:/Windows/Fonts/calibri.ttf",
         "/System/Library/Fonts/Arial.ttf",
@@ -136,8 +136,7 @@ int main(int argc, char *argv[])
                     int resultado = mostrarMenuConfiguracion(ventana, renderer, fuente, fuenteGrande, &configuracion);
                     if (resultado == 1) {
                         // Configuracion guardada exitosamente
-                        printf("Configuracion actualizada: Dimensiones=%dx%d, Minas=%d\n",
-                               configuracion.dimensiones, configuracion.dimensiones, configuracion.cantMinas);
+                        printf("Configuracion actualizada: Dimensiones=%dx%d, Minas=%d\n",configuracion.dimensiones, configuracion.dimensiones, configuracion.cantMinas);
 
                         // Mostrar mensaje de confirmacion por 2 segundos
                         SDL_SetRenderDrawColor(renderer, 30, 42, 75, 255);
@@ -147,8 +146,7 @@ int main(int argc, char *argv[])
                         renderizarTexto(renderer, fuenteGrande, "CONFIGURACION GUARDADA", 0, 250, (SDL_Color){0, 255, 0, 255}, (SDL_Color){0, 0, 0, 255}, 1, 1);
 
                         char detalles[150];
-                        sprintf(detalles, "Nuevo tablero: %dx%d con %d minas",
-                               configuracion.dimensiones, configuracion.dimensiones, configuracion.cantMinas);
+                        sprintf(detalles, "Nuevo tablero: %dx%d con %d minas",configuracion.dimensiones, configuracion.dimensiones, configuracion.cantMinas);
                         if (fuente)
                         renderizarTexto(renderer, fuente, detalles, 0, 300, (SDL_Color){255, 255, 255, 255}, (SDL_Color){0, 0, 0, 255}, 1, 1);
 

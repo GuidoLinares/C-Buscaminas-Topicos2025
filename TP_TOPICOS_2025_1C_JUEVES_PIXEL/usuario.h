@@ -6,7 +6,9 @@
 #define MAX_PARTIDAS_GUARDADAS 5
 #define ARCHIVO_USUARIOS "usuarios.dat"
 
-typedef struct {
+// Estructura de estadisticas
+typedef struct
+{
     int partidasJugadas;
     int partidasGanadas;
     int partidasPerdidas;
@@ -16,8 +18,9 @@ typedef struct {
     int mejorRacha;
 }sEstadisticasUsuario;
 
-// Estructura de partida guardada MODIFICADA
-typedef struct {
+// Estructura de partida guardada
+typedef struct
+{
     char nombre[100];
     time_t fechaGuardado;
     int dimensiones;
@@ -31,7 +34,8 @@ typedef struct {
 }sPartidaGuardada;
 
 // Estructura principal del usuario
-typedef struct {
+typedef struct
+{
     char nombre[MAX_NOMBRE_USUARIO];
     time_t fechaCreacion;
     time_t ultimoAcceso;

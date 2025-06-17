@@ -137,23 +137,26 @@ void llenarMatriz(sCelda** matriz, sArchivo_conf configuracion)
 
     size_t minasColocadas = 0;
     // Ciclo para colocar todas las minas en posiciones aleatorias
-    while (minasColocadas < configuracion.cantMinas) {
+    while (minasColocadas < configuracion.cantMinas)
+    {
         int fila = generarAleatorio(0, configuracion.dimensiones - 1);
         int columna = generarAleatorio(0, configuracion.dimensiones - 1);
 
         sCelda* celdaObjetivo = *(matriz + fila) + columna;
 
-        if (celdaObjetivo->tieneMina == 0) {
+        if (celdaObjetivo->tieneMina == 0)
+        {
             celdaObjetivo->tieneMina = 1;
             minasColocadas++;
         }
     }
 
-    // Calcular minas adyacentes para todas las celdas
     // Ciclo para recorrer todas las filas
-    for (int r = 0; r < configuracion.dimensiones; r++) {
+    for (int r = 0; r < configuracion.dimensiones; r++)
+    {
         // Ciclo para recorrer todas las columnas
-        for (int c = 0; c < configuracion.dimensiones; c++) {
+        for (int c = 0; c < configuracion.dimensiones; c++)
+        {
             contarMinasAdyacentes(matriz, configuracion.dimensiones, r, c);
         }
     }
@@ -171,13 +174,16 @@ void mostrarMatriz(sCelda** matriz, int dimension)
     sCelda** punteroFilaFin = matriz + dimension;
 
     // Ciclo para recorrer todas las filas
-    for( ; punteroFila < punteroFilaFin ; punteroFila++) {
+    for( ; punteroFila < punteroFilaFin ; punteroFila++)
+    {
         sCelda* punteroColumna = *punteroFila;
         sCelda* punteroColumnaFin = *punteroFila + dimension;
 
         // Ciclo para recorrer todas las columnas de la fila actual
-        for( ; punteroColumna < punteroColumnaFin ; punteroColumna++ ) {
-            if (punteroColumna->tieneMina) {
+        for( ; punteroColumna < punteroColumnaFin ; punteroColumna++ )
+        {
+            if (punteroColumna->tieneMina)
+            {
                 printf("[M]");
             } else {
                 printf("[%d]", punteroColumna->minasAdyacentes);
@@ -246,18 +252,21 @@ sArchivo_conf leerArchivo()
     }
 
     // Leer linea por linea
-    while (fgets(linea, MAX_LINEA, archivo)) {
+    while (fgets(linea, MAX_LINEA, archivo))
+    {
         trim(linea);
 
         // Ignorar lineas vacias y comentarios
-        if (strlen(linea) == 0 || linea[0] == '#') {
+        if (strlen(linea) == 0 || linea[0] == '#')
             continue;
-        }
+
 
         // Buscar dimensiones
-        if (strncmp(linea, "dimensiones=", 12) == 0) {
+        if (strncmp(linea, "dimensiones=", 12) == 0)
+        {
             int dim = atoi(linea + 12);
-            if (dim >= 8 && dim <= MAX_DIMENSION) {
+            if (dim >= 8 && dim <= MAX_DIMENSION)
+            {
                 configuracion.dimensiones = dim;
                 dimensionesLeidas = 1;
             } else {
@@ -266,17 +275,20 @@ sArchivo_conf leerArchivo()
             }
         }
         // Buscar cantidad de minas
-        else if (strncmp(linea, "cantidad_minas=", 15) == 0) {
+        else if (strncmp(linea, "cantidad_minas=", 15) == 0)
+        {
             char* valorMinas = linea + 15;
             trim(valorMinas);
 
             int longitud = strlen(valorMinas);
-            if (longitud > 0 && valorMinas[longitud - 1] == '%') {
+            if (longitud > 0 && valorMinas[longitud - 1] == '%')
+            {
                 // Formato porcentaje: cantidad_minas=15%
                 valorMinas[longitud - 1] = '\0';
                 int porcentaje = atoi(valorMinas);
 
-                if (porcentaje < 1 || porcentaje > 90) {
+                if (porcentaje < 1 || porcentaje > 90)
+                {
                     fprintf(stderr, "ERROR: Porcentaje de minas debe estar entre 1%% y 90%%\n");
                     exit(-2);
                 }
@@ -285,9 +297,9 @@ sArchivo_conf leerArchivo()
                 configuracion.cantMinas = (porcentaje * totalCasillas) / 100;
 
                 // Asegurar al menos 1 mina
-                if (configuracion.cantMinas < 1) {
+                if (configuracion.cantMinas < 1)
                     configuracion.cantMinas = 1;
-                }
+
 
                 printf("Minas calculadas por porcentaje: %d%% de %d = %d minas\n",
                        porcentaje, totalCasillas, configuracion.cantMinas);
@@ -302,29 +314,30 @@ sArchivo_conf leerArchivo()
     fclose(archivo);
 
     // Validar que se leyeron ambos valores
-    if (!dimensionesLeidas) {
+    if (!dimensionesLeidas)
+    {
         fprintf(stderr, "AVISO: No se encontro 'dimensiones=' en %s, usando %d por defecto\n",
                 ARCH_CONFIG, configuracion.dimensiones);
     }
 
-    if (!minasLeidas) {
+    if (!minasLeidas)
+    {
         fprintf(stderr, "AVISO: No se encontro 'cantidad_minas=' en %s, usando %d por defecto\n",
                 ARCH_CONFIG, configuracion.cantMinas);
     }
 
     // Validacion final
     int maxMinasPosibles = (configuracion.dimensiones * configuracion.dimensiones) - 1;
-    if (configuracion.cantMinas < 1 || configuracion.cantMinas > maxMinasPosibles) {
-        fprintf(stderr, "ERROR: Cantidad de minas %d fuera del rango valido (1-%d) para tablero %dx%d\n",
-                configuracion.cantMinas, maxMinasPosibles, configuracion.dimensiones, configuracion.dimensiones);
+    if (configuracion.cantMinas < 1 || configuracion.cantMinas > maxMinasPosibles)
+    {
+        fprintf(stderr, "ERROR: Cantidad de minas %d fuera del rango valido (1-%d) para tablero %dx%d\n",configuracion.cantMinas, maxMinasPosibles, configuracion.dimensiones, configuracion.dimensiones);
         exit(-3);
     }
 
     printf("Configuracion cargada exitosamente:\n");
     printf("- Dimensiones: %dx%d\n", configuracion.dimensiones, configuracion.dimensiones);
     printf("- Minas: %d\n", configuracion.cantMinas);
-    printf("- Porcentaje de minas: %.1f%%\n",
-           ((double)configuracion.cantMinas / (configuracion.dimensiones * configuracion.dimensiones)) * 100.0);
+    printf("- Porcentaje de minas: %.1f%%\n",((double)configuracion.cantMinas / (configuracion.dimensiones * configuracion.dimensiones)) * 100.0);
 
     return configuracion;
 }

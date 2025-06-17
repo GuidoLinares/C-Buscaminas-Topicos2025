@@ -11,7 +11,8 @@
  * @param estadoCheat - Puntero al estado actual del cheat
  * @return 1 si se activo exitosamente, 0 si ya se uso
  */
-int activarCheatXray(sEstadoCheat* estadoCheat) {
+int activarCheatXray(sEstadoCheat* estadoCheat)
+{
     if (estadoCheat->xrayUsado) {
         printf("CHEAT X-RAY: Ya fue usado en esta partida\n");
         return 0;
@@ -27,8 +28,10 @@ int activarCheatXray(sEstadoCheat* estadoCheat) {
  * Actualiza el estado del cheat X-Ray verificando si debe desactivarse
  * @param estadoCheat - Puntero al estado actual del cheat
  */
-void actualizarCheatXray(sEstadoCheat* estadoCheat) {
-    if (estadoCheat->xrayActivo && SDL_GetTicks() - estadoCheat->tiempoInicioXray > DURACION_XRAY) {
+void actualizarCheatXray(sEstadoCheat* estadoCheat)
+{
+    if (estadoCheat->xrayActivo && SDL_GetTicks() - estadoCheat->tiempoInicioXray > DURACION_XRAY)
+    {
         estadoCheat->xrayActivo = 0;
         printf("Cheat X-Ray desactivado\n");
     }
@@ -38,7 +41,8 @@ void actualizarCheatXray(sEstadoCheat* estadoCheat) {
  * Reinicia el estado del cheat para una nueva partida
  * @param estadoCheat - Puntero al estado del cheat a reiniciar
  */
-void reiniciarCheatXray(sEstadoCheat* estadoCheat) {
+void reiniciarCheatXray(sEstadoCheat* estadoCheat)
+{
     estadoCheat->xrayActivo = 0;
     estadoCheat->xrayUsado = 0;
     estadoCheat->tiempoInicioXray = 0;
@@ -48,7 +52,8 @@ void reiniciarCheatXray(sEstadoCheat* estadoCheat) {
  * Marca el cheat como usado (para partidas cargadas)
  * @param estadoCheat - Puntero al estado del cheat a modificar
  */
-void marcarCheatXrayComoUsado(sEstadoCheat* estadoCheat) {
+void marcarCheatXrayComoUsado(sEstadoCheat* estadoCheat)
+{
     estadoCheat->xrayUsado = 1;
 }
 
@@ -233,9 +238,8 @@ void procesarGameOver(SDL_Renderer *renderer, TTF_Font *fuente, TTF_Font *fuente
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
     dibujarHeader(renderer, fuente, *minasRestantes, ventana_ancho, NULL);
-dibujarCeldas(renderer, matriz, dimensiones, fuente, NULL);
-
-        dibujarTablero(renderer, dimensiones);
+    dibujarCeldas(renderer, matriz, dimensiones, fuente, NULL);
+    dibujarTablero(renderer, dimensiones);
 
     mostrarGameOver(renderer, fuenteGrande, dimensiones);
     SDL_RenderPresent(renderer);
@@ -261,20 +265,17 @@ int manejarClicIzquierdo(SDL_Event *e, SDL_Renderer *renderer, TTF_Font *fuente,
     int mouse_x = e->button.x;
     int mouse_y = e->button.y;
 
-    // AJUSTAR COORDENADAS RESTANDO EL HEADER
     if (mouse_y >= ALTURA_HEADER)
     {
         int columna_cliqueada = mouse_x / PIXEL_CELDA;
         int fila_cliqueada = (mouse_y - ALTURA_HEADER) / PIXEL_CELDA;
 
-        if (fila_cliqueada >= 0 && fila_cliqueada < configuracion.dimensiones &&
-            columna_cliqueada >= 0 && columna_cliqueada < configuracion.dimensiones)
+        if (fila_cliqueada >= 0 && fila_cliqueada < configuracion.dimensiones && columna_cliqueada >= 0 && columna_cliqueada < configuracion.dimensiones)
         {
             logClickCelda(matriz, fila_cliqueada, columna_cliqueada, configuracion.dimensiones, "IZQUIERDO");
 
             // Revela la celda si no esta ya revelada o marcada con bandera
-            if (!(*(matriz+fila_cliqueada)+columna_cliqueada)->esRevelada &&
-                !(*(matriz+fila_cliqueada)+columna_cliqueada)->tieneBandera)
+            if (!(*(matriz+fila_cliqueada)+columna_cliqueada)->esRevelada && !(*(matriz+fila_cliqueada)+columna_cliqueada)->tieneBandera)
             {
                 // VERIFICAR INMUNIDAD EN PRIMER CLIC
                 if (*primerClic && (*(matriz+fila_cliqueada)+columna_cliqueada)->tieneMina)
@@ -292,16 +293,14 @@ int manejarClicIzquierdo(SDL_Event *e, SDL_Renderer *renderer, TTF_Font *fuente,
                 // Verificar victoria
                 if (verificarVictoria(matriz, configuracion.dimensiones, configuracion.cantMinas))
                 {
-                    procesarVictoria(renderer, fuente, fuenteGrande, matriz, configuracion.dimensiones,
-                                   minasRestantes, ventana_ancho);
+                    procesarVictoria(renderer, fuente, fuenteGrande, matriz, configuracion.dimensiones, minasRestantes, ventana_ancho);
                     return 0; // Terminar juego
                 }
 
                 // VERIFICAR SI HAY MINA - GAME OVER (solo despues del primer clic)
                 if ((*(matriz+fila_cliqueada)+columna_cliqueada)->tieneMina)
                 {
-                    procesarGameOver(renderer, fuente, fuenteGrande, matriz, configuracion.dimensiones,
-                                   minasRestantes, ventana_ancho, fila_cliqueada, columna_cliqueada);
+                    procesarGameOver(renderer, fuente, fuenteGrande, matriz, configuracion.dimensiones, minasRestantes, ventana_ancho, fila_cliqueada, columna_cliqueada);
                     return 0; // Terminar juego
                 }
             }
@@ -323,14 +322,12 @@ void manejarClicDerecho(SDL_Event *e, sCelda **matriz, sArchivo_conf configuraci
     int mouse_x = e->button.x;
     int mouse_y = e->button.y;
 
-    // AJUSTAR COORDENADAS RESTANDO EL HEADER
     if (mouse_y >= ALTURA_HEADER)
     {
         int columna_cliqueada = mouse_x / PIXEL_CELDA;
         int fila_cliqueada = (mouse_y - ALTURA_HEADER) / PIXEL_CELDA;
 
-        if (fila_cliqueada >= 0 && fila_cliqueada < configuracion.dimensiones &&
-            columna_cliqueada >= 0 && columna_cliqueada < configuracion.dimensiones)
+        if (fila_cliqueada >= 0 && fila_cliqueada < configuracion.dimensiones && columna_cliqueada >= 0 && columna_cliqueada < configuracion.dimensiones)
         {
             // Pone/quita bandera si la celda no esta revelada
             if (!(*(matriz+fila_cliqueada)+columna_cliqueada)->esRevelada)
@@ -356,7 +353,6 @@ void manejarClicDerecho(SDL_Event *e, sCelda **matriz, sArchivo_conf configuraci
         }
     }
 }
-
 
 /**
  * Limpia todos los recursos asignados al finalizar el juego
@@ -408,7 +404,7 @@ int mostrarMenuPausaFijo(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* 
     SDL_Color amarillo = {255, 255, 0, 255};
     SDL_Color azulOscuro = {20, 30, 50, 200};
     SDL_Color rojo = {255, 0, 0, 255};
-    SDL_Color gris = {100, 100, 100, 255}; // Para sombras
+    SDL_Color gris = {100, 100, 100, 255};
 
     int opcionSeleccionada = 0;
     const int numOpciones = 4;
@@ -425,7 +421,8 @@ int mostrarMenuPausaFijo(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* 
     char mensaje[150] = "";
 
     // Bucle del menu de pausa
-    while (1) {
+    while (1)
+    {
         SDL_Event e;
         // Ciclo para procesar eventos del menu de pausa
         while (SDL_PollEvent(&e))
@@ -526,10 +523,11 @@ int mostrarMenuPausaFijo(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Font* 
         {
             // Espaciado adaptativo según altura de ventana
             int espaciadoLinea;
-            int espaciadoOpciones; // espaciado específico para opciones del menú
+            int espaciadoOpciones;
             int margenSuperior;
 
-            if (altoVentana < 250) {
+            if (altoVentana < 250)
+            {
                 espaciadoLinea = 15;
                 espaciadoOpciones = 25;
                 margenSuperior = 10;
@@ -688,14 +686,16 @@ void jugarConGuardado(SDL_Window *ventana, SDL_Renderer *renderer, TTF_Font *fue
         }
 
         // Renderizado solo si el juego sigue corriendo
-        if (corriendo) {
+        if (corriendo)
+        {
             actualizarCheatXray(estadoCheat);
-SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-SDL_RenderClear(renderer);
-dibujarHeader(renderer, fuente, *minasRestantes, ventana_ancho, estadoCheat);
-dibujarCeldas(renderer, matriz, configuracion.dimensiones, fuente, estadoCheat);
-dibujarTablero(renderer, configuracion.dimensiones);
-SDL_RenderPresent(renderer);        }
+            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+            SDL_RenderClear(renderer);
+            dibujarHeader(renderer, fuente, *minasRestantes, ventana_ancho, estadoCheat);
+            dibujarCeldas(renderer, matriz, configuracion.dimensiones, fuente, estadoCheat);
+            dibujarTablero(renderer, configuracion.dimensiones);
+            SDL_RenderPresent(renderer);
+        }
 
         // Pequena pausa para controlar FPS
         SDL_Delay(16);

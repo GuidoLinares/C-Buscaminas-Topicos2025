@@ -45,11 +45,13 @@ void renderizarCeldaIndividual(SDL_Renderer* renderizador, SDL_Rect rectCelda, s
 
                 SDL_SetRenderDrawColor(renderizador, 100, 0, 0, 255);
                 int radio = 4;
-                for (int y = -radio; y <= radio; y++) {
-                    for (int x = -radio; x <= radio; x++) {
-                        if (x*x + y*y <= radio*radio) {
+                for (int y = -radio; y <= radio; y++)
+                {
+                    for (int x = -radio; x <= radio; x++)
+                    {
+                        if (x*x + y*y <= radio*radio)
                             SDL_RenderDrawPoint(renderizador, cx + x, cy + y);
-                        }
+
                     }
                 }
 
@@ -65,15 +67,18 @@ void renderizarCeldaIndividual(SDL_Renderer* renderizador, SDL_Rect rectCelda, s
                 SDL_RenderFillRect(renderizador, &rectCelda);
 
                 // Mostrar numero de minas adyacentes si existe
-                if (celda->minasAdyacentes > 0 && fuente) {
+                if (celda->minasAdyacentes > 0 && fuente)
+                {
                     char numero[12];
                     sprintf(numero, "%d", celda->minasAdyacentes);
 
                     SDL_Color colorNum = {50, 50, 50, 255};
                     SDL_Surface* superficie = TTF_RenderText_Solid(fuente, numero, colorNum);
-                    if (superficie) {
+                    if (superficie)
+                    {
                         SDL_Texture* textura = SDL_CreateTextureFromSurface(renderizador, superficie);
-                        if (textura) {
+                        if (textura)
+                        {
                             int x = rectCelda.x + (PIXEL_CELDA - superficie->w) / 2;
                             int y = rectCelda.y + (PIXEL_CELDA - superficie->h) / 2;
                             SDL_Rect destRect = {x, y, superficie->w, superficie->h};
@@ -126,11 +131,13 @@ void renderizarCeldaIndividual(SDL_Renderer* renderizador, SDL_Rect rectCelda, s
             // Cuerpo principal (negro)
             SDL_SetRenderDrawColor(renderizador, 20, 20, 20, 255);
             int radio = 6;
-            for (int y = -radio; y <= radio; y++) {
-                for (int x = -radio; x <= radio; x++) {
-                    if (x*x + y*y <= radio*radio) {
+            for (int y = -radio; y <= radio; y++)
+            {
+                for (int x = -radio; x <= radio; x++)
+                {
+                    if (x*x + y*y <= radio*radio)
                         SDL_RenderDrawPoint(renderizador, cx + x, cy + y);
-                    }
+
                 }
             }
 
@@ -199,14 +206,18 @@ void renderizarCeldaIndividual(SDL_Renderer* renderizador, SDL_Rect rectCelda, s
                 SDL_Color colorTexto = {255, 255, 255};
 
                 SDL_Surface* superficieTexto = TTF_RenderText_Solid(fuente, texto, colorTexto);
-                if (superficieTexto == NULL) {
+                if (superficieTexto == NULL)
                     fprintf(stderr, "Error al crear superficie de texto: %s\n", TTF_GetError());
-                } else {
+
+                else
+                {
                     SDL_Texture* texturaTexto = SDL_CreateTextureFromSurface(renderizador, superficieTexto);
-                    if (texturaTexto == NULL) {
+                    if (texturaTexto == NULL)
+                    {
                         fprintf(stderr, "Error al crear textura de texto: %s\n", SDL_GetError());
                         SDL_FreeSurface(superficieTexto);
-                    } else {
+                    }
+                    else {
                         SDL_Rect destinoTexto;
                         destinoTexto.w = superficieTexto->w;
                         destinoTexto.h = superficieTexto->h;
@@ -419,8 +430,10 @@ int verificarVictoria(sCelda** matriz, int dimensiones, int totalMinas)
     int reveladas = 0;
 
     // Ciclo para contar todas las celdas reveladas
-    for (int r = 0; r < dimensiones; r++) {
-        for (int c = 0; c < dimensiones; c++) {
+    for (int r = 0; r < dimensiones; r++)
+    {
+        for (int c = 0; c < dimensiones; c++)
+        {
             if ((*(matriz + r) + c)->esRevelada)
                 reveladas++;
         }
@@ -436,7 +449,8 @@ int verificarVictoria(sCelda** matriz, int dimensiones, int totalMinas)
  * @param fuente - Fuente para renderizar el texto
  * @param dimensiones - Dimensiones del tablero para centrar el mensaje
  */
-void mostrarVictoria(SDL_Renderer* renderizador, TTF_Font* fuente, int dimensiones) {
+void mostrarVictoria(SDL_Renderer* renderizador, TTF_Font* fuente, int dimensiones)
+{
     const char* linea1 = "!FELICIDADES!";
     const char* linea2 = "GANASTE";
 

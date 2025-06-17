@@ -24,7 +24,7 @@ void crearNuevoUsuario(const char* nombre, sUsuario* usuario)
     for (int i = 0; i < MAX_PARTIDAS_GUARDADAS; i++)
     {
         usuario->partidas[i].esValida = 0;
-        usuario->partidas[i].cheatXrayUsado = 0;  // ← AGREGAR ESTA LÍNEA
+        usuario->partidas[i].cheatXrayUsado = 0;
         strcpy(usuario->partidas[i].nombre, "");
     }
 }
@@ -507,9 +507,7 @@ void ejecutarPartidaCargada(SDL_Window* ventana, SDL_Renderer* renderer, TTF_Fon
     printf("Primer clic: %s\n", primerClic ? "No realizado" : "Ya realizado");
     printf("Cheat X-Ray: %s\n", estadoCheat.xrayUsado ? "Ya usado" : "Disponible");
 
-    // Usar la nueva funcion de juego con guardado
-    jugarConGuardado(ventana, renderer, fuente, fuenteGrande, matriz, config,
-                    &minasRestantes, ventana_ancho, usuario, tiempoInicioAjustado, &primerClic, &estadoCheat);
+    jugarConGuardado(ventana, renderer, fuente, fuenteGrande, matriz, config,&minasRestantes, ventana_ancho, usuario, tiempoInicioAjustado, &primerClic, &estadoCheat);
 
     // Al terminar la partida, calcular tiempo total y actualizar estadisticas
     time_t tiempoFin = time(NULL);
