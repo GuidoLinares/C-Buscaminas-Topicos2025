@@ -25,6 +25,40 @@ TP_TOPICOS_2025_1C_JUEVES_PIXEL/
 └── README                 Este archivo
 
 
+INSTALACION Y CONFIGURACION DE ENTORNO EN CODEBLOCKS:
+
+PASO 1) DESCARGAR SDL2 : https://github.com/libsdl-org/SDL/releases/download/release-2.0.22/SDL2-devel-2.0.
+22-mingw.zip
+
+PASO 2) EXTRAERLO EN LA RAIZ DEL JUEGO (debería dejar la carpeta con nombre SDL2-2.0.22 en la raíz (esta dentro de la extraída)).
+
+PASO 3) COPIAR Y PEGAR EL ARCHIVO SDL2.dll que esta en la ruta " TP_TOPICOS_2025_1C_JUEVES_PIXEL\SDL2-2.0.22\x86_64-w64-mingw32\bin" en la raíz de la carpeta del juego.
+
+PASO 4) ENTRAR A LA CARPETA LIB DONDE ESTARA LA LIBRERIA TTF NECESARIA PARA LA FUENTE.
+
+PASO 5) COPIAR Y PEGAR EL ARCHIVO SDL2_ttf.dll que esta en la ruta "TP_TOPICOS_2025_1C_JUEVES_PIXEL\lib\SDL2_ttf-2.24.0\x86_64-w64-mingw32\bin" en la raíz de la carpeta del juego.
+
+PASO 6) Configurar el proyecto dentro de codeblocks con los siguientes 
+parámetros (en este orden, asegurarse que se copie todo tanto en debug, release como en el proyecto):
+
+Linker settings: SDL2main 
+		 SDL2_ttf
+		 SDL2
+
+Search directories (agregar estos paths de carpetas(podria tener variaciones)):
+
+Compiler: SDL2-2.0.22\x86_64-w64-mingw32\include
+	  SDL2-2.0.22\x86_64-w64-mingw32\include\SDL2
+	  lib\SDL2_ttf-2.24.0\x86_64-w64-mingw32\include
+
+Linker: SDL2-2.0.22\x86_64-w64-mingw32\lib
+	lib\SDL2_ttf-2.24.0\x86_64-w64-mingw32\lib
+
+
+PASO 7) A DISFRUTAR DEL JUEGO !!!!
+
+
+
 FUNCIONALIDADES IMPLEMENTADAS:
 Funcionalidades Minimas:
 
@@ -46,37 +80,3 @@ Funcionalidades Opcionales:
  Estadisticas de ultimas 10 partidas
  Sistema de cheats
 
-COMPILACION Y EJECUCION:
-Requisitos:
-
-COPIAR Y PEGAR EL ARCHIVO SDL2.dll de la ruta " TP_TOPICOS_2025_1C_JUEVES_PIXEL\SDL2-2.0.22\x86_64-w64-mingw32\bin" en la raíz de la carpeta.
-
-COPIAR Y PEGAR EL ARCHIVO SDL2_ttf.dll de la ruta "TP_TOPICOS_2025_1C_JUEVES_PIXEL\lib\SDL2_ttf-2.24.0\x86_64-w64-mingw32\bin" en la raíz de la carpeta.
-
-
-CONFIGURACION:
-El archivo buscaminas.conf debe contener:
-dimensiones=16
-cantidad_minas=40
-O alternativamente:
-cantidad_minas=15%
-
-CONTROLES:
-
-Clic izquierdo: Revelar casilla
-Clic derecho: Marcar/desmarcar mina
-ESC: Salir del juego
-
-ARCHIVOS DE LOG:
-El juego genera automaticamente archivos de log con:
-
-Fecha y hora de inicio/fin de partida
-Registro de todos los clics con coordenadas
-Resultado de la partida
-
-NOTAS TECNICAS:
-
-Resolucion recomendada: 1366x768 o superior
-El proyecto utiliza memoria dinamica para el tablero
-Implementa recursividad para revelar casillas vacias
-Sistema de eventos SDL para manejo de entrada======================
